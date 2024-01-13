@@ -97,8 +97,6 @@ class Ball:
         self.rect.x = self.x - self.radius
         self.rect.y = self.y - self.radius
 
-        # Add collision detection with walls, paddle, and bricks here
-
     def draw(self, screen):
         pg.draw.circle(screen, self.color, (self.x, self.y), self.radius)
 
@@ -114,17 +112,20 @@ class Brick:
 
     def destroy(self):
         self.is_destroyed = True
+        self.color = (0, 0, 0)  # Black color
 
 
 class Level:
     def __init__(self, level_data):
-        self.bricks = []  # List to store the bricks in the level
-        self.load_level(level_data)
+        self.level_name = level_data['name']
+        self.level_map = level_data['layout']
+        self.bricks = []
         self.level_complete = False
+        self.load_level(level_data)
 
     def load_level(self, level_data):
         if self.bricks is not None:
-            screen_width, screen_height = 800, 600
+            screen_width, screen_height = SCREEN_WIDTH, SCREEN_HEIGHT
             brick_width, brick_height = screen_width // 5, screen_height // 10
             for row_index, row in enumerate(level_data):
                 for col_index, col in enumerate(row):
@@ -194,14 +195,30 @@ class Collision:
 
     def check_brick_collision(self):
         for brick in self.bricks:
-            if self.ball.rect.colliderect(brick.rect):
-                print("collision")
+            if not brick.is_destroyed and self.ball.rect.colliderect(brick.rect):
+                print("Collision Detected with Brick at:", brick.rect.x, brick.rect.y)
                 self.ball.speed_y *= -1  # Reverse vertical direction
-                self.bricks.is_destroyed = True  # Destroy the brick
-                self.level.draw(self.screen)  # Redraw the new brick layout
-                break  # Assuming one collision per update
+                brick.is_destroyed = True  # Mark the brick as destroyed
+                break
+
 
     def update(self):
         self.check_wall_collision()
         self.check_paddle_collision()
         self.check_brick_collision()
+
+    
+class InputEvent:
+    def __init__(self, paddle, ball):
+        self.paddle = paddle
+        self.ball = ball
+
+    def handle_input(self):
+        keys = pg.key.get_pressed()
+        if keys[KEY_MOVE_LEFT]:
+            self.paddle.move("left")
+        elif keys[KEY_MOVE_RIGHT]:
+            self.paddle.move("right")
+        if keys[pg.K_SPACE]:
+            self.ball.handle_event(pg.event.Event(pg.KEYDOWN, key=pg.K_SPACE))
+

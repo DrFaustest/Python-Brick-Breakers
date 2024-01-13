@@ -2,6 +2,7 @@ import pygame as pg
 from objects import *
 import json
 from settings import * 
+
 class Game():
     def __init__(self, screen):
         self.screen = screen
@@ -11,16 +12,14 @@ class Game():
         with open("levels.json", "r") as file:
             self.levels = json.load(file)
         self.current_level = 0
+        self.current_level_object = Level(self.levels['levels'][self.current_level])
 
-        current_level_data = self.levels['levels'][self.current_level]
-        self.level_name = current_level_data['name']
-        self.level_map = current_level_data['layout']
 
-        self.level_complete = False
         self.paddle = Paddle(350, 550, 100, 20, self.screen_width)  # Example dimensions
         self.ball = Ball(self.paddle)
         self.scoreboard = Scoreboard(10, 10)  # Position of the scoreboard
-        self.collision = Collision(self.ball, self.paddle, [], self.screen_width, self.screen_height)
+        self.collision = Collision(self.ball, self.paddle, self.current_level_object.bricks, self.screen_width, self.screen_height)
+        self.input_handler = InputEvent(self.paddle, self.ball)
 
     def start(self):
         
@@ -36,32 +35,25 @@ class Game():
 
     def update(self):
         if self.state == "Playing":
-            keys = pg.key.get_pressed()
-            if keys[KEY_MOVE_LEFT]:
-                self.paddle.move("left")
-            elif keys[KEY_MOVE_RIGHT]:
-                self.paddle.move("right")
-            if keys[pg.K_SPACE]:
-                self.ball.handle_event(pg.event.Event(pg.KEYDOWN, key=pg.K_SPACE))
-            self.collision.update()
+            self.input_handler.handle_input()
             self.ball.update()
-
-            self.level = Level(self.level_map)
-            if self.level.is_level_complete():
+            self.collision.update()
+            if self.current_level_object.is_level_complete():
                 self.current_level += 1
                 if self.current_level < len(self.levels['levels']):
                     self.level_map = self.levels['levels'][self.current_level]
                 else:
                     # All levels are complete, handle game completion or ending
                     self.state = "Game Over"
+                    self.screen.fill((WHITE))
 
     def draw(self):
         self.screen.fill(BLACK)
         # Draw game objects
+        self.current_level_object.draw(self.screen)
+        self.scoreboard.draw(self.screen)
         self.paddle.draw(self.screen)
         self.ball.draw(self.screen)
-        self.level.draw(self.screen)
-        self.scoreboard.draw(self.screen)
 
 
 
