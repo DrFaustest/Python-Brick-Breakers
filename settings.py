@@ -13,7 +13,7 @@ KEY_QUIT = pg.K_DELETE  # Update with the actual key code or name
 
 # Game settings
 FPS = 60  # Frames per second
-PADDLE_SPEED = 1  # Update with the actual speed value
+PADDLE_SPEED = .5  # Update with the actual speed value
 BALL_SPEED = 0.25  # Update with the actual speed value
 
 # Colors (RGB)
