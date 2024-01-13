@@ -37,7 +37,7 @@ class Paddle:
     def __init__(self, x, y, width, height, SCREEN_WIDTH, color=(WHITE)):
         self.rect = pg.Rect(x, y, width, height)
         self.color = color
-        self.speed = PADDLE_SPEED 
+        self.speed = PADDLE_SPEED
         self.screen_width = SCREEN_WIDTH
 
     def move(self, direction):
