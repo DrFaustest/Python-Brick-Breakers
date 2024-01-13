@@ -1,12 +1,13 @@
 import pygame as pg
 from game import Game
+from settings import *
 
 def main():
     pg.init()
-    screen = pg.display.set_mode((800,600))
+    screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pg.display.set_caption("brick breaker")
     clock = pg.time.Clock()
-    clock.tick(60)
+    clock.tick(FPS)
     game = Game(screen)
     running = True
     while running:

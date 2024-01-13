@@ -1,13 +1,13 @@
 import pygame as pg
 from objects import *
 import json
-
+from settings import * 
 class Game():
     def __init__(self, screen):
         self.screen = screen
         self.state = "Start"
-        self.screen_width = 800
-        self.screen_height = 600
+        self.screen_width = SCREEN_WIDTH
+        self.screen_height = SCREEN_HEIGHT
         with open("levels.json", "r") as file:
             self.levels = json.load(file)
         self.current_level = 0
@@ -37,9 +37,9 @@ class Game():
     def update(self):
         if self.state == "Playing":
             keys = pg.key.get_pressed()
-            if keys[pg.K_LEFT]:
+            if keys[KEY_MOVE_LEFT]:
                 self.paddle.move("left")
-            elif keys[pg.K_RIGHT]:
+            elif keys[KEY_MOVE_RIGHT]:
                 self.paddle.move("right")
             if keys[pg.K_SPACE]:
                 self.ball.handle_event(pg.event.Event(pg.KEYDOWN, key=pg.K_SPACE))
@@ -56,7 +56,7 @@ class Game():
                     self.state = "Game Over"
 
     def draw(self):
-        self.screen.fill((0, 0, 0))
+        self.screen.fill(BLACK)
         # Draw game objects
         self.paddle.draw(self.screen)
         self.ball.draw(self.screen)

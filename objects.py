@@ -1,9 +1,10 @@
 #this file houses all of the commonly used objects in the game
-
+from settings import *
 import pygame as pg
+import math
 
 class Button:
-    def __init__(self, x, y, width = 200, height = 100, text = "Change ME", color =(255,255,255) , hover_color = (0, 255, 0), text_color = (0, 0, 0), action = None):
+    def __init__(self, x, y, width = 200, height = 100, text = "Change ME", color =(WHITE) , hover_color = (0, 255, 0), text_color = (BLACK), action = None):
         self.rect = pg.Rect(x, y, width, height)
         self.color = color
         self.hover_color = hover_color
@@ -33,11 +34,11 @@ class Button:
                     self.action()
 
 class Paddle:
-    def __init__(self, x, y, width, height, screen_width, color=(255, 255, 255)):
+    def __init__(self, x, y, width, height, SCREEN_WIDTH, color=(WHITE)):
         self.rect = pg.Rect(x, y, width, height)
         self.color = color
-        self.speed = 1
-        self.screen_width = screen_width
+        self.speed = PADDLE_SPEED 
+        self.screen_width = SCREEN_WIDTH
 
     def move(self, direction):
         if direction == "left":
@@ -53,21 +54,27 @@ class Paddle:
         pg.draw.rect(screen, self.color, self.rect)
 
 class Ball:
-    def __init__(self, paddle, radius=10, color=(255, 255, 255)):
+    def __init__(self, paddle, radius=10, color=(WHITE)):
         self.radius = radius
         self.color = color
         self.paddle = paddle
         self.x = paddle.rect.centerx
         self.y = paddle.rect.top - radius
         self.rect = pg.Rect(self.x - radius, self.y - radius, radius * 2, radius * 2)
-        self.speed_x = 1
-        self.speed_y = 1
+        self.overall_speed = BALL_SPEED
         self.attached_to_paddle = True
+
+    def calculate_angle_and_speed(self, relative_position):
+        # Convert relative position to an angle (from -45° to 45°)
+        relative_position = max(-0.5, min(0.5, relative_position))
+        angle = relative_position * math.pi / 4
+        self.speed_x = self.overall_speed * math.sin(angle)
+        self.speed_y = -self.overall_speed * math.cos(angle)
 
     def handle_event(self, event):
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE and self.attached_to_paddle:
-            self.speed_x = 0.1  # You can adjust the initial speed and direction
-            self.speed_y = -0.1
+            relative_position = (self.rect.centerx - self.paddle.rect.centerx) / self.paddle.rect.width
+            self.calculate_angle_and_speed(relative_position)
             self.attached_to_paddle = False
 
     def update(self):
@@ -173,9 +180,8 @@ class Collision:
 
     def check_paddle_collision(self):
         if self.ball.rect.colliderect(self.paddle.rect):
-            self.ball.speed_y *= -1  # Reverse vertical direction
-
-            # Optional: Adjust ball's horizontal speed based on where it hits the paddle
+            relative_position = (self.ball.rect.centerx - self.paddle.rect.centerx) / self.paddle.rect.width
+            self.ball.calculate_angle_and_speed(relative_position)
 
     def check_brick_collision(self):
         for brick in self.bricks:
