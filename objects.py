@@ -36,7 +36,7 @@ class Paddle:
     def __init__(self, x, y, width, height, screen_width, color=(255, 255, 255)):
         self.rect = pg.Rect(x, y, width, height)
         self.color = color
-        self.speed = 5
+        self.speed = 1
         self.screen_width = screen_width
 
     def move(self, direction):
@@ -178,7 +178,6 @@ class Collision:
             # Optional: Adjust ball's horizontal speed based on where it hits the paddle
 
     def check_brick_collision(self):
-        print("checking brick collision")
         for brick in self.bricks:
             if self.ball.rect.colliderect(brick.rect):
                 print("collision")

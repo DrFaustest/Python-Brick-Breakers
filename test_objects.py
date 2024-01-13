@@ -72,7 +72,7 @@ class TestPaddle(unittest.TestCase):
         # Test initialization
         self.assertEqual(self.paddle.rect, pg.Rect.return_value)
         self.assertEqual(self.paddle.color, (255, 255, 255))
-        self.assertEqual(self.paddle.speed, 5)
+        self.assertEqual(self.paddle.speed, 1)
         self.assertEqual(self.paddle.screen_width, 800)
 
     def test_draw(self):

@@ -42,7 +42,6 @@ class Game():
             elif keys[pg.K_RIGHT]:
                 self.paddle.move("right")
             if keys[pg.K_SPACE]:
-                print("space")
                 self.ball.handle_event(pg.event.Event(pg.KEYDOWN, key=pg.K_SPACE))
             self.collision.update()
             self.ball.update()
