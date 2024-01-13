@@ -1,0 +1,21 @@
+This is a brick breaker game written in python using pygame
+
+It needs a brick class -  this is the class that will be used to create the bricks at varrious levels
+the bricks can prograssively get harder to break as the levels increase
+
+it needs a ball class - this is the class that will be used to create the ball that will break the bricks
+the ball will have a speed and direction that will change when it hits the walls or the bricks
+later powerups can be added to the ball to make it more interesting
+
+it needs a paddle class - this is the class that will be used to create the paddle that will hit the ball
+this is the only thing that the player will control
+can add a vector visuilization to the paddle to show the player where the ball will go when it hits the paddle when initially launched
+
+it needs a level class - this is the class that will be used to create the levels
+it will use a base play space and then add bricks to it to create the levels
+later it can have obsticles and powerups added to it to make it more interesting
+
+it needs a game class - this is the class that will be used to create the game and run it pulling everything together into a playable game
+
+it will be ran from the main.py file- this will initiallizw pygame and then run the game class and handle the closing of the game
+
