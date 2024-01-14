@@ -22,7 +22,7 @@ class Game():
         self.collision = Collision(self.ball, self.paddle, self.bricks)
         self.input_handler = InputEvent(self.paddle, self.ball)
         self.level_banner = LevelBanner()
-        self.game_reset = GameReset(self.paddle, self.ball)
+        self.game_reset = GameReset(self)
 
     def start(self):
         self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
@@ -45,12 +45,9 @@ class Game():
             if self.level.is_level_complete():
                 self.current_level_index += 1
                 try:
-                    self.level = Level(self.current_level_index)
-                    self.game_reset.reset(self.screen_width, 550, self.ball.radius)
-                    self.collision = Collision(self.ball, self.paddle, self.bricks)  # Update collision object with new bricks
+                    self.game_reset.reset()
                     self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
                 except ValueError:
-                    # All levels are complete, handle game completion or ending
                     self.state = "Game Over"
                     self.screen.fill(WHITE)
 

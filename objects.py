@@ -1,7 +1,6 @@
 #this file houses all of the commonly used objects in the game
 from settings import *
 import pygame as pg
-import math
 import json
 
 class Button:
