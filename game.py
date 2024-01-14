@@ -19,7 +19,7 @@ class Game():
         self.paddle = Paddle(350, 550, 100, 20, self.screen_width)  # Example dimensions
         self.ball = Ball(self.paddle)
         self.scoreboard = Scoreboard(10, 10)  # Position of the scoreboard
-        self.collision = Collision(self.ball, self.paddle, self.bricks)
+        self.collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard)
         self.input_handler = InputEvent(self.paddle, self.ball)
         self.level_banner = LevelBanner()
         self.game_reset = GameReset(self)

@@ -163,6 +163,10 @@ class Scoreboard:
         # Increase the score by the given number of points
         self.score += points
 
+    def decrease_score(self, points=10):
+        # Decrease the score by the given number of points
+        self.score -= points
+
     def update(self):
         # This method can be used to update any other information on the scoreboard if needed
         pass
@@ -173,12 +177,13 @@ class Scoreboard:
         screen.blit(score_text, (self.x, self.y))
 
 class Collision:
-    def __init__(self, ball, paddle, bricks):
+    def __init__(self, ball, paddle, bricks, scoreboard):
         self.ball = ball
         self.paddle = paddle
         self.bricks = bricks
         self.screen_width = SCREEN_WIDTH
         self.screen_height = SCREEN_HEIGHT
+        self.scoreboard = scoreboard
 
     def check_wall_collision(self):
         # Check for collision with left, right, and top walls
@@ -186,6 +191,19 @@ class Collision:
             self.ball.speed_x *= -1  # Reverse horizontal direction
         if self.ball.rect.top <= 0:
             self.ball.speed_y *= -1  # Reverse vertical direction
+
+        # reattach ball to paddle if it hits the bottom wall
+        if self.ball.rect.bottom >= self.screen_height:
+            self.ball.attached_to_paddle = True
+            self.ball.speed_x = 0
+            self.ball.speed_y = 0
+            self.ball.x = self.paddle.rect.centerx
+            self.ball.y = self.paddle.rect.top - self.ball.radius
+            self.ball.rect.x = self.ball.x - self.ball.radius
+            self.ball.rect.y = self.ball.y - self.ball.radius
+            self.paddle.rect.centerx = self.screen_width // 2
+            self.paddle.rect.y = 550  
+            self.scoreboard.decrease_score()
 
         # Add bottom wall collision if needed (usually results in game over)
 
@@ -198,6 +216,7 @@ class Collision:
             if not brick.is_destroyed and self.ball.rect.colliderect(brick.rect):
                 self.ball.speed_y *= -1  # Reverse vertical direction
                 brick.is_destroyed = True  # Mark the brick as destroyed
+                self.scoreboard.increase_score()
                 break
 
 
@@ -254,6 +273,6 @@ class GameReset:
         self.game.ball.attached_to_paddle = True
 
         # Reset collision detection with the new bricks
-        self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks)
+        self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks, self.game.scoreboard)
 
 
