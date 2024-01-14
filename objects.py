@@ -235,19 +235,26 @@ class LevelBanner:
         pg.time.wait(2000)  # Wait for a couple of seconds
 
 class GameReset:
-    def __init__(self, paddle, ball):
-        self.paddle = paddle
-        self.ball = ball
+    def __init__(self, game):
+        self.game = game
 
-    def reset(self, screen_width, paddle_y_position, ball_radius):
+    def reset(self):
+        # Load the new level
+        self.game.level = Level(self.game.current_level_index)
+        self.game.bricks = self.game.level.bricks
+
         # Reset paddle position
-        self.paddle.rect.centerx = screen_width // 2
-        self.paddle.rect.y = paddle_y_position
+        self.game.paddle.rect.centerx = self.game.screen_width // 2
+        self.game.paddle.rect.y = 550  # Assuming a fixed Y position
 
         # Reset ball position and state
-        self.ball.x = self.paddle.rect.centerx
-        self.ball.y = self.paddle.rect.top - ball_radius
-        self.ball.speed_x = 0
-        self.ball.speed_y = 0
-        self.ball.attached_to_paddle = True
+        self.game.ball.x = self.game.paddle.rect.centerx
+        self.game.ball.y = self.game.paddle.rect.top - self.game.ball.radius
+        self.game.ball.speed_x = 0
+        self.game.ball.speed_y = 0
+        self.game.ball.attached_to_paddle = True
+
+        # Reset collision detection with the new bricks
+        self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks)
+
 

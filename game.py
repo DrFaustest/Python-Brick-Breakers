@@ -1,6 +1,5 @@
 import pygame as pg
 from objects import *
-import json
 from settings import * 
 
 class Game():
@@ -48,6 +47,7 @@ class Game():
                 try:
                     self.level = Level(self.current_level_index)
                     self.game_reset.reset(self.screen_width, 550, self.ball.radius)
+                    self.collision = Collision(self.ball, self.paddle, self.bricks)  # Update collision object with new bricks
                     self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
                 except ValueError:
                     # All levels are complete, handle game completion or ending
