@@ -11,7 +11,7 @@ KEY_MOVE_RIGHT = pg.K_RIGHT  # Update with the actual key code or name
 KEY_PAUSE = pg.K_p  # Update with the actual key code or name
 KEY_QUIT = pg.K_DELETE  # Update with the actual key code or name
 
-# Game settings
+# Game settings+
 FPS = 60  # Frames per second
 PADDLE_SPEED = .5  # Update with the actual speed value
 BALL_SPEED = 0.25  # Update with the actual speed value

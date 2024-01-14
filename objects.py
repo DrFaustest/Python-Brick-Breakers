@@ -2,6 +2,7 @@
 from settings import *
 import pygame as pg
 import math
+import json
 
 class Button:
     def __init__(self, x, y, width = 200, height = 100, text = "Change ME", color =(WHITE) , hover_color = (0, 255, 0), text_color = (BLACK), action = None):
@@ -70,20 +71,14 @@ class Ball:
         self.x = paddle.rect.centerx
         self.y = paddle.rect.top - radius
         self.rect = pg.Rect(self.x - radius, self.y - radius, radius * 2, radius * 2)
-        self.overall_speed = BALL_SPEED
+        self.speed_x = 0
+        self.speed_y = 0
         self.attached_to_paddle = True
-
-    def calculate_angle_and_speed(self, relative_position):
-        # Convert relative position to an angle (from -45° to 45°)
-        relative_position = max(-0.5, min(0.5, relative_position))
-        angle = relative_position * math.pi / 4
-        self.speed_x = self.overall_speed * math.sin(angle)
-        self.speed_y = -self.overall_speed * math.cos(angle)
 
     def handle_event(self, event):
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE and self.attached_to_paddle:
-            relative_position = (self.rect.centerx - self.paddle.rect.centerx) / self.paddle.rect.width
-            self.calculate_angle_and_speed(relative_position)
+            self.speed_x = BALL_SPEED
+            self.speed_y = -BALL_SPEED
             self.attached_to_paddle = False
 
     def update(self):
@@ -116,24 +111,31 @@ class Brick:
 
 
 class Level:
-    def __init__(self, level_data):
-        self.level_name = level_data['name']
-        self.level_map = level_data['layout']
+    def __init__(self, current_level):
+        with open("levels.json", "r") as file:
+            all_levels = json.load(file)["levels"]
+        if current_level < len(all_levels):
+            self.level_data = all_levels[current_level]
+        else:
+            print("All levels are complete")
+            raise ValueError("Level does not exist")
+
+        self.level_name = self.level_data['name']
+        self.level_map = self.level_data['layout']
         self.bricks = []
         self.level_complete = False
-        self.load_level(level_data)
+        self.load_level(self.level_map)
 
     def load_level(self, level_data):
-        if self.bricks is not None:
-            screen_width, screen_height = SCREEN_WIDTH, SCREEN_HEIGHT
-            brick_width, brick_height = screen_width // 5, screen_height // 10
-            for row_index, row in enumerate(level_data):
-                for col_index, col in enumerate(row):
-                    if col == 1:
-                        brick = self.create_brick(col_index, row_index, brick_width, brick_height)
-                        self.bricks.append(brick)
-        else:
-            return
+        screen_width, screen_height = SCREEN_WIDTH, SCREEN_HEIGHT
+        brick_width, brick_height = screen_width // len(level_data[0]), (screen_height // len(level_data)) //2
+
+        for row_index, row in enumerate(level_data):
+            for col_index, col in enumerate(row):
+                if col == 1:
+                    brick = self.create_brick(col_index, row_index, brick_width, brick_height)
+                    self.bricks.append(brick)
+    
 
     def create_brick(self, x_index, y_index, brick_width, brick_height):
         x, y = x_index * brick_width, y_index * brick_height
@@ -172,12 +174,12 @@ class Scoreboard:
         screen.blit(score_text, (self.x, self.y))
 
 class Collision:
-    def __init__(self, ball, paddle, bricks, screen_width, screen_height):
+    def __init__(self, ball, paddle, bricks):
         self.ball = ball
         self.paddle = paddle
         self.bricks = bricks
-        self.screen_width = screen_width
-        self.screen_height = screen_height
+        self.screen_width = SCREEN_WIDTH
+        self.screen_height = SCREEN_HEIGHT
 
     def check_wall_collision(self):
         # Check for collision with left, right, and top walls
@@ -190,13 +192,11 @@ class Collision:
 
     def check_paddle_collision(self):
         if self.ball.rect.colliderect(self.paddle.rect):
-            relative_position = (self.ball.rect.centerx - self.paddle.rect.centerx) / self.paddle.rect.width
-            self.ball.calculate_angle_and_speed(relative_position)
+            self.ball.speed_y *= -1  # Reverse vertical direction
 
     def check_brick_collision(self):
         for brick in self.bricks:
             if not brick.is_destroyed and self.ball.rect.colliderect(brick.rect):
-                print("Collision Detected with Brick at:", brick.rect.x, brick.rect.y)
                 self.ball.speed_y *= -1  # Reverse vertical direction
                 brick.is_destroyed = True  # Mark the brick as destroyed
                 break
@@ -221,4 +221,16 @@ class InputEvent:
             self.paddle.move("right")
         if keys[pg.K_SPACE]:
             self.ball.handle_event(pg.event.Event(pg.KEYDOWN, key=pg.K_SPACE))
+
+class LevelBanner:
+    def __init__(self, font_size=50, color=(255, 255, 255)):
+        self.font = pg.font.SysFont("Arial", font_size)
+        self.color = color
+
+    def display(self, screen, level_number, screen_width, screen_height):
+        level_text = self.font.render(f"Level {level_number}", True, self.color)
+        text_rect = level_text.get_rect(center=(screen_width // 2, screen_height // 2))
+        screen.blit(level_text, text_rect)
+        pg.display.flip()  # Update the display
+        pg.time.wait(2000)  # Wait for a couple of seconds
 

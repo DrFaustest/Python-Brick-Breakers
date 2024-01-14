@@ -9,16 +9,16 @@ class Game():
         self.state = "Start"
         self.screen_width = SCREEN_WIDTH
         self.screen_height = SCREEN_HEIGHT
-        with open("levels.json", "r") as file:
-            self.levels = json.load(file)
-        self.current_level = 0
-        self.current_level_object = Level(self.levels['levels'][self.current_level])
+
+        self.current_level_index = 0
+        self.level = Level(self.current_level_index)
+        self.bricks = self.level.bricks
 
 
         self.paddle = Paddle(350, 550, 100, 20, self.screen_width)  # Example dimensions
         self.ball = Ball(self.paddle)
         self.scoreboard = Scoreboard(10, 10)  # Position of the scoreboard
-        self.collision = Collision(self.ball, self.paddle, self.current_level_object.bricks, self.screen_width, self.screen_height)
+        self.collision = Collision(self.ball, self.paddle, self.bricks)
         self.input_handler = InputEvent(self.paddle, self.ball)
 
     def start(self):
@@ -38,19 +38,21 @@ class Game():
             self.input_handler.handle_input()
             self.ball.update()
             self.collision.update()
-            if self.current_level_object.is_level_complete():
-                self.current_level += 1
-                if self.current_level < len(self.levels['levels']):
-                    self.level_map = self.levels['levels'][self.current_level]
-                else:
+            if self.level.is_level_complete():
+                self.current_level_index += 1
+                try:
+                    self.level = Level(self.current_level_index)
+                    self.bricks = self.level.bricks
+                except ValueError:
                     # All levels are complete, handle game completion or ending
                     self.state = "Game Over"
-                    self.screen.fill((WHITE))
+                    self.screen.fill((BLACK))
+                    self.scoreboard.draw(self.screen)
 
     def draw(self):
         self.screen.fill(BLACK)
         # Draw game objects
-        self.current_level_object.draw(self.screen)
+        self.level.draw(self.screen)
         self.scoreboard.draw(self.screen)
         self.paddle.draw(self.screen)
         self.ball.draw(self.screen)
