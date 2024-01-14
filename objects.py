@@ -4,7 +4,7 @@ import pygame as pg
 import json
 
 class Button:
-    def __init__(self, x, y, width = 200, height = 100, text = "Change ME", color =(WHITE) , hover_color = (0, 255, 0), text_color = (BLACK), action = None):
+    def __init__(self, x:int, y:int, width:int = 200, height:int = 100, text:str = "Change ME", color:tuple =(WHITE) , hover_color:tuple = (0, 255, 0), text_color:tuple = (BLACK), action: callable = None) -> None:
         self.rect = pg.Rect(x, y, width, height)
         self.color = color
         self.hover_color = hover_color
@@ -23,8 +23,6 @@ class Button:
     def check_hover(self, mouse_pos):
         if self.rect.collidepoint(mouse_pos):
             self.color = self.hover_color
-        else:
-            self.color = self.color
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
@@ -63,24 +61,24 @@ class Paddle:
         pg.draw.rect(screen, self.color, self.rect)
 
 class Ball:
-    def __init__(self, paddle, radius=10, color=(WHITE)):
-        self.radius = radius
-        self.color = color
-        self.paddle = paddle
-        self.x = paddle.rect.centerx
-        self.y = paddle.rect.top - radius
-        self.rect = pg.Rect(self.x - radius, self.y - radius, radius * 2, radius * 2)
-        self.speed_x = 0
-        self.speed_y = 0
-        self.attached_to_paddle = True
+    def __init__(self, paddle: Paddle, radius: int =10, color: tuple =(WHITE)) -> None:
+        self.radius: int = radius
+        self.color: tuple = color
+        self.paddle: Paddle = paddle
+        self.x: int = paddle.rect.centerx
+        self.y: int = paddle.rect.top - radius
+        self.rect: pg.Rect = pg.Rect(self.x - radius, self.y - radius, radius * 2, radius * 2)
+        self.speed_x: int = 0
+        self.speed_y: int = 0
+        self.attached_to_paddle: bool = True
 
-    def handle_event(self, event):
+    def handle_event(self, event: pg.event.Event) -> None:
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE and self.attached_to_paddle:
             self.speed_x = BALL_SPEED
             self.speed_y = -BALL_SPEED
             self.attached_to_paddle = False
 
-    def update(self):
+    def update(self) -> None:
         if self.attached_to_paddle:
             self.x = self.paddle.rect.centerx
             self.y = self.paddle.rect.top - self.radius

@@ -1,37 +1,38 @@
 import pygame as pg
 from objects import *
 from settings import * 
+from typing import *
 
 class Game():
     def __init__(self, screen):
-        self.screen = screen
-        self.state = "Start"
-        self.screen_width = SCREEN_WIDTH
-        self.screen_height = SCREEN_HEIGHT
+        self.screen: pg.Surface = screen
+        self.state: str = "Start"
+        self.screen_width: int = SCREEN_WIDTH
+        self.screen_height: int = SCREEN_HEIGHT
 
 
 
-        self.current_level_index = 0
-        self.level = Level(self.current_level_index)
-        self.bricks = self.level.bricks
+        self.current_level_index: int = 0
+        self.level: Level = Level(self.current_level_index)
+        self.bricks: list[Brick] = self.level.bricks
 
 
-        self.paddle = Paddle(350, 550, 100, 20, self.screen_width)  # Example dimensions
-        self.ball = Ball(self.paddle)
-        self.scoreboard = Scoreboard(10, 10)  # Position of the scoreboard
-        self.collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard)
-        self.input_handler = InputEvent(self.paddle, self.ball)
-        self.level_banner = LevelBanner()
-        self.game_reset = GameReset(self)
+        self.paddle: Paddle = Paddle(350, 550, 100, 20, self.screen_width)  # Example dimensions
+        self.ball: Ball = Ball(self.paddle)
+        self.scoreboard: Scoreboard = Scoreboard(10, 10)  # Position of the scoreboard
+        self.collision: Collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard)
+        self.input_handler: InputEvent = InputEvent(self.paddle, self.ball)
+        self.level_banner: LevelBanner = LevelBanner()
+        self.game_reset: GameReset = GameReset(self)
 
     def start(self):
         self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
         
         def change_to_playing():
-            self.state = "Playing"
+            self.state: str = "Playing"
             self.screen.fill((0, 0, 0))
 
-        play_button = Button(300, 150, 200, 100, "Play", (255, 255, 255), (0, 255, 0), (0, 0, 0), change_to_playing)
+        play_button: Button = Button(300, 150, 200, 100, "Play", (255, 255, 255), (0, 255, 0), (0, 0, 0), change_to_playing)
         play_button.draw(self.screen)
         for event in pg.event.get():
             if event.type == pg.MOUSEBUTTONDOWN:
@@ -48,7 +49,7 @@ class Game():
                     self.game_reset.reset()
                     self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
                 except ValueError:
-                    self.state = "Game Over"
+                    self.state: str = "Game Over"
                     self.screen.fill(WHITE)
 
     def draw(self):
