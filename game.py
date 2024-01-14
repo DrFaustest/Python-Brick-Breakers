@@ -10,6 +10,8 @@ class Game():
         self.screen_width = SCREEN_WIDTH
         self.screen_height = SCREEN_HEIGHT
 
+
+
         self.current_level_index = 0
         self.level = Level(self.current_level_index)
         self.bricks = self.level.bricks
@@ -20,8 +22,11 @@ class Game():
         self.scoreboard = Scoreboard(10, 10)  # Position of the scoreboard
         self.collision = Collision(self.ball, self.paddle, self.bricks)
         self.input_handler = InputEvent(self.paddle, self.ball)
+        self.level_banner = LevelBanner()
+        self.game_reset = GameReset(self.paddle, self.ball)
 
     def start(self):
+        self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
         
         def change_to_playing():
             self.state = "Playing"
@@ -42,12 +47,12 @@ class Game():
                 self.current_level_index += 1
                 try:
                     self.level = Level(self.current_level_index)
-                    self.bricks = self.level.bricks
+                    self.game_reset.reset(self.screen_width, 550, self.ball.radius)
+                    self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
                 except ValueError:
                     # All levels are complete, handle game completion or ending
                     self.state = "Game Over"
-                    self.screen.fill((BLACK))
-                    self.scoreboard.draw(self.screen)
+                    self.screen.fill(WHITE)
 
     def draw(self):
         self.screen.fill(BLACK)

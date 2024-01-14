@@ -234,3 +234,20 @@ class LevelBanner:
         pg.display.flip()  # Update the display
         pg.time.wait(2000)  # Wait for a couple of seconds
 
+class GameReset:
+    def __init__(self, paddle, ball):
+        self.paddle = paddle
+        self.ball = ball
+
+    def reset(self, screen_width, paddle_y_position, ball_radius):
+        # Reset paddle position
+        self.paddle.rect.centerx = screen_width // 2
+        self.paddle.rect.y = paddle_y_position
+
+        # Reset ball position and state
+        self.ball.x = self.paddle.rect.centerx
+        self.ball.y = self.paddle.rect.top - ball_radius
+        self.ball.speed_x = 0
+        self.ball.speed_y = 0
+        self.ball.attached_to_paddle = True
+
