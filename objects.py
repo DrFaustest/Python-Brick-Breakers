@@ -125,7 +125,7 @@ class Level:
 
     def load_level(self, level_data):
         screen_width, screen_height = SCREEN_WIDTH, SCREEN_HEIGHT
-        brick_width, brick_height = screen_width // len(level_data[0]), (screen_height // len(level_data)) //2
+        brick_width, brick_height =  100, 20 # screen_width // len(level_data[0]), (screen_height // len(level_data)) //2
 
         for row_index, row in enumerate(level_data):
             for col_index, col in enumerate(row):
