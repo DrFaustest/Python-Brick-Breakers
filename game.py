@@ -1,6 +1,7 @@
 import pygame as pg
 from objects import *
 from settings import * 
+import settings
 from typing import *
 
 class Game():
@@ -9,8 +10,6 @@ class Game():
         self.state: str = "Start"
         self.screen_width: int = SCREEN_WIDTH
         self.screen_height: int = SCREEN_HEIGHT
-
-
 
         self.current_level_index: int = 0
         self.level: Level = Level(self.current_level_index)
@@ -45,6 +44,8 @@ class Game():
             self.collision.update()
             if self.level.is_level_complete():
                 self.current_level_index += 1
+                if DIFFICULTY < 10:
+                    settings.DIFFICULTY += 0.2
                 try:
                     self.game_reset.reset()
                     self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
