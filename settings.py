@@ -4,6 +4,8 @@ import pygame as pg
 # Screen dimensions
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
+BRICK_WIDTH = 100
+BRICK_HEIGHT = 20
 
 # Key bindings
 KEY_MOVE_LEFT = pg.K_LEFT  # Update with the actual key code or name
@@ -15,6 +17,7 @@ KEY_QUIT = pg.K_DELETE  # Update with the actual key code or name
 FPS = 60  # Frames per second
 PADDLE_SPEED = .5  # Update with the actual speed value
 BALL_SPEED = 0.25  # Update with the actual speed value
+DIFFICULTY = 1  # Update with the changeable difficulty level
 
 # Colors (RGB)
 WHITE = (255, 255, 255)
