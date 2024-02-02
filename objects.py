@@ -2,6 +2,7 @@
 from settings import *
 import pygame as pg
 import json
+import brick_map
 
 class Button:
     def __init__(self, x:int, y:int, width:int = 200, height:int = 100, text:str = "Change ME", color:tuple =(WHITE) , hover_color:tuple = (0, 255, 0), text_color:tuple = (BLACK), action: callable = None) -> None:
@@ -94,8 +95,8 @@ class Ball:
 
 
 class Brick:
-    def __init__(self, x, y, width, height):
-        self.rect = pg.Rect(x, y, width, height)
+    def __init__(self, x, y):
+        self.rect = pg.Rect(x, y, BRICK_WIDTH, BRICK_HEIGHT)
         self.color = (255, 0, 0)  # Red color (you can change this)
         self.is_destroyed = False  # A flag to track if the brick is destroyed
 
@@ -109,16 +110,9 @@ class Brick:
 
 class Level:
     def __init__(self, current_level):
-        with open("levels.json", "r") as file:
-            all_levels = json.load(file)["levels"]
-        if current_level < len(all_levels):
-            self.level_data = all_levels[current_level]
-        else:
-            print("All levels are complete")
-            raise ValueError("Level does not exist")
-
-        self.level_name = self.level_data['name']
-        self.level_map = self.level_data['layout']
+        self.current_level = current_level
+        self.level_name = current_level+1
+        self.level_map = brick_map.generate_brick_map()
         self.bricks = []
         self.level_complete = False
         self.load_level(self.level_map)
@@ -130,13 +124,13 @@ class Level:
         for row_index, row in enumerate(level_data):
             for col_index, col in enumerate(row):
                 if col == 1:
-                    brick = self.create_brick(col_index, row_index, brick_width, brick_height)
+                    brick = self.create_brick(col_index, row_index)
                     self.bricks.append(brick)
     
 
-    def create_brick(self, x_index, y_index, brick_width, brick_height):
-        x, y = x_index * brick_width, y_index * brick_height
-        return Brick(x, y, brick_width, brick_height)
+    def create_brick(self, x_index, y_index):
+        x, y = x_index * BRICK_WIDTH, y_index * BRICK_HEIGHT
+        return Brick(x, y)
 
     def draw(self, screen):
         for brick in self.bricks:
