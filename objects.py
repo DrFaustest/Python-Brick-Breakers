@@ -97,11 +97,13 @@ class Ball:
 class Brick:
     def __init__(self, x, y):
         self.rect = pg.Rect(x, y, BRICK_WIDTH, BRICK_HEIGHT)
-        self.color = (255, 0, 0)  # Red color (you can change this)
+        self.image = pg.image.load("img/brick_img.png")
+        self.image = pg.transform.scale(self.image, (BRICK_WIDTH, BRICK_HEIGHT))
+
         self.is_destroyed = False  # A flag to track if the brick is destroyed
 
     def draw(self, screen):
-        pg.draw.rect(screen, self.color, self.rect)
+        screen.blit(self.image, self.rect)
 
     def destroy(self):
         self.is_destroyed = True
