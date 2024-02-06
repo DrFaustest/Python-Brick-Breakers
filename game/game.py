@@ -1,8 +1,18 @@
 import pygame as pg
-from objects.objects import *
 from settings import * 
 import settings
 from typing import *
+from ui.button import Button
+from objects.paddle import Paddle
+from objects.ball import Ball
+from objects.brick import Brick
+from levels.level import Level
+from ui.level_banner import LevelBanner
+from ui.scoreboard import Scoreboard
+from managers.collision import Collision
+from managers.input import InputEvent
+from managers.game_reset import GameReset
+
 
 class Game():
     def __init__(self, screen):
@@ -16,7 +26,7 @@ class Game():
         self.bricks: list[Brick] = self.level.bricks
 
 
-        self.paddle: Paddle = Paddle(350, 550, 100, 20, self.screen_width)  # Example dimensions
+        self.paddle: Paddle = Paddle()
         self.ball: Ball = Ball(self.paddle)
         self.scoreboard: Scoreboard = Scoreboard(10, 10)  # Position of the scoreboard
         self.collision: Collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard)
