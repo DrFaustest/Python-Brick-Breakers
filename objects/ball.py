@@ -20,6 +20,11 @@ class Ball:
             self.speed_x = BALL_SPEED
             self.speed_y = -BALL_SPEED
             self.attached_to_paddle = False
+        if event.type == pg.MOUSEBUTTONDOWN and self.attached_to_paddle:
+            self.speed_x = BALL_SPEED
+            self.speed_y = -BALL_SPEED
+            self.attached_to_paddle = False
+        
 
     def update(self) -> None:
         if self.attached_to_paddle:
