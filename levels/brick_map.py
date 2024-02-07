@@ -6,10 +6,8 @@ def generate_brick_map():
     max_bricks_x = settings.SCREEN_WIDTH // settings.BRICK_WIDTH
     max_bricks_y = (settings.SCREEN_HEIGHT // 2) // settings.BRICK_HEIGHT  # Ensure bricks don't pass halfway
 
-
     # Calculate total bricks based on difficulty (1 to 10)
     total_bricks = int((max_bricks_x * max_bricks_y) * (settings.DIFFICULTY / 10))
-    print(total_bricks)
 
     # Initialize empty grid
     grid = [[0 for _ in range(max_bricks_x)] for _ in range(max_bricks_y)]
