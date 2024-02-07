@@ -2,8 +2,9 @@ import unittest
 from unittest.mock import MagicMock, patch
 import pygame as pg
 from pygame.locals import *
-from settings import *
-from objects.paddle import Paddle
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from objects.ball import Ball
 
 # Mock settings before importing Ball
