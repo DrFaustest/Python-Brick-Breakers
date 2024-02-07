@@ -1,6 +1,7 @@
 import pygame as pg
 from settings import *
 from objects.paddle import Paddle
+from managers.vector import Vector2D
 
 
 class Ball:
@@ -8,34 +9,33 @@ class Ball:
         self.radius: int = radius
         self.color: tuple = color
         self.paddle: Paddle = paddle
-        self.x: int = paddle.rect.centerx
-        self.y: int = paddle.rect.top - radius
-        self.rect: pg.Rect = pg.Rect(self.x - radius, self.y - radius, radius * 2, radius * 2)
-        self.speed_x: int = 0
-        self.speed_y: int = 0
+        self.position = Vector2D(paddle.rect.centerx, paddle.rect.top - self.radius)
+        self.rect = pg.Rect(self.position.x - radius, self.position.y - radius, radius * 2, radius * 2)
+        self.velocity = Vector2D(0, 0)
         self.attached_to_paddle: bool = True
 
     def handle_event(self, event: pg.event.Event) -> None:
-        if event.type == pg.KEYDOWN and event.key == pg.K_SPACE and self.attached_to_paddle:
-            self.speed_x = BALL_SPEED
-            self.speed_y = -BALL_SPEED
-            self.attached_to_paddle = False
-        if event.type == pg.MOUSEBUTTONDOWN and self.attached_to_paddle:
-            self.speed_x = BALL_SPEED
-            self.speed_y = -BALL_SPEED
+        if (event.type == pg.KEYDOWN and event.key == pg.K_SPACE or
+        event.type == pg.MOUSEBUTTONDOWN) and self.attached_to_paddle:
+        # Set initial velocity when the ball is released
+            self.velocity = Vector2D(BALL_SPEED, -BALL_SPEED)
             self.attached_to_paddle = False
         
 
     def update(self) -> None:
         if self.attached_to_paddle:
-            self.x = self.paddle.rect.centerx
-            self.y = self.paddle.rect.top - self.radius
+            # Update position based on the paddle's position if attached
+            self.position.x = self.paddle.rect.centerx
+            self.position.y = self.paddle.rect.top - self.radius
         else:
-            self.x += self.speed_x
-            self.y += self.speed_y
+            # Update position based on velocity if not attached
+            self.velocity.set_magnitude(BALL_SPEED)
 
-        self.rect.x = self.x - self.radius
-        self.rect.y = self.y - self.radius
+        # Update rect for collision detection
+        self.position += self.velocity
+        self.rect.x = int(self.position.x - self.radius)
+        self.rect.y = int(self.position.y - self.radius)
 
     def draw(self, screen):
-        pg.draw.circle(screen, self.color, (self.x, self.y), self.radius)
+        # Draw the ball using its vector position
+        pg.draw.circle(screen, self.color, (int(self.position.x), int(self.position.y)), self.radius)
