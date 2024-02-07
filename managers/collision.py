@@ -29,11 +29,9 @@ class Collision:
         if self.ball.rect.colliderect(self.paddle.rect):
             offset = (self.ball.position.x - self.paddle.rect.centerx) / (self.paddle.rect.width / 2)
             reflection_angle = offset * MAX_REFLECTION_ANGLE
-
             self.ball.velocity.x = math.cos(reflection_angle)
-            self.ball.velocity.y = -math.sin(reflection_angle)  # Assume Y-axis is positive downwards
-            self.ball.velocity.set_magnitude(BALL_SPEED)  # Set the ball's speed to a constant value
-
+            self.ball.velocity.y = -math.sin(reflection_angle)
+            self.ball.velocity.set_magnitude(BALL_SPEED)
 
     def check_brick_collision(self):
         for brick in self.bricks:

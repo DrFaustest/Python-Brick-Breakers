@@ -17,11 +17,11 @@ KEY_QUIT = pg.K_DELETE  # Update with the actual key code or name
 # Game settings+
 FPS = 60  # Frames per second
 PADDLE_SPEED = .5  # Update with the actual speed value
-BALL_SPEED = 0.5  # Update with the actual speed value
+BALL_SPEED = 0.35  # Update with the actual speed value
 DIFFICULTY = 1  # Update with the changeable difficulty level
 
 # Colors (RGB)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-MAX_REFLECTION_ANGLE = 60 # Maximum reflection angle for paddle collision
+MAX_REFLECTION_ANGLE = 90 # Maximum reflection angle for paddle collision

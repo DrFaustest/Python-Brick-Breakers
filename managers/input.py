@@ -26,9 +26,7 @@ class InputEvent:
                 self.paddle.move("right")
             if keys[pg.K_SPACE] and self.ball.attached_to_paddle:
                 # Release the ball
-                self.ball.speed_x = BALL_SPEED
-                self.ball.speed_y = -BALL_SPEED
-                self.ball.attached_to_paddle = False
+                self.ball.handle_event(pg.event.Event(pg.KEYDOWN, key=pg.K_SPACE))
 
         # Handle mouse inputs
         elif self.active_input_type == "mouse":
