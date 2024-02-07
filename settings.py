@@ -1,5 +1,6 @@
 # settings.py
 import pygame as pg
+import math
 
 # Screen dimensions
 SCREEN_WIDTH = 800
@@ -22,6 +23,5 @@ DIFFICULTY = 1  # Update with the changeable difficulty level
 # Colors (RGB)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-# ... other colors as needed
 
-# ... any other settings
+MAX_REFLECTION_ANGLE = 60 # Maximum reflection angle for paddle collision
