@@ -20,6 +20,8 @@ class Game():
         self.state: str = "Start"
         self.screen_width: int = SCREEN_WIDTH
         self.screen_height: int = SCREEN_HEIGHT
+        self.background_image: pg.Surface = pg.image.load("img/background.png")
+        self.background_image = pg.transform.scale(self.background_image, (self.screen_width, self.screen_height))
 
         self.current_level_index: int = 0
         self.level: Level = Level(self.current_level_index)
@@ -64,7 +66,7 @@ class Game():
                     self.screen.fill(WHITE)
 
     def draw(self):
-        self.screen.fill(BLACK)
+        self.screen.blit(self.background_image, (0, 0))
         # Draw game objects
         self.level.draw(self.screen)
         self.scoreboard.draw(self.screen)
