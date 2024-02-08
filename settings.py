@@ -24,4 +24,4 @@ DIFFICULTY = 1  # Update with the changeable difficulty level
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-MAX_REFLECTION_ANGLE = 90 # Maximum reflection angle for paddle collision
+MAX_REFLECTION_ANGLE = 75 # Maximum reflection angle for paddle collision
