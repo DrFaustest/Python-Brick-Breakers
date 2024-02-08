@@ -2,7 +2,7 @@ import pygame as pg
 from settings import *
 
 class Brick:
-    image = pg.image.load("img/brick_img.png")
+    image = pg.image.load(BRICK_IMG)
     image = pg.transform.scale(image, (BRICK_WIDTH, BRICK_HEIGHT))
     
     def __init__(self, x, y):
