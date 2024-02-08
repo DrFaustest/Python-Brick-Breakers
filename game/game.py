@@ -28,7 +28,7 @@ class Game():
 
         self.paddle: Paddle = Paddle()
         self.ball: Ball = Ball(self.paddle)
-        self.scoreboard: Scoreboard = Scoreboard(10, 10)  # Position of the scoreboard
+        self.scoreboard: Scoreboard = Scoreboard()  # Position of the scoreboard
         self.collision: Collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard)
         self.input_handler: InputEvent = InputEvent(self.paddle, self.ball)
         self.level_banner: LevelBanner = LevelBanner()
