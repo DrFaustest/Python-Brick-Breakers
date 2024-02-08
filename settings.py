@@ -25,3 +25,8 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 MAX_REFLECTION_ANGLE = 75 # Maximum reflection angle for paddle collision
+
+BALL_IMG = "img/future_ball.png"
+PADDLE_IMG = "img/paddle.png"
+BRICK_IMG = "img/brick_img.png"
+BACKGROUND_IMG = "img/background.png"
