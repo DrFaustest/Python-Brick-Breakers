@@ -3,7 +3,7 @@ from settings import *
 
 class Paddle:
     def __init__(self):
-        self.original_image = pg.image.load("img/paddle.png")
+        self.original_image = pg.image.load(PADDLE_IMG)
         self.image = pg.transform.scale(self.original_image, (100, 20))
         self.rect = self.image.get_rect()
         self.rect.x = 350
