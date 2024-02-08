@@ -6,10 +6,13 @@ from managers.vector import Vector2D
 
 class Ball:
     def __init__(self, paddle: Paddle, radius: int =10, color: tuple =(WHITE)) -> None:
+        self.image = pg.image.load(BALL_IMG)
+        self.image = pg.transform.scale(self.image, (radius * 2, radius * 2))
         self.radius: int = radius
         self.color: tuple = color
         self.paddle: Paddle = paddle
         self.position = Vector2D(paddle.rect.centerx, paddle.rect.top - self.radius)
+
         self.rect = pg.Rect(self.position.x - radius, self.position.y - radius, radius * 2, radius * 2)
         self.velocity = Vector2D(0, 0)
         self.attached_to_paddle: bool = True
@@ -38,4 +41,4 @@ class Ball:
 
     def draw(self, screen):
         # Draw the ball using its vector position
-        pg.draw.circle(screen, self.color, (int(self.position.x), int(self.position.y)), self.radius)
+        screen.blit(self.image, self.rect)
