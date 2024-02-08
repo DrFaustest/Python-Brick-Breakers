@@ -3,8 +3,11 @@ from settings import *
 
 class Paddle:
     def __init__(self):
-        self.rect = pg.Rect(350, 550, 100, 20)
-        self.color = WHITE
+        self.original_image = pg.image.load("img/paddle.png")
+        self.image = pg.transform.scale(self.original_image, (100, 20))
+        self.rect = self.image.get_rect()
+        self.rect.x = 350
+        self.rect.y = 550
         self.speed = PADDLE_SPEED
         self.screen_width = SCREEN_WIDTH
         self.position_accumulator = 350  # Floating-point accumulator for precise movement
@@ -28,4 +31,4 @@ class Paddle:
 
 
     def draw(self, screen):
-        pg.draw.rect(screen, self.color, self.rect)
+        screen.blit(self.image, self.rect)
