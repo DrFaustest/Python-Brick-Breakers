@@ -20,7 +20,7 @@ class Game():
         self.state: str = "Start"
         self.screen_width: int = SCREEN_WIDTH
         self.screen_height: int = SCREEN_HEIGHT
-        self.background_image: pg.Surface = pg.image.load("img/background.png")
+        self.background_image: pg.Surface = pg.image.load(BACKGROUND_IMG)
         self.background_image = pg.transform.scale(self.background_image, (self.screen_width, self.screen_height))
 
         self.current_level_index: int = 0
