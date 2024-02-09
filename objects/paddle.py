@@ -6,8 +6,8 @@ class Paddle:
         self.original_image = pg.image.load(PADDLE_IMG)
         self.image = pg.transform.scale(self.original_image, (100, 20))
         self.rect = self.image.get_rect()
-        self.rect.x = 350
-        self.rect.y = 550
+        self.rect.x = SCREEN_WIDTH // 2 - 50
+        self.rect.y = SCREEN_HEIGHT - 40
         self.speed = PADDLE_SPEED
         self.screen_width = SCREEN_WIDTH
         self.position_accumulator = 350  # Floating-point accumulator for precise movement
