@@ -5,7 +5,7 @@ from managers.vector import Vector2D
 
 
 class Ball:
-    def __init__(self, paddle: Paddle, radius: int =10, color: tuple =(WHITE)) -> None:
+    def __init__(self, paddle: Paddle, radius: int =15, color: tuple =(WHITE)) -> None:
         self.image = pg.image.load(BALL_IMG)
         self.image = pg.transform.scale(self.image, (radius * 2, radius * 2))
         self.radius: int = radius
