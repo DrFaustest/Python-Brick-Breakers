@@ -16,12 +16,16 @@ KEY_QUIT = pg.K_DELETE  # Update with the actual key code or name
 
 # Game settings+
 FPS = 60  # Frames per second
-PADDLE_SPEED = .5  # Update with the actual speed value
-BALL_SPEED = .5 # Update with the actual speed value
+PADDLE_SPEED = 50  # Update with the actual speed value
+BALL_SPEED = 1 # Update with the actual speed value
 DIFFICULTY = 1  # Update with the changeable difficulty level
-
+VOLUME = .5  # Update with the actual volume level
 # Colors (RGB)
 WHITE = (255, 255, 255)
+GRAY = (128, 128, 128)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 
 MAX_REFLECTION_ANGLE = 75 # Maximum reflection angle for paddle collision
@@ -30,3 +34,5 @@ BALL_IMG = "img/retro_snow_ball.png"
 PADDLE_IMG = "img/paddle.png"
 BRICK_IMG = "img/brick_img.png"
 BACKGROUND_IMG = "img/background.png"
+SOUND_ENABLED_IMAGE = "img/sound_image.png"
+SOUND_DISABLED_IMAGE = "img/sound_muted.png"
