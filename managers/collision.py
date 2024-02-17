@@ -1,7 +1,7 @@
 import pygame as pg
 from settings import *
-from managers.vector import Vector2D
 import math
+
 
 class Collision:
     def __init__(self, ball, paddle, bricks, scoreboard):
@@ -14,15 +14,15 @@ class Collision:
 
     def check_wall_collision(self):
         # Left or Right wall collision
-        if self.ball.position.x <= 0 or self.ball.position.x + self.ball.radius * 2 >= self.screen_width:
+        if self.ball.position.x <= 0 or self.ball.position.x + BALL_RADIUS * 2 >= self.screen_width:
             self.ball.velocity.x *= -1
         # Top wall collision
         if self.ball.position.y <= 0:
             self.ball.velocity.y *= -1
         # Bottom wall collision
-        if self.ball.position.y + self.ball.radius * 2 >= self.screen_height:
+        if self.ball.position.y + BALL_RADIUS * 2 >= self.screen_height:
             self.ball.attached_to_paddle = True
-            self.ball.velocity = Vector2D(0, 0)
+            self.ball.velocity = pg.math.Vector2(0, 0)
             self.scoreboard.decrease_score()
 
     def check_paddle_collision(self):
@@ -31,7 +31,8 @@ class Collision:
             reflection_angle = offset * MAX_REFLECTION_ANGLE
             self.ball.velocity.x = math.cos(reflection_angle)
             self.ball.velocity.y = -math.sin(reflection_angle)
-            self.ball.velocity.set_magnitude(BALL_SPEED)
+            self.ball.velocity = pg.math.Vector2(math.cos(reflection_angle), -math.sin(reflection_angle)).normalize() * BALL_SPEED
+
 
     def check_brick_collision(self):
         for brick in self.bricks:
