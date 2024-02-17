@@ -11,54 +11,51 @@ class Collision:
         self.screen_width = SCREEN_WIDTH
         self.screen_height = SCREEN_HEIGHT
         self.scoreboard = scoreboard
+        self.paddle_hit=False
 
     def check_wall_collision(self):
-        # Left or Right wall collision
-        if self.ball.position.x <= 0 or self.ball.position.x + BALL_RADIUS * 2 >= self.screen_width:
+        if (self.ball.position.x - BALL_RADIUS) <= 0 or (self.ball.position.x + BALL_RADIUS * 2) >= self.screen_width:
             self.ball.velocity.x *= -1
-        # Top wall collision
-        if self.ball.position.y <= 0:
+        if (self.ball.position.y-BALL_RADIUS) <= 0:
             self.ball.velocity.y *= -1
-        # Bottom wall collision
         if self.ball.position.y + BALL_RADIUS * 2 >= self.screen_height:
             self.ball.attached_to_paddle = True
             self.ball.velocity = pg.math.Vector2(0, 0)
             self.scoreboard.decrease_score()
 
     def check_paddle_collision(self):
-        if self.ball.rect.colliderect(self.paddle.rect):
+        if self.ball.rect.colliderect(self.paddle.rect) and not self.paddle_hit:
+            self.paddle_hit = True
             offset = (self.ball.position.x - self.paddle.rect.centerx) / (self.paddle.rect.width / 2)
             reflection_angle = offset * MAX_REFLECTION_ANGLE
-            self.ball.velocity.x = math.cos(reflection_angle)
-            self.ball.velocity.y = -math.sin(reflection_angle)
-            self.ball.velocity = pg.math.Vector2(math.cos(reflection_angle), -math.sin(reflection_angle)).normalize() * BALL_SPEED
-
+            new_vx = math.cos(math.radians(reflection_angle)) * BALL_SPEED * (1 if offset > 0 else -1)
+            new_vy = -math.sqrt(BALL_SPEED**2 - new_vx**2)
+            if new_vy > MIN_Y_VELOCITY:
+                new_vy = MIN_Y_VELOCITY
+                new_vx = math.copysign(math.sqrt(BALL_SPEED**2 - new_vy**2), new_vx)
+            self.ball.velocity = pg.math.Vector2(new_vx, new_vy)
+        elif not self.ball.rect.colliderect(self.paddle.rect):
+            self.paddle_hit = False
 
     def check_brick_collision(self):
         for brick in self.bricks:
             if not brick.is_destroyed and self.ball.rect.colliderect(brick.rect):
-                # Determine the side of the collision
-                if self.ball.velocity.x > 0:  # Moving right
-                    # Check if it hit the left side of the brick
+                if self.ball.velocity.x > 0:
                     if self.ball.rect.right >= brick.rect.left and self.ball.rect.left < brick.rect.left:
-                        self.ball.velocity.x *= -1  # Reverse horizontal direction
-                elif self.ball.velocity.x < 0:  # Moving left
-                    # Check if it hit the right side of the brick
+                        self.ball.velocity.x *= -1 
+                elif self.ball.velocity.x < 0:
                     if self.ball.rect.left <= brick.rect.right and self.ball.rect.right > brick.rect.right:
                         self.ball.velocity.x *= -1
                 
-                if self.ball.velocity.y > 0:  # Moving down
-                    # Check if it hit the top side of the brick
+                if self.ball.velocity.y > 0:
                     if self.ball.rect.bottom >= brick.rect.top and self.ball.rect.top < brick.rect.top:
-                        self.ball.velocity.y *= -1  # Reverse vertical direction
-                elif self.ball.velocity.y < 0:  # Moving up
-                    # Check if it hit the bottom side of the brick
+                        self.ball.velocity.y *= -1
+                elif self.ball.velocity.y < 0:
                     if self.ball.rect.top <= brick.rect.bottom and self.ball.rect.bottom > brick.rect.bottom:
                         self.ball.velocity.y *= -1
-    
-                brick.is_destroyed = True  # Mark the brick as destroyed
+                brick.is_destroyed = True
                 self.scoreboard.increase_score()
-                break  # Assuming one collision per update for simplicity
+                break
 
     def update(self):
         self.check_wall_collision()
