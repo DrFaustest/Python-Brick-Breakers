@@ -29,10 +29,11 @@ BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 
 MAX_REFLECTION_ANGLE = 75 # Maximum reflection angle for paddle collision
+BALL_RADIUS = 15  # Update with the actual radius value
 
 BALL_IMG = "img/retro_snow_ball.png"
 PADDLE_IMG = "img/paddle.png"
 BRICK_IMG = "img/brick_img.png"
-BACKGROUND_IMG = "img/background.png"
+BACKGROUND_IMG = "img/background_4.webp"
 SOUND_ENABLED_IMAGE = "img/sound_image.png"
 SOUND_DISABLED_IMAGE = "img/sound_muted.png"

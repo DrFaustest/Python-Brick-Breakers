@@ -5,6 +5,7 @@ from objects.paddle import Paddle
 from objects.ball import Ball
 from ui.scoreboard import Scoreboard
 from typing import *
+from settings import *
 
 class GameReset:
     def __init__(self, game):
@@ -21,7 +22,7 @@ class GameReset:
 
         # Reset ball position and state
         self.game.ball.x = self.game.paddle.rect.centerx
-        self.game.ball.y = self.game.paddle.rect.top - self.game.ball.radius
+        self.game.ball.y = self.game.paddle.rect.top - BALL_RADIUS
         self.game.ball.speed_x = 0
         self.game.ball.speed_y = 0
         self.game.ball.attached_to_paddle = True
