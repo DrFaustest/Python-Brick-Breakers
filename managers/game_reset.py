@@ -28,6 +28,14 @@ class GameReset:
         self.game.ball.attached_to_paddle = True
 
         # Reset collision detection with the new bricks
-        self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks, self.game.scoreboard)
+        self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks, self.game.scoreboard, self.game.lives)
+
+    def full_reset(self):
+        self.game.current_level_index = 0
+        self.game.scoreboard.score = 0
+        self.game.lives.lives = 3
+        self.reset()
+
+
 
 
