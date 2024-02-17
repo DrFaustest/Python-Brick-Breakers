@@ -1,4 +1,4 @@
-from settings import *
+from settings import SOUND_ENABLED_IMAGE, SOUND_DISABLED_IMAGE, VOLUME
 import pygame as pg
 
 class BackgroundMusic:
@@ -8,10 +8,10 @@ class BackgroundMusic:
         self.enabled_image = pg.transform.scale(self.enabled_image, (50, 50))
         self.disabled_image: pg.Surface = pg.image.load(SOUND_DISABLED_IMAGE)
         self.disabled_image = pg.transform.scale(self.disabled_image, (50, 50))
-        # Load the initial music track
-        pg.mixer.music.load("sound/background_1.mp3")
+        self.playlist = ["sound/background_1.mp3", "sound/background_2.mp3", "sound/background_1.mid", "sound/background_2.mid"]
+        self.current_track_index = 0
         pg.mixer.music.set_volume(VOLUME)
-        self.current_image: pg.Surface = self.enabled_image
+        pg.mixer.music.set_endevent(pg.USEREVENT)
         self.play()
 
     def change_music_state(self) -> None:
@@ -21,6 +21,15 @@ class BackgroundMusic:
             self.play()
 
     def play(self) -> None:
+        # Load the initial track based on current index
+        pg.mixer.music.load(self.playlist[self.current_track_index])
+        pg.mixer.music.play(-1)  # Play indefinitely
+        self.enabled = True
+        self.current_image = self.enabled_image
+
+    def play_next_track(self):
+        self.current_track_index = (self.current_track_index + 1) % len(self.playlist)
+        pg.mixer.music.load(self.playlist[self.current_track_index])
         pg.mixer.music.play(-1)  # Play indefinitely
         self.enabled = True
         self.current_image = self.enabled_image
