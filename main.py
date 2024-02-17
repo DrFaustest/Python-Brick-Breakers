@@ -14,7 +14,7 @@ def main() -> None:
         events = pg.event.get()
         for event in events:
             if event.type == pg.USEREVENT:
-                background_music.play_next_track()
+                game.background_music.play_next_track()
             if event.type == pg.QUIT:
                 running = False
         game.update(events)  # Pass the events to the game update method
