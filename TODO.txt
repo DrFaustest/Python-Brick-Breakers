@@ -1,0 +1,28 @@
+--GAME FEATURES--
+1. lives system
+2. powerups
+3. multi-player
+4. lofi mode (auto play)
+5. leaderboard
+
+--Menu features--
+1. MAin Screen (done)
+2. Sound Mute Button (done)
+3. Settings Menue
+4. Menu images (1/3)
+5. Game over and score saving 
+
+
+--Requirments Reminder--
+
+1. Code is organized into modules where applicable.
+2. Programs that use/retrieve/store data use files/databases/API.
+3. Data validation and exception handling is present where applicable.
+4. Appropriate algorithms/data structures/data types used appropriately.
+5. OOP best practices implemented (Separating code to classes, data hiding, inheritance).
+6. Graphical user interface available and intuitive to use where applicable (must separate code in format discussed in lab 10 or test 10).
+7. Proper documentation.
+	-Using descriptive variable names, class names, and file names.
+	-Docstrings for functions.
+	-Type hinting.
+8. Public GitHub link submitted with all project files placed/merged into the main/master branch. The project files could range from python files, images, documents, images, sound files, text files, binary files, executable files, etc. (generally anything that is needed for the application to work).
