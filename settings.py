@@ -28,7 +28,8 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 
-MAX_REFLECTION_ANGLE = 75 # Maximum reflection angle for paddle collision
+MAX_REFLECTION_ANGLE = 90
+MIN_Y_VELOCITY = -1.5
 BALL_RADIUS = 15  # Update with the actual radius value
 
 BALL_IMG = "img/retro_snow_ball.png"
