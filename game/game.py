@@ -103,14 +103,11 @@ class Game():
             self.update_playing()
         elif self.state == "GameOver":
             self.update_game_over()
-        # Add other states as needed
 
     def draw(self):
-        # Common drawing code here (if any)
         if self.state == "Start":
             self.draw_start()
         elif self.state == "Playing":
             self.draw_playing()
         elif self.state == "GameOver":
             self.draw_game_over()
-        # Add other states as needed
