@@ -4,7 +4,7 @@ import math
 
 
 class Collision:
-    def __init__(self, ball, paddle, bricks, scoreboard):
+    def __init__(self, ball, paddle, bricks, scoreboard, player_lives):
         self.ball = ball
         self.paddle = paddle
         self.bricks = bricks
@@ -12,6 +12,7 @@ class Collision:
         self.screen_height = SCREEN_HEIGHT
         self.scoreboard = scoreboard
         self.paddle_hit=False
+        self.lives = player_lives
 
     def check_wall_collision(self):
         if (self.ball.position.x - BALL_RADIUS) <= 0 or (self.ball.position.x + BALL_RADIUS * 2) >= self.screen_width:
@@ -22,6 +23,7 @@ class Collision:
             self.ball.attached_to_paddle = True
             self.ball.velocity = pg.math.Vector2(0, 0)
             self.scoreboard.decrease_score()
+            self.lives.decrease_lives()
 
     def check_paddle_collision(self):
         if self.ball.rect.colliderect(self.paddle.rect) and not self.paddle_hit:
