@@ -15,9 +15,9 @@ KEY_PAUSE = pg.K_p  # Update with the actual key code or name
 KEY_QUIT = pg.K_DELETE  # Update with the actual key code or name
 
 # Game settings+
-FPS = 60  # Frames per second
-PADDLE_SPEED = 50  # Update with the actual speed value
-BALL_SPEED = 10 # Update with the actual speed value
+FPS = 120  # Frames per second
+PADDLE_SPEED = 25  # Update with the actual speed value
+BALL_SPEED = 5 # Update with the actual speed value
 DIFFICULTY = 1  # Update with the changeable difficulty level
 VOLUME = .5  # Update with the actual volume level
 # Colors (RGB)
