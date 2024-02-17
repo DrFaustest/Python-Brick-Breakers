@@ -9,6 +9,7 @@ from objects.brick import Brick
 from levels.level import Level
 from ui.level_banner import LevelBanner
 from ui.scoreboard import Scoreboard
+from ui.player_lives import PlayerLives
 from managers.collision import Collision
 from managers.input import InputEvent
 from managers.game_reset import GameReset
@@ -16,7 +17,7 @@ from utils.background_music import BackgroundMusic
 
 class Game():
     def __init__(self, screen):
-        self.screen: pg.Surface = screen
+        self.screen: pg.Surface = screen   
         self.state: str = "Start"
         self.screen_width: int = SCREEN_WIDTH
         self.screen_height: int = SCREEN_HEIGHT
@@ -28,13 +29,15 @@ class Game():
         self.paddle: Paddle = Paddle()
         self.ball: Ball = Ball(self.paddle)
         self.scoreboard: Scoreboard = Scoreboard()  # Position of the scoreboard
-        self.collision: Collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard)
+        self.lives: PlayerLives = PlayerLives()
+        self.collision: Collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard, self.lives)
         self.input_handler: InputEvent = InputEvent(self.paddle, self.ball)
         self.level_banner: LevelBanner = LevelBanner()
         self.game_reset: GameReset = GameReset(self)
         self.background_music: BackgroundMusic = BackgroundMusic()
         self.buttons: list[Button] = []
         self.setup_start_state()  # Setup for the start state
+        
 
     def setup_start_state(self):
         self.buttons.clear()
@@ -71,15 +74,18 @@ class Game():
         self.ball.update()
         self.collision.update()
         if self.level.is_level_complete():
-            self.current_level_index += 1
-            if DIFFICULTY < 10:
-                settings.DIFFICULTY += 0.2
-            try:
-                self.game_reset.reset()
-                self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
-            except ValueError:
-                self.state: str = "Game Over"
-                self.screen.fill(WHITE)
+            self.handle_level_complete()
+        if self.lives.lives == 0:
+            self.state: str = "GameOver"
+    
+    def handle_level_complete(self):
+        self.current_level_index += 1  # Move to the next level
+        if DIFFICULTY < 10:
+            settings.DIFFICULTY += 0.2  # Increase difficulty, if applicable
+
+        self.game_reset.reset()  # Reset game elements for the next level
+        # Optionally, display a level completion banner/message
+        self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width,    self.screen_height)
 
     def draw_playing(self):
         self.screen.blit(self.background_image, (0, 0))
@@ -87,14 +93,23 @@ class Game():
         self.scoreboard.draw(self.screen)
         self.paddle.draw(self.screen)
         self.ball.draw(self.screen)
+        self.lives.draw(self.screen)
 
-    def update_game_over(self):
-        # Handle updates specific to the game over state
-        pass
+    def update_game_over(self, events):
+    # Display a "Game Over" message and wait for player input to reset the game
+        for event in events:
+            if event.type == pg.KEYDOWN or event.type == pg.MOUSEBUTTONDOWN:
+                self.game_reset.full_reset()
+                self.state = "Start"
 
     def draw_game_over(self):
-        # Draw elements specific to the game over state
-        pass
+        # Fill the screen with a different color or a game over screen
+        self.screen.fill((0, 0, 0))  # Example: fill the screen with black
+        # Display "Game Over" text
+        font = pg.font.SysFont(None, 74)
+        text = font.render('Game Over', True, (255, 0, 0))
+        text_rect = text.get_rect(center=(self.screen_width/2, self.screen_height/2))
+        self.screen.blit(text, text_rect)
 
     def update(self, events):
         if self.state == "Start":
@@ -102,7 +117,7 @@ class Game():
         elif self.state == "Playing":
             self.update_playing()
         elif self.state == "GameOver":
-            self.update_game_over()
+            self.update_game_over(events)
 
     def draw(self):
         if self.state == "Start":
