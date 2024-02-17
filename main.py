@@ -1,6 +1,7 @@
 import pygame as pg
 from game.game import Game
 from settings import *
+from utils import background_music
 
 def main() -> None:
     pg.init()
@@ -12,6 +13,8 @@ def main() -> None:
     while running:
         events = pg.event.get()
         for event in events:
+            if event.type == pg.USEREVENT:
+                background_music.play_next_track()
             if event.type == pg.QUIT:
                 running = False
         game.update(events)  # Pass the events to the game update method
