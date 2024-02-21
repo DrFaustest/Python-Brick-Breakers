@@ -25,7 +25,6 @@ class TestPaddle(unittest.TestCase):
         self.assertEqual(self.paddle.rect.y, 550)
         self.assertEqual(self.paddle.rect.width, 100)
         self.assertEqual(self.paddle.rect.height, 20)
-        self.assertEqual(self.paddle.color, WHITE)
         self.assertEqual(self.paddle.speed, PADDLE_SPEED)
         self.assertEqual(self.paddle.screen_width, SCREEN_WIDTH)
         self.assertEqual(self.paddle.position_accumulator, 350)
@@ -58,7 +57,7 @@ class TestPaddle(unittest.TestCase):
     def test_draw(self, mock_draw):
         screen_mock = Mock()
         self.paddle.draw(screen_mock)
-        mock_draw.assert_called_once_with(screen_mock, self.paddle.color, self.paddle.rect)
+        mock_draw.assert_called_once_with(screen_mock, self.paddle.rect)
 
 if __name__ == '__main__':
     unittest.main()
