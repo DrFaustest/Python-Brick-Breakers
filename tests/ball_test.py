@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 import pygame as pg
 from pygame.locals import *
+from settings import *
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -14,7 +15,7 @@ BALL_SPEED = 5
 with patch.dict('sys.modules', {'settings': MagicMock(WHITE=WHITE, BALL_SPEED=BALL_SPEED),
                                 'objects.paddle': MagicMock(),
                                 'managers.vector': MagicMock()}):
-    from objects.ball import Ball  # Replace 'your_module.ball' with the actual module path
+    from objects.ball import Ball  
 
 class TestBall(unittest.TestCase):
     def setUp(self):
@@ -25,7 +26,7 @@ class TestBall(unittest.TestCase):
         self.ball = Ball(self.paddle_mock)
 
     def test_init(self):
-        self.assertEqual(self.ball.radius, 10)
+        self.assertEqual(self.ball.radius, BALL_RADIUS)
         self.assertEqual(self.ball.color, WHITE)
         self.assertTrue(self.ball.attached_to_paddle)
         self.assertEqual(self.ball.velocity.x, 0)
