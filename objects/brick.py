@@ -3,10 +3,10 @@ from settings import *
 
 class Brick:
     image = pg.image.load(BRICK_IMG)
-    image = pg.transform.scale(image, (BRICK_WIDTH, BRICK_HEIGHT))
+    image = pg.transform.scale(image, (BRICK_SIZE[0], BRICK_SIZE[1]))
     
     def __init__(self, x, y):
-        self.rect = pg.Rect(x, y, BRICK_WIDTH, BRICK_HEIGHT)
+        self.rect = pg.Rect(x, y, BRICK_SIZE[0], BRICK_SIZE[1])
         self.is_destroyed = False  # A flag to track if the brick is destroyed
 
     def draw(self, screen):
