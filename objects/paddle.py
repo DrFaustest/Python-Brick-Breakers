@@ -2,17 +2,17 @@ import pygame as pg
 from settings import *
 
 class Paddle:
-    def __init__(self):
+    def __init__(self) -> None:
         self.original_image = pg.image.load(PADDLE_IMG)
-        self.image = pg.transform.scale(self.original_image, (100, 20))
+        self.image = pg.transform.scale(self.original_image, (PADDLE_SIZE[0], PADDLE_SIZE[1]))
         self.rect = self.image.get_rect()
-        self.rect.x = SCREEN_WIDTH // 2 - 50
-        self.rect.y = SCREEN_HEIGHT - 40
+        self.rect.x = SCREEN_WIDTH // 2 - PADDLE_SIZE[0] // 2
+        self.rect.y = SCREEN_HEIGHT - 60
         self.speed = PADDLE_SPEED
         self.screen_width = SCREEN_WIDTH
-        self.position_accumulator = 350  # Floating-point accumulator for precise movement
+        self.position_accumulator = SCREEN_WIDTH // 2  # Floating-point accumulator for precise movement
 
-    def move(self, direction):
+    def move(self, direction) -> None:
         if direction == "left":
             self.position_accumulator -= self.speed
         elif direction == "right":
@@ -30,5 +30,5 @@ class Paddle:
             self.position_accumulator = self.screen_width - self.rect.width
 
 
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)
