@@ -12,6 +12,7 @@ class Level:
         self.load_level(self.level_map)
 
     def load_level(self, level_data):
+        # Create bricks based on the level data
         for row_index, row in enumerate(level_data):
             for col_index, col in enumerate(row):
                 if col == 1:
@@ -19,7 +20,7 @@ class Level:
                     self.bricks.append(brick)
     
     def create_brick(self, x_index, y_index):
-        x, y = x_index * BRICK_WIDTH, y_index * BRICK_HEIGHT
+        x, y = x_index * BRICK_SIZE[0], y_index * BRICK_SIZE[1]
         return Brick(x, y)
 
     def draw(self, screen):
