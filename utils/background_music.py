@@ -10,7 +10,7 @@ class BackgroundMusic:
         self.disabled_image = pg.transform.scale(self.disabled_image, (50, 50))
         self.current_image = self.enabled_image
         self.playlist = ["sound/background_1.mp3", "sound/background_2.mp3", "sound/background_1.mid", "sound/background_2.mid"]
-        self.current_track_index = 3
+        self.current_track_index = 0
         pg.mixer.music.set_volume(VOLUME)
         pg.mixer.music.set_endevent(pg.USEREVENT)
         self.play()
@@ -21,14 +21,14 @@ class BackgroundMusic:
         else:
             self.play()
 
-    def play(self):
+    def play(self) -> None:
         if not self.enabled:
             self.enabled = True
             self.current_image = self.enabled_image
         pg.mixer.music.load(self.playlist[self.current_track_index])
         pg.mixer.music.play(0)
 
-    def play_next_track(self):
+    def play_next_track(self) -> None:
         if not self.enabled:
             return
         self.current_track_index = (self.current_track_index + 1) % len(self.playlist)
