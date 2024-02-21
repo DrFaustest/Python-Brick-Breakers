@@ -9,6 +9,19 @@
 1. MAin Screen (done)
 2. Sound Mute Button (done)
 3. Settings Menu
+	(sliders)
+	- music volume
+	- sound effects volume
+	- master volume
+	- asset size adjustment [this is a multiplier for all assets]
+	(clickable left and right arrows)
+	- background selection
+	- brick selection
+	- ball selection
+	- paddle selection
+	(drop down menu)
+	- preselected visual themes [auto sets the background, brick, ball, and paddle]
+	- screen size asjustment [need preset sizes to maintain aspect ratios]
 4. Menu images (1/3)
 5. Game over and score saving 
 
