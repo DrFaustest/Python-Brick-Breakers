@@ -4,6 +4,10 @@
 3. multi-player
 4. lofi mode (auto play)
 5. leaderboard
+   - Saves the top 10 scores and names (done)
+   - at end of game if the score is in the top 10, it will ask for the players name
+   - if the score is not in the top 10, it will display the leaderboard
+   - add a leader board button to the main menu to display the leaderboard
 
 --Menu features--
 1. MAin Screen (done)
