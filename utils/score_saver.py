@@ -1,15 +1,31 @@
 import csv
 import os
 
-# Class to save the top 10 high scores and names in a csv file in name, score format
-# At initialization, the class checks if the file exists and creates it if it doesn't
-# The class also loads the scores from the file and stores them in a list
-# The class also checks if a score is a high score and returns a boolean
-# If the score makes the list of high scores, the class will save the new score list to the file
-# This class will also arrange and format the list for display in the high score screen
-
 class ScoreSaver:
+    """
+    A class that manages the saving, loading, and displaying of high scores.
+
+    Attributes:
+    - filename (str): The name of the file to store the high scores.
+    - scores (list): A list of tuples representing the high scores, where each tuple contains the name and score.
+
+    Methods:
+    - __init__(): Initializes the ScoreSaver object.
+    - load_scores() -> list: Loads the high scores from the file.
+    - check_high_score(score): Checks if a given score is a high score.
+    - sort_scores(): Sorts the high scores in descending order.
+    - add_score(name, score): Adds a new score to the high scores.
+    - save_scores(): Saves the high scores to the file.
+    - score_display(): Generates a formatted display of the high scores.
+    """
+
     def __init__(self):
+        """
+        Initializes the ScoreSaver object.
+
+        If the high score file does not exist, it creates an empty file.
+        Loads the high scores from the file.
+        """
         self.filename = "high_score.csv"
         if not os.path.isfile(self.filename):
             self.file = open(self.filename, 'w')
@@ -17,6 +33,12 @@ class ScoreSaver:
         self.scores = self.load_scores()
 
     def load_scores(self) -> list: 
+        """
+        Loads the high scores from the file.
+
+        Returns:
+        - scores (list): A list of tuples representing the high scores, where each tuple contains the name and score.
+        """
         scores = []
         with open(self.filename, 'r') as file:
             reader = csv.reader(file)
@@ -31,6 +53,15 @@ class ScoreSaver:
         return scores
     
     def check_high_score(self, score):
+        """
+        Checks if a given score is a high score.
+
+        Args:
+        - score (int): The score to be checked.
+
+        Returns:
+        - True if the score is a high score, False otherwise.
+        """
         self.sort_scores()
         if len(self.scores) < 10:
             return True
@@ -39,10 +70,22 @@ class ScoreSaver:
         return False
         
     def sort_scores(self):
+        """
+        Sorts the high scores in descending order.
+        """
         self.scores.sort(key=lambda x: x[1], reverse=True)
         return self.scores
 
     def add_score(self, name, score):
+        """
+        Adds a new score to the high scores.
+
+        If the number of scores exceeds 10, removes the lowest score.
+
+        Args:
+        - name (str): The name associated with the score.
+        - score (int): The score to be added.
+        """
         self.scores.append((name, score))
         self.sort_scores()
         if len(self.scores) > 10:
@@ -50,12 +93,21 @@ class ScoreSaver:
         self.save_scores()
 
     def save_scores(self):
+        """
+        Saves the high scores to the file.
+        """
         with open(self.filename, 'w', newline='') as file:
             writer = csv.writer(file)
             for score in self.scores:
                 writer.writerow(score)
 
     def score_display(self):
+        """
+        Generates a formatted display of the high scores.
+
+        Returns:
+        - display (list): A list of strings representing the formatted high scores.
+        """
         self.sort_scores()
         display = []
         for i, score in enumerate(self.scores):
