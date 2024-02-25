@@ -3,11 +3,23 @@ from settings import *
 
 class InputEvent:
     def __init__(self, paddle, ball):
+        """
+        Initialize the InputEvent class.
+
+        Args:
+            paddle (Paddle): The paddle object.
+            ball (Ball): The ball object.
+        """
         self.paddle = paddle
         self.ball = ball
         self.active_input_type = "keyboard"  # Default to keyboard at the start
 
     def handle_input(self):
+        """
+        Handle the input events.
+
+        This method checks for keyboard and mouse inputs and updates the paddle and ball accordingly.
+        """
         keys = pg.key.get_pressed()
         mouse_x, mouse_y = pg.mouse.get_pos()  # Get the current mouse position
         mouse_buttons = pg.mouse.get_pressed()  # Check if any mouse buttons are pressed
