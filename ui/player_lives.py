@@ -3,6 +3,15 @@ from settings import *
 
 class PlayerLives:
     def __init__(self):
+        """
+        Initializes the PlayerLives object.
+
+        Attributes:
+        - lives (int): The number of lives the player has.
+        - x (int): The x-coordinate of the player lives display.
+        - y (int): The y-coordinate of the player lives display.
+        - ball_image (Surface): The image of the ball representing a life.
+        """
         self.lives = 3
         self.x = 10
         self.y = SCREEN_HEIGHT - 40  # Adjusted for better visibility
@@ -12,14 +21,25 @@ class PlayerLives:
         self.ball_image = pg.transform.scale(self.ball_image, (20, 20))  # Scale the image to 20x20 pixels
 
     def decrease_lives(self):
-        # Decrease the number of lives by 1
+        """
+        Decreases the number of lives by 1.
+        """
         self.lives -= 1
 
     def update(self):
-        # This method can be used to update any other information on the scoreboard if needed
+        """
+        Updates the player lives display.
+        This method can be used to update any other information on the scoreboard if needed.
+        """
         pass
 
     def draw(self, screen):
+        """
+        Draws the player lives display on the screen.
+
+        Parameters:
+        - screen (Surface): The surface to draw on.
+        """
         # Draw an oval-shaped box with a white border and black fill
         rect_width = self.lives * 25 + 10  # Adjust based on the size of the ball image and desired spacing
         pg.draw.ellipse(screen, (0, 0, 0), (self.x, self.y, rect_width, 30), 0)  # Black fill
