@@ -4,6 +4,15 @@ from objects.paddle import Paddle
 
 class Ball:
     def __init__(self, paddle: Paddle) -> None:
+        """
+        Initialize the Ball object.
+
+        Args:
+            paddle (Paddle): The paddle object.
+
+        Returns:
+            None
+        """
         self.image = pg.image.load(BALL_IMG)
         self.image = pg.transform.scale(self.image, (BALL_RADIUS * 2, BALL_RADIUS * 2))
         self.BALL_RADIUS: int = BALL_RADIUS
@@ -15,6 +24,15 @@ class Ball:
         self.attached_to_paddle: bool = True
 
     def handle_event(self, event: pg.event.Event) -> None:
+        """
+        Handle the events for the Ball object.
+
+        Args:
+            event (pg.event.Event): The event object.
+
+        Returns:
+            None
+        """
         if (event.type == pg.KEYDOWN and event.key == pg.K_SPACE or
         event.type == pg.MOUSEBUTTONDOWN) and self.attached_to_paddle:
             paddle_center_relative = (self.paddle.rect.centerx - SCREEN_WIDTH / 2) / (SCREEN_WIDTH / 2)
@@ -23,6 +41,15 @@ class Ball:
             self.attached_to_paddle = False
 
     def update(self) -> None:
+        """
+        Update the Ball object.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         if self.attached_to_paddle:
             self.position.x = self.paddle.rect.centerx
             self.position.y = self.paddle.rect.top - self.BALL_RADIUS
@@ -30,5 +57,14 @@ class Ball:
         self.rect.x = int(self.position.x - self.BALL_RADIUS)
         self.rect.y = int(self.position.y - self.BALL_RADIUS)
 
-    def draw(self, screen):
+    def draw(self, screen) -> None:
+        """
+        Draw the Ball object on the screen.
+
+        Args:
+            screen: The screen object.
+
+        Returns:
+            None
+        """
         screen.blit(self.image, self.rect)
