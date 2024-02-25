@@ -3,6 +3,18 @@ from settings import *
 
 class Paddle:
     def __init__(self) -> None:
+        """
+        Initializes a Paddle object.
+
+        The Paddle object represents the player's paddle in the game.
+        It loads the paddle image, sets its initial position, speed, and other attributes.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         self.original_image = pg.image.load(PADDLE_IMG)
         self.image = pg.transform.scale(self.original_image, (PADDLE_SIZE[0], PADDLE_SIZE[1]))
         self.rect = self.image.get_rect()
@@ -13,6 +25,15 @@ class Paddle:
         self.position_accumulator = SCREEN_WIDTH // 2  # Floating-point accumulator for precise movement
 
     def move(self, direction) -> None:
+        """
+        Moves the paddle in the specified direction.
+
+        Args:
+            direction (str): The direction to move the paddle. Can be "left" or "right".
+
+        Returns:
+            None
+        """
         if direction == "left":
             self.position_accumulator -= self.speed
         elif direction == "right":
@@ -31,4 +52,13 @@ class Paddle:
 
 
     def draw(self, screen) -> None:
+        """
+        Draws the paddle on the screen.
+
+        Args:
+            screen (pygame.Surface): The surface to draw the paddle on.
+
+        Returns:
+            None
+        """
         screen.blit(self.image, self.rect)
