@@ -6,9 +6,27 @@ from settings import *
 
 class GameReset:
     def __init__(self, game):
+        """
+        Initializes a new instance of the GameReset class.
+
+        Parameters:
+        - game: The game object.
+
+        Returns:
+        None
+        """
         self.game = game
 
     def reset(self) -> None:
+        """
+        Resets the game state.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+        """
         # Load the new level
         self.game.level = Level(self.game.current_level_index)
         self.game.bricks = self.game.level.bricks
@@ -28,6 +46,15 @@ class GameReset:
         self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks, self.game.scoreboard, self.game.lives)
 
     def full_reset(self) -> None:
+        """
+        Performs a full reset of the game state.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+        """
         self.game.current_level_index = 0
         self.game.scoreboard.score = 0
         self.game.lives.lives = 3
