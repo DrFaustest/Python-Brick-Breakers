@@ -2,6 +2,20 @@ import pygame
 
 class Slider:
     def __init__(self, x, y, screen_width, h, min_val, max_val, initial_val, description, font_size=20):
+        """
+        Initializes a Slider object.
+
+        Args:
+            x (int): The x-coordinate of the slider.
+            y (int): The y-coordinate of the slider.
+            screen_width (int): The width of the screen.
+            h (int): The height of the slider.
+            min_val (float): The minimum value of the slider.
+            max_val (float): The maximum value of the slider.
+            initial_val (float): The initial value of the slider.
+            description (str): The description of the slider.
+            font_size (int, optional): The font size of the description. Defaults to 20.
+        """
         self.font = pygame.font.Font(None, font_size)
         self.description = description
         description_surf = self.font.render(description, True, (0, 0, 0))
@@ -21,6 +35,12 @@ class Slider:
         self.update_handle_position()
 
     def draw(self, surface):
+        """
+        Draws the slider on the given surface.
+
+        Args:
+            surface (pygame.Surface): The surface to draw the slider on.
+        """
         # Draw the description
         description_surf = self.font.render(self.description, True, (0, 0, 0))
         surface.blit(description_surf, (self.rect.x - description_surf.get_width() - 10, self.rect.y + self.rect.height / 2 - description_surf.get_height() / 2))
@@ -39,6 +59,12 @@ class Slider:
         surface.blit(current_val_surf, (self.handle_rect.x + self.handle_rect.width / 2 - current_val_surf.get_width() / 2, self.handle_rect.y - current_val_surf.get_height() - 5))
 
     def handle_event(self, event):
+        """
+        Handles the given event.
+
+        Args:
+            event (pygame.event.Event): The event to handle.
+        """
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.handle_rect.collidepoint(event.pos):
                 self.grabbed = True
@@ -48,11 +74,19 @@ class Slider:
             self.move_handle(event.pos[0])
 
     def move_handle(self, mouse_x):
+        """
+        Moves the handle of the slider based on the mouse position.
+
+        Args:
+            mouse_x (int): The x-coordinate of the mouse position.
+        """
         # Move the handle within the slider bounds
         self.handle_rect.x = max(self.rect.x, min(mouse_x, self.rect.x + self.rect.width - self.handle_rect.width))
         self.val = self.min_val + ((self.handle_rect.x - self.rect.x) / (self.rect.width - self.handle_rect.width)) * (self.max_val - self.min_val)
         self.update_handle_position()
 
     def update_handle_position(self):
-        # Update the handle position based on the current value
+        """
+        Updates the position of the handle based on the current value.
+        """
         self.handle_rect.x = self.rect.x + (self.val - self.min_val) / (self.max_val - self.min_val) * (self.rect.width - self.handle_rect.width)
