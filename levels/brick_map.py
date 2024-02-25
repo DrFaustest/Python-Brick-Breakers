@@ -2,7 +2,13 @@ import settings
 import random
 
 def generate_brick_map():
-    # Determmin max bricks and percentage of bricks to be generated
+    """
+    Generates a brick map based on the game settings and difficulty level.
+
+    Returns:
+    - grid (list): A 2D list representing the brick map, where 0 represents an empty space and 1 represents a brick.
+    """
+    # Determine max bricks and percentage of bricks to be generated
     max_bricks_x = settings.SCREEN_WIDTH // settings.BRICK_SIZE[0]
     max_bricks_y = (settings.SCREEN_HEIGHT // 2) // settings.BRICK_SIZE[1]
     total_bricks = int((max_bricks_x * max_bricks_y) * (settings.DIFFICULTY / 10))
