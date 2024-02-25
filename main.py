@@ -4,6 +4,15 @@ from settings import *
 from logo import LogoDisplay
 
 def main() -> None:
+    """
+    The main function that runs the Brick Breaker game.
+
+    This function initializes the game, sets up the display window, and runs the game loop.
+    It handles events, updates the game state, and renders the game on the screen.
+
+    Returns:
+        None
+    """
     pg.init()
     screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pg.display.set_caption("Brick Breaker")
@@ -19,7 +28,7 @@ def main() -> None:
             if event.type == pg.QUIT:
                 running = False
         if not logo_display.done:
-            logo_display.update()
+            logo_display.update(events)
             logo_display.draw()
             pg.display.flip()
             continue
@@ -29,5 +38,7 @@ def main() -> None:
         pg.display.flip()
         clock.tick(FPS)
     pg.quit()
+
+
 if __name__ == "__main__":
     main()
