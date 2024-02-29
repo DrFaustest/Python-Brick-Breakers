@@ -105,6 +105,11 @@ class Game():
         self.background_music.change_music_state()
         self.sound_button.image = self.background_music.current_image
 
+    def change_to_start(self):
+        """Change the game state to "Start"."""
+        self.state: str = "Start"
+        self.setup_start_state()
+
         
     def update_start(self, events):
         """Update the game logic in the start state.
