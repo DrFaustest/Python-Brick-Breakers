@@ -1,13 +1,13 @@
 import pygame as pg
 from settings import *
 
-class Paddle:
+class Paddle(pg.sprite.Sprite):
     def __init__(self) -> None:
         """
-        Initializes a Paddle object.
+        Initialize the Paddle object.
 
-        The Paddle object represents the player's paddle in the game.
-        It loads the paddle image, sets its initial position, speed, and other attributes.
+        This method loads the paddle image, scales it to the specified size,
+        sets the initial position of the paddle, and initializes other attributes.
 
         Args:
             None
@@ -15,6 +15,7 @@ class Paddle:
         Returns:
             None
         """
+        super().__init__()
         self.original_image = pg.image.load(PADDLE_IMG)
         self.image = pg.transform.scale(self.original_image, (PADDLE_SIZE[0], PADDLE_SIZE[1]))
         self.rect = self.image.get_rect()
@@ -26,10 +27,13 @@ class Paddle:
 
     def move(self, direction) -> None:
         """
-        Moves the paddle in the specified direction.
+        Move the paddle in the specified direction.
+
+        This method updates the position of the paddle based on the specified direction.
+        It also handles boundary conditions to prevent the paddle from moving off the screen.
 
         Args:
-            direction (str): The direction to move the paddle. Can be "left" or "right".
+            direction (str): The direction in which to move the paddle. Can be "left" or "right".
 
         Returns:
             None
@@ -39,10 +43,8 @@ class Paddle:
         elif direction == "right":
             self.position_accumulator += self.speed
 
-        # Update rect position with truncated value of accumulator
         self.rect.x = int(self.position_accumulator)
 
-        # Boundary checks
         if self.rect.x < 0:
             self.rect.x = 0
             self.position_accumulator = 0
@@ -50,13 +52,14 @@ class Paddle:
             self.rect.right = self.screen_width
             self.position_accumulator = self.screen_width - self.rect.width
 
-
     def draw(self, screen) -> None:
         """
-        Draws the paddle on the screen.
+        Draw the paddle on the screen.
+
+        This method blits the paddle image onto the specified screen surface at the current position.
 
         Args:
-            screen (pygame.Surface): The surface to draw the paddle on.
+            screen (pygame.Surface): The surface on which to draw the paddle.
 
         Returns:
             None
