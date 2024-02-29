@@ -1,6 +1,7 @@
 from settings import *
 import levels.brick_map as brick_map
 from objects.brick import Brick
+import pygame
 
 class Level:
     def __init__(self, current_level):
@@ -14,13 +15,13 @@ class Level:
         - current_level (int): The current level number.
         - level_name (int): The level name (current_level + 1).
         - level_map (list): The map of bricks for the level.
-        - bricks (list): The list of Brick objects in the level.
+        - bricks (pygame.sprite.Group): The group of Brick objects in the level.
         - level_complete (bool): Indicates if the level is complete.
         """
         self.current_level = current_level
         self.level_name = current_level + 1
         self.level_map = brick_map.generate_brick_map()
-        self.bricks = []
+        self.bricks = pygame.sprite.Group()
         self.level_complete = False
         self.load_level(self.level_map)
 
@@ -35,7 +36,7 @@ class Level:
             for col_index, col in enumerate(row):
                 if col == 1:
                     brick = self.create_brick(col_index, row_index)
-                    self.bricks.append(brick)
+                    self.bricks.add(brick)
     
     def create_brick(self, x_index, y_index):
         """
@@ -58,9 +59,7 @@ class Level:
         Parameters:
         - screen: The screen to draw on.
         """
-        for brick in self.bricks:
-            if not brick.is_destroyed:
-                brick.draw(screen)
+        self.bricks.draw(screen)
 
     def is_level_complete(self):
         """
