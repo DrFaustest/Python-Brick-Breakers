@@ -28,7 +28,7 @@ def main() -> None:
             if event.type == pg.QUIT:
                 running = False
         if not logo_display.done:
-            logo_display.update(events)
+            logo_display.update()
             logo_display.draw()
             pg.display.flip()
             continue
