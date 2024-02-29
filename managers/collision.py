@@ -1,9 +1,7 @@
 import pygame as pg
 from settings import *
 import math
-
-
-class Collision:
+class Collision(pg.sprite.Sprite):
     def __init__(self, ball, paddle, bricks, scoreboard, player_lives):
         """
         Initializes a Collision object.
@@ -15,6 +13,7 @@ class Collision:
             scoreboard (Scoreboard): The scoreboard object.
             player_lives (PlayerLives): The player lives object.
         """
+        super().__init__()
         self.ball = ball
         self.paddle = paddle
         self.bricks = bricks
@@ -28,11 +27,11 @@ class Collision:
         """
         Checks for collision with the walls and updates the ball's velocity accordingly.
         """
-        if (self.ball.position.x - BALL_RADIUS) <= 0 or (self.ball.position.x + BALL_RADIUS * 2) >= self.screen_width:
+        if (self.ball.rect.left) <= 0 or (self.ball.rect.right) >= self.screen_width:
             self.ball.velocity.x *= -1
-        if (self.ball.position.y - BALL_RADIUS) <= 0:
+        if (self.ball.rect.top) <= 0:
             self.ball.velocity.y *= -1
-        if self.ball.position.y + BALL_RADIUS * 2 >= self.screen_height:
+        if self.ball.rect.bottom >= self.screen_height:
             self.ball.attached_to_paddle = True
             self.ball.velocity = pg.math.Vector2(0, 0)
             self.scoreboard.decrease_score()
@@ -42,9 +41,9 @@ class Collision:
         """
         Checks for collision with the paddle and updates the ball's velocity accordingly.
         """
-        if self.ball.rect.colliderect(self.paddle.rect) and not self.paddle_hit:
+        if pg.sprite.collide_rect(self.ball, self.paddle) and not self.paddle_hit:
             self.paddle_hit = True
-            offset = (self.ball.position.x - self.paddle.rect.centerx) / (self.paddle.rect.width / 2)
+            offset = (self.ball.rect.centerx - self.paddle.rect.centerx) / (self.paddle.rect.width / 2)
             reflection_angle = offset * MAX_REFLECTION_ANGLE
             new_vx = math.cos(math.radians(reflection_angle)) * BALL_SPEED * (1 if offset > 0 else -1)
             new_vy = -math.sqrt(BALL_SPEED ** 2 - new_vx ** 2)
@@ -52,7 +51,7 @@ class Collision:
                 new_vy = MIN_Y_VELOCITY
                 new_vx = math.copysign(math.sqrt(BALL_SPEED ** 2 - new_vy ** 2), new_vx)
             self.ball.velocity = pg.math.Vector2(new_vx, new_vy)
-        elif not self.ball.rect.colliderect(self.paddle.rect):
+        elif not pg.sprite.collide_rect(self.ball, self.paddle):
             self.paddle_hit = False
 
     def check_brick_collision(self):
@@ -60,7 +59,7 @@ class Collision:
         Checks for collision with the bricks and updates the ball's velocity accordingly.
         """
         for brick in self.bricks:
-            if not brick.is_destroyed and self.ball.rect.colliderect(brick.rect):
+            if not brick.is_destroyed and pg.sprite.collide_rect(self.ball, brick):
                 if self.ball.velocity.x > 0:
                     if self.ball.rect.right >= brick.rect.left and self.ball.rect.left < brick.rect.left:
                         self.ball.velocity.x *= -1
@@ -74,7 +73,7 @@ class Collision:
                 elif self.ball.velocity.y < 0:
                     if self.ball.rect.top <= brick.rect.bottom and self.ball.rect.bottom > brick.rect.bottom:
                         self.ball.velocity.y *= -1
-                brick.is_destroyed = True
+                brick.destroy()
                 self.scoreboard.increase_score()
                 break
 
