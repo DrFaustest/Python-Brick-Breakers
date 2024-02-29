@@ -2,7 +2,7 @@ import pygame as pg
 from settings import *
 from objects.paddle import Paddle
 
-class Ball:
+class Ball(pg.sprite.Sprite):
     def __init__(self, paddle: Paddle) -> None:
         """
         Initialize the Ball object.
@@ -13,13 +13,14 @@ class Ball:
         Returns:
             None
         """
+        super().__init__()
         self.image = pg.image.load(BALL_IMG)
         self.image = pg.transform.scale(self.image, (BALL_RADIUS * 2, BALL_RADIUS * 2))
         self.BALL_RADIUS: int = BALL_RADIUS
         self.color: tuple = WHITE
         self.paddle: Paddle = paddle
         self.position = pg.math.Vector2(paddle.rect.centerx, paddle.rect.top - self.BALL_RADIUS)
-        self.rect = pg.Rect(self.position.x - BALL_RADIUS, self.position.y - BALL_RADIUS, BALL_RADIUS * 2, BALL_RADIUS * 2)
+        self.rect = self.image.get_rect(center=self.position)
         self.velocity = pg.math.Vector2(0, 0)
         self.attached_to_paddle: bool = True
 
@@ -54,8 +55,7 @@ class Ball:
             self.position.x = self.paddle.rect.centerx
             self.position.y = self.paddle.rect.top - self.BALL_RADIUS
         self.position += self.velocity
-        self.rect.x = int(self.position.x - self.BALL_RADIUS)
-        self.rect.y = int(self.position.y - self.BALL_RADIUS)
+        self.rect.center = self.position
 
     def draw(self, screen) -> None:
         """
