@@ -46,15 +46,6 @@ class GameReset:
         self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks, self.game.scoreboard, self.game.lives)
 
     def full_reset(self) -> None:
-        """
-        Performs a full reset of the game state.
-
-        Parameters:
-        None
-
-        Returns:
-        None
-        """
         self.game.current_level_index = 0
         self.game.scoreboard.score = 0
         self.game.lives.lives = 3

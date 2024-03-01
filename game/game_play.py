@@ -44,12 +44,13 @@ class GamePlay(GameState):
             self.handle_level_complete()
         if self.lives.lives == 0:
             settings.PLAYER_SCORE = self.scoreboard.score
+            settings.DIFFICULTY = 1
             self.game.change_state("GameOver")
     
     def handle_level_complete(self):
         self.current_level_index += 1
-        if self.difficulty < 10:
-            self.difficulty += 0.2
+        if settings.DIFFICULTY < 10:
+            settings.DIFFICULTY += 0.2
         self.game_reset.reset()
         self.level_banner.display(self.screen, self.current_level_index + 1, SCREEN_WIDTH,SCREEN_HEIGHT)
 
