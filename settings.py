@@ -12,6 +12,8 @@ BRICK_IMAGES = ["img/brick_img.png", "img/brick_img1.png"]
 BALL_IMAGES = ["img/future_ball.png","img/retro_snow_ball.png","img/ring_ball.png"]
 PADDLE_IMAGES = ["img/paddle.png"]
 
+PLAYER_SCORE = 0
+
 # Key bindings
 KEY_MOVE_LEFT = pg.K_LEFT 
 KEY_MOVE_RIGHT = pg.K_RIGHT  
