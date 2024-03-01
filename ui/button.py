@@ -49,9 +49,12 @@ class Button:
         else:
             pg.draw.rect(screen, self.color, self.rect)
         # Draw text in the center of the button/image
-        text = self.font.render(self.text, True, self.text_color)
-        text_rect = text.get_rect(center=self.rect.center)
-        screen.blit(text, text_rect)
+        if self.text:
+            text_str = str(self.text)
+            text_color = self.text_color if isinstance(self.text_color, tuple) and len(self.text_color) in [3, 4] else (0, 0, 0)
+            text_surface = self.font.render(text_str, True, text_color)
+            text_rect = text_surface.get_rect(center=self.rect.center)
+            screen.blit(text_surface, text_rect)
 
     def check_hover(self, mouse_pos):
         """
@@ -75,3 +78,13 @@ class Button:
             mouse_pos = event.pos
             if self.rect.collidepoint(mouse_pos) and self.action:
                 self.action()
+
+    def update(self, mouse_pos, event):
+        """
+        Updates the button's appearance based on the current mouse position.
+
+        Parameters:
+        - mouse_pos: The current position of the mouse cursor.
+        """
+        self.check_hover(mouse_pos)
+        self.handle_event(event)
