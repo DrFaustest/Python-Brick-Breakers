@@ -8,7 +8,7 @@ from settings import *
 class GameOver(GameState):
     def __init__(self, game):
         super().__init__(game)
-        self.score = PLAYER_SCORE
+        self.score = game.player_score
         self.screen = game.screen
         self.score_saver = ScoreSaver()
         self.new_high_score = self.score_saver.check_high_score(self.score)

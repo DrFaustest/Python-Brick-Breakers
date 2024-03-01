@@ -43,8 +43,8 @@ class GamePlay(GameState):
         if self.level.is_level_complete():
             self.handle_level_complete()
         if self.lives.lives == 0:
-            settings.PLAYER_SCORE = self.scoreboard.score
             settings.DIFFICULTY = 1
+            self.game.player_score = self.scoreboard.score
             self.game.change_state("GameOver")
     
     def handle_level_complete(self):

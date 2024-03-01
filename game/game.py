@@ -11,9 +11,11 @@ from utils.background_music import BackgroundMusic
 class Game():
     def __init__(self, screen):
         self.screen = screen
+        self.player_score = 0
         self.background_music: BackgroundMusic = BackgroundMusic()
         self.music_current_image = self.background_music.current_image
         self.current_state = MainMenu(self)
+
 
     def change_state(self, new_state_str):
         if new_state_str == "Playing":

@@ -2,23 +2,6 @@ import csv
 import os
 
 class ScoreSaver:
-    """
-    A class that manages the saving, loading, and displaying of high scores.
-
-    Attributes:
-    - filename (str): The name of the file to store the high scores.
-    - scores (list): A list of tuples representing the high scores, where each tuple contains the name and score.
-
-    Methods:
-    - __init__(): Initializes the ScoreSaver object.
-    - load_scores() -> list: Loads the high scores from the file.
-    - check_high_score(score): Checks if a given score is a high score.
-    - sort_scores(): Sorts the high scores in descending order.
-    - add_score(name, score): Adds a new score to the high scores.
-    - save_scores(): Saves the high scores to the file.
-    - score_display(): Generates a formatted display of the high scores.
-    """
-
     def __init__(self):
         """
         Initializes the ScoreSaver object.
