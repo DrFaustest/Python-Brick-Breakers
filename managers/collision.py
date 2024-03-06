@@ -76,6 +76,17 @@ class Collision(pg.sprite.Sprite):
                 brick.destroy()
                 self.scoreboard.increase_score()
                 break
+    
+    def check_ball_stuck(self):
+        '''
+        Checks if the ball is stuck to a wall by ensuring that the balls velocity in never zero in the y direction and if the x velocity is zero then the balls position cannot be at left or right limit of the screen if so call a collision with the wall to get the ball moving again
+        '''
+        if self.ball.velocity.y == 0:
+            self.ball.velocity.y = 1
+        if self.ball.velocity.x == 0:
+            if self.ball.rect.left == 0 or self.ball.rect.right == self.screen_width:
+                self.check_wall_collision()
+
 
     def update(self):
         """
