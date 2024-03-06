@@ -54,3 +54,6 @@ class Slider:
         surface.blit(min_val_surf, (self.rect.x - min_val_surf.get_width() / 2, self.rect.y + self.rect.height + 5))
         surface.blit(max_val_surf, (self.rect.x + self.rect.width - max_val_surf.get_width() / 2, self.rect.y + self.rect.height + 5))
         surface.blit(current_val_surf, (self.handle_rect.x + self.handle_rect.width / 2 - current_val_surf.get_width() / 2, self.handle_rect.y - current_val_surf.get_height() - 5))
+
+    def get_value(self):
+        return self.val
