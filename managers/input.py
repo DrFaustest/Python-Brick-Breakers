@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from settings import Settings
 
 class InputEvent:
     def __init__(self, paddle, ball):
@@ -13,6 +13,8 @@ class InputEvent:
         self.paddle = paddle
         self.ball = ball
         self.active_input_type = "keyboard"  # Default to keyboard at the start
+        self.settings = Settings()
+        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
 
     def handle_input(self):
         """
@@ -25,16 +27,16 @@ class InputEvent:
         mouse_buttons = pg.mouse.get_pressed()  # Check if any mouse buttons are pressed
 
         # Determine active input type based on input received
-        if keys[KEY_MOVE_LEFT] or keys[KEY_MOVE_RIGHT] or keys[pg.K_SPACE]:
+        if keys[pg.K_LEFT] or keys[pg.K_RIGHT] or keys[pg.K_SPACE]:
             self.active_input_type = "keyboard"
         elif mouse_buttons[0]:  # Left mouse button click activates mouse mode
             self.active_input_type = "mouse"
 
         # Handle keyboard inputs
         if self.active_input_type == "keyboard":
-            if keys[KEY_MOVE_LEFT]:
+            if keys[pg.K_LEFT]:
                 self.paddle.move("left")
-            elif keys[KEY_MOVE_RIGHT]:
+            elif keys[pg.K_RIGHT]:
                 self.paddle.move("right")
             if keys[pg.K_SPACE] and self.ball.attached_to_paddle:
                 # Release the ball
@@ -47,8 +49,8 @@ class InputEvent:
             # Restrict paddle movement to screen bounds
             if self.paddle.rect.left < 0:
                 self.paddle.rect.left = 0
-            if self.paddle.rect.right > SCREEN_WIDTH:
-                self.paddle.rect.right = SCREEN_WIDTH
+            if self.paddle.rect.right > self.SCREEN_WIDTH:
+                self.paddle.rect.right = self.SCREEN_WIDTH
             # Mouse input to release the ball
             if mouse_buttons[0]:  # Left mouse button
                 self.ball.handle_event(pg.event.Event(pg.MOUSEBUTTONDOWN, button=1))

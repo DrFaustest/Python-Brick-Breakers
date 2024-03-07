@@ -1,4 +1,4 @@
-import settings
+from settings import Settings
 import random
 
 def generate_brick_map():
@@ -8,10 +8,15 @@ def generate_brick_map():
     Returns:
     - grid (list): A 2D list representing the brick map, where 0 represents an empty space and 1 represents a brick.
     """
+    settings = Settings()
+    SCREEN_WIDTH = settings.get("SCREEN_WIDTH")
+    SCREEN_HEIGHT = settings.get("SCREEN_HEIGHT")
+    BRICK_SIZE = settings.get("BRICK_SIZE")
+    DIFFICULTY = settings.get("DIFFICULTY")
     # Determine max bricks and percentage of bricks to be generated
-    max_bricks_x = settings.SCREEN_WIDTH // settings.BRICK_SIZE[0]
-    max_bricks_y = (settings.SCREEN_HEIGHT // 2) // settings.BRICK_SIZE[1]
-    total_bricks = int((max_bricks_x * max_bricks_y) * (settings.DIFFICULTY / 10))
+    max_bricks_x = SCREEN_WIDTH // BRICK_SIZE[0]
+    max_bricks_y = (SCREEN_HEIGHT // 2) // BRICK_SIZE[1]
+    total_bricks = int((max_bricks_x * max_bricks_y) * (DIFFICULTY / 10))
     # Generate the brick map with random brick positions
     grid = [[0 for _ in range(max_bricks_x)] for _ in range(max_bricks_y)]
     brick_positions = set()

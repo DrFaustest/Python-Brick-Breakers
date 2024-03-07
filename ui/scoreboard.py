@@ -1,8 +1,8 @@
 import pygame as pg
-from settings import *
+from settings import Settings
 
 class Scoreboard:
-    def __init__(self, font_size=30, color=WHITE):
+    def __init__(self, font_size=30, color=(255, 255, 255)):
         """
         Initialize the Scoreboard object.
 
@@ -10,11 +10,14 @@ class Scoreboard:
             font_size (int): The font size of the score text. Default is 30.
             color (tuple): The color of the score text. Default is WHITE.
         """
+        self.settings = Settings()
+        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
+        self.SCREEN_HEIGHT = self.settings.get("SCREEN_HEIGHT")
         self.score = 0
         self.font = pg.font.SysFont(None, font_size)
         self.color = color
-        self.x = SCREEN_WIDTH - 120
-        self.y = SCREEN_HEIGHT - 25
+        self.x = self.SCREEN_WIDTH - 120
+        self.y = self.SCREEN_HEIGHT - 25
 
     def increase_score(self, points=10):
         """

@@ -1,4 +1,4 @@
-from settings import *
+from settings import Settings
 import levels.brick_map as brick_map
 from objects.brick import Brick
 import pygame
@@ -18,6 +18,8 @@ class Level:
         - bricks (pygame.sprite.Group): The group of Brick objects in the level.
         - level_complete (bool): Indicates if the level is complete.
         """
+        self.settings = Settings()
+        self.BRICK_SIZE = self.settings.get("BRICK_SIZE")
         self.current_level = current_level
         self.level_name = current_level + 1
         self.level_map = brick_map.generate_brick_map()
@@ -49,7 +51,7 @@ class Level:
         Returns:
         - Brick: The created Brick object.
         """
-        x, y = x_index * BRICK_SIZE[0], y_index * BRICK_SIZE[1]
+        x, y = x_index * self.BRICK_SIZE[0], y_index * self.BRICK_SIZE[1]
         return Brick(x, y)
 
     def draw(self, screen):

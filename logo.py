@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT
+from settings import Settings
 
 class LogoDisplay:
     """
@@ -28,11 +28,14 @@ class LogoDisplay:
             screen (pygame.Surface): The surface to display the logo on.
             duration (int, optional): The duration of the logo display in milliseconds. Default is 4000.
         """
+        self.settings = Settings()
+        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
+        self.SCREEN_HEIGHT = self.settings.get("SCREEN_HEIGHT")
         self.screen = screen
         original_logo = pg.image.load("img\logo.png.webp").convert_alpha()
         logo_width, logo_height = original_logo.get_size()
         aspect_ratio = logo_width / logo_height
-        max_width, max_height = SCREEN_WIDTH, SCREEN_HEIGHT
+        max_width, max_height = self.SCREEN_WIDTH, self.SCREEN_HEIGHT
         if logo_width > max_width or logo_height > max_height:
             if (max_width / logo_width) < (max_height / logo_height):
                 new_width = max_width
@@ -43,7 +46,7 @@ class LogoDisplay:
         else:
             new_width, new_height = logo_width, logo_height
         self.logo = pg.transform.scale(original_logo, (new_width, new_height))
-        self.logo_rect = self.logo.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        self.logo_rect = self.logo.get_rect(center=(self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2))
         self.duration = duration
         self.start_ticks = pg.time.get_ticks()
         self.done = False

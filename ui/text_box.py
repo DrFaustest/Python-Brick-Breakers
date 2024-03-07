@@ -39,7 +39,8 @@ class TextBox:
         if event.type == pygame.KEYDOWN:
             if self.active:
                 if event.key == pygame.K_RETURN:
-                    self.callback_function(self.text)
+                    if callable(self.callback_function):
+                        self.callback_function()
                     self.text = ''
                     self.active = False
                 elif event.key == pygame.K_BACKSPACE:

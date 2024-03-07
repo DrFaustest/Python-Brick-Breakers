@@ -1,11 +1,16 @@
 import pygame as pg
 from game.game import Game
-from settings import *
+from settings import Settings
 from logo import LogoDisplay
 
 def main() -> None:
     pg.init()
-    screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    settings = Settings()
+    screen_width = settings.get("SCREEN_WIDTH")
+    screen_height = settings.get("SCREEN_HEIGHT")
+
+    FPS = settings.get("FPS")
+    screen = pg.display.set_mode((screen_width, screen_height))
     pg.display.set_caption("Brick Breaker")
     game = Game(screen)
     logo_display = LogoDisplay(screen)

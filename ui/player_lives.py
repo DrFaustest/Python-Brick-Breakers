@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from settings import Settings
 
 class PlayerLives:
     def __init__(self):
@@ -12,12 +12,15 @@ class PlayerLives:
         - y (int): The y-coordinate of the player lives display.
         - ball_image (Surface): The image of the ball representing a life.
         """
+        self.settings = Settings()
+        self.SCREEN_HEIGHT = self.settings.get("SCREEN_HEIGHT")
+        self.BALL_IMG = self.settings.get("BALL_IMG")
         self.lives = 3
         self.x = 10
-        self.y = SCREEN_HEIGHT - 40  # Adjusted for better visibility
+        self.y = self.SCREEN_HEIGHT - 40  # Adjusted for better visibility
         
         # Load and scale the ball image
-        self.ball_image = pg.image.load(BALL_IMG).convert_alpha()  # Assuming BALL_IMG_PATH is defined in settings
+        self.ball_image = pg.image.load(self.BALL_IMG).convert_alpha()  # Assuming BALL_IMG_PATH is defined in settings
         self.ball_image = pg.transform.scale(self.ball_image, (20, 20))  # Scale the image to 20x20 pixels
 
     def decrease_lives(self):

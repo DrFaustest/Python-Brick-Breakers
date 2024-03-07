@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from settings import Settings
 
 class Paddle(pg.sprite.Sprite):
     def __init__(self) -> None:
@@ -16,14 +16,20 @@ class Paddle(pg.sprite.Sprite):
             None
         """
         super().__init__()
-        self.original_image = pg.image.load(PADDLE_IMG)
-        self.image = pg.transform.scale(self.original_image, (PADDLE_SIZE[0], PADDLE_SIZE[1]))
+        self.settings = Settings()
+        self.PADDLE_IMG = self.settings.get("PADDLE_IMG")
+        self.PADDLE_SIZE = self.settings.get("PADDLE_SIZE")
+        self.PADDLE_SPEED = self.settings.get("PADDLE_SPEED")
+        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
+        self.SCREEN_HEIGHT = self.settings.get("SCREEN_HEIGHT")
+        self.original_image = pg.image.load(self.PADDLE_IMG)
+        self.image = pg.transform.scale(self.original_image, (self.PADDLE_SIZE[0], self.PADDLE_SIZE[1]))
         self.rect = self.image.get_rect()
-        self.rect.x = SCREEN_WIDTH // 2 - PADDLE_SIZE[0] // 2
-        self.rect.y = SCREEN_HEIGHT - 60
-        self.speed = PADDLE_SPEED
-        self.screen_width = SCREEN_WIDTH
-        self.position_accumulator = SCREEN_WIDTH // 2  # Floating-point accumulator for precise movement
+        self.rect.x = self.SCREEN_WIDTH // 2 - self.PADDLE_SIZE[0] // 2
+        self.rect.y = self.SCREEN_HEIGHT - 60
+        self.speed = self.PADDLE_SPEED
+        self.screen_width = self.SCREEN_WIDTH
+        self.position_accumulator = self.SCREEN_WIDTH // 2  # Floating-point accumulator for precise movement
 
     def move(self, direction) -> None:
         """

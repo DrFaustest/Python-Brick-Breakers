@@ -1,4 +1,4 @@
-from settings import SOUND_ENABLED_IMAGE, SOUND_DISABLED_IMAGE, VOLUME
+from settings import Settings
 import pygame as pg
 
 class BackgroundMusic:
@@ -10,15 +10,19 @@ class BackgroundMusic:
         sets the current image, initializes the playlist, sets the current track index,
         sets the volume and end event for the mixer, and starts playing the music.
         """
+        self.settings = Settings()
+        self.SOUND_ENABLED_IMAGE = self.settings.get("SOUND_ENABLED_IMAGE")
+        self.SOUND_DISABLED_IMAGE = self.settings.get("SOUND_DISABLED_IMAGE")
+        self.VOLUME = self.settings.get("VOLUME")
         self.enabled: bool = True
-        self.enabled_image: pg.Surface = pg.image.load(SOUND_ENABLED_IMAGE)
+        self.enabled_image: pg.Surface = pg.image.load(self.SOUND_ENABLED_IMAGE)
         self.enabled_image = pg.transform.scale(self.enabled_image, (50, 50))
-        self.disabled_image: pg.Surface = pg.image.load(SOUND_DISABLED_IMAGE)
+        self.disabled_image: pg.Surface = pg.image.load(self.SOUND_DISABLED_IMAGE)
         self.disabled_image = pg.transform.scale(self.disabled_image, (50, 50))
         self.current_image = self.enabled_image
         self.playlist = ["sound/background_1.mp3", "sound/background_2.mp3", "sound/background_1.mid", "sound/background_2.mid"]
         self.current_track_index = 0
-        pg.mixer.music.set_volume(VOLUME)
+        pg.mixer.music.set_volume(self.VOLUME)
         pg.mixer.music.set_endevent(pg.USEREVENT)
         self.play()
 

@@ -1,23 +1,35 @@
 import pygame as pg
-from settings import *
+from settings import Settings
 from ui.button import Button
 from ui.slider import Slider
 from ui.preview_window import PreviewWindow
 
 class SettingsMenu:
-    def __init__(self):
+    def __init__(self,screen):
         self.unsaved_changes = False
+        self.settings = Settings()
+        self.screen = screen
+        self.WHITE = self.settings.get("WHITE")
+        self.GREEN = self.settings.get("GREEN")
+        self.BLACK = self.settings.get("BLACK")
+        self.RED = self.settings.get("RED")
+        self.GRAY = self.settings.get("GRAY")
+        self.BALL_IMAGES = self.settings.get("BALL_IMAGES")
+        self.PADDLE_IMAGES = self.settings.get("PADDLE_IMAGES")
+        self.BACKGROUND_IMAGES = self.settings.get("BACKGROUND_IMAGES")
+        self.VOLUME = self.settings.get("VOLUME")
+        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
         # Initialize buttons
-        self.back_button = Button(0, 0, 100, 50, "BACK", WHITE, self.back_button_color, self.back_button_action)
-        self.save_button = Button(SCREEN_WIDTH - 100, 0, 100, 50, "SAVE", WHITE, GRAY, BLACK, self.save_settings)
+        self.back_button = Button(0, 0, 100, 50, "BACK", self.WHITE, self.back_button_color, self.back_button_action)
+        self.save_button = Button(self.SCREEN_WIDTH - 100, 0, 100, 50, "SAVE",self. WHITE, self.GRAY, self.BLACK, self.save_settings)
         
         # Initialize preview windows
-        self.ball_preview = PreviewWindow(BALL_IMAGES, 100, 100, (200, 200))
-        self.paddle_preview = PreviewWindow(PADDLE_IMAGES, 100, 300, (200, 200))
-        self.background_preview = PreviewWindow(BACKGROUND_IMAGES, 100, 500, (200, 200))
+        self.ball_preview = PreviewWindow(self.BALL_IMAGES, 100, 100, (200, 200))
+        self.paddle_preview = PreviewWindow(self.PADDLE_IMAGES, 100, 300, (200, 200))
+        self.background_preview = PreviewWindow(self.BACKGROUND_IMAGES, 100, 500, (200, 200))
         
         # Initialize slider
-        self.volume_slider = Slider(SCREEN_WIDTH // 2 - 100, 650, 200, 20, 0, 100, VOLUME * 100, "Volume")
+        self.volume_slider = Slider(self.SCREEN_WIDTH // 2 - 100, 650, 200, 20, 0, 100, self.VOLUME * 100, "Volume")
 
     def update(self):
         # Here you would check for input, update UI elements, etc.
@@ -66,4 +78,4 @@ class SettingsMenu:
     @property
     def back_button_color(self):
         # Dynamic property to get the current color for the back button
-        return RED if self.unsaved_changes else GRAY
+        return self.RED if self.unsaved_changes else self.GRAY

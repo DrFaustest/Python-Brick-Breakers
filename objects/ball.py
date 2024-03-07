@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from settings import Settings
 from objects.paddle import Paddle
 
 class Ball(pg.sprite.Sprite):
@@ -14,10 +14,16 @@ class Ball(pg.sprite.Sprite):
             None
         """
         super().__init__()
-        self.image = pg.image.load(BALL_IMG)
-        self.image = pg.transform.scale(self.image, (BALL_RADIUS * 2, BALL_RADIUS * 2))
-        self.BALL_RADIUS: int = BALL_RADIUS
-        self.color: tuple = WHITE
+        self.settings = Settings()
+        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
+        self.BALL_RADIUS = self.settings.get("BALL_RADIUS")
+        self.BALL_SPEED = self.settings.get("BALL_SPEED")
+        self.WHITE = self.settings.get("WHITE")
+        self.BALL_IMG = self.settings.get("BALL_IMG")
+        self.image = pg.image.load(self.BALL_IMG)
+        self.image = pg.transform.scale(self.image, (self.BALL_RADIUS * 2, self.BALL_RADIUS * 2))
+        self.BALL_RADIUS: int = self.BALL_RADIUS
+        self.color: tuple = self.WHITE
         self.paddle: Paddle = paddle
         self.position = pg.math.Vector2(paddle.rect.centerx, paddle.rect.top - self.BALL_RADIUS)
         self.rect = self.image.get_rect(center=self.position)
@@ -36,9 +42,9 @@ class Ball(pg.sprite.Sprite):
         """
         if (event.type == pg.KEYDOWN and event.key == pg.K_SPACE or
         event.type == pg.MOUSEBUTTONDOWN) and self.attached_to_paddle:
-            paddle_center_relative = (self.paddle.rect.centerx - SCREEN_WIDTH / 2) / (SCREEN_WIDTH / 2)
+            paddle_center_relative = (self.paddle.rect.centerx - self.SCREEN_WIDTH / 2) / (self.SCREEN_WIDTH / 2)
             initial_angle = (paddle_center_relative * 45) + 90
-            self.velocity = pg.math.Vector2(BALL_SPEED, 0).rotate(-initial_angle)
+            self.velocity = pg.math.Vector2(self.BALL_SPEED, 0).rotate(-initial_angle)
             self.attached_to_paddle = False
 
     def update(self) -> None:

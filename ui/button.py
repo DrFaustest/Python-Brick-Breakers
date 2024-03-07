@@ -1,8 +1,7 @@
 import pygame as pg
-from settings import *
 
 class Button:
-    def __init__(self, x: int, y: int, width: int = None, height: int = None, text: str = "change me", color: tuple = WHITE, hover_color: tuple = GRAY, text_color: tuple = BLACK, action: callable = None, image: pg.Surface = None) -> None:
+    def __init__(self, x: int, y: int, width: int = None, height: int = None, text: str = "change me", color: tuple = (255, 255, 255), hover_color: tuple = (128, 128, 128), text_color: tuple = (0, 0, 0), action: callable = None, image: pg.Surface = None) -> None:
         """
         Initializes a Button object.
 
@@ -12,9 +11,9 @@ class Button:
         - width (int, optional): The width of the button. If not provided, defaults to 200.
         - height (int, optional): The height of the button. If not provided, defaults to 100.
         - text (str, optional): The text displayed on the button. Defaults to "change me".
-        - color (tuple, optional): The color of the button. Defaults to WHITE.
-        - hover_color (tuple, optional): The color of the button when hovered over. Defaults to GRAY.
-        - text_color (tuple, optional): The color of the button's text. Defaults to BLACK.
+        - color (tuple, optional): The color of the button. Defaults to (255, 255, 255) (white).
+        - hover_color (tuple, optional): The color of the button when hovered over. Defaults to (128, 128, 128) (gray).
+        - text_color (tuple, optional): The color of the button's text. Defaults to (0, 0, 0) (black).
         - action (callable, optional): The function to be executed when the button is clicked. Defaults to None.
         - image (pg.Surface, optional): The image to be displayed on the button. Defaults to None.
         """

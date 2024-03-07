@@ -1,5 +1,3 @@
-import pygame as pg
-from settings import *
 from game.game_play import GamePlay
 from game.main_menu import MainMenu
 from game.settings_menu import SettingsMenu

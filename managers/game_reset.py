@@ -2,7 +2,7 @@
 from levels.level import Level
 from managers.collision import Collision
 from typing import *
-from settings import *
+from settings import Settings
 
 class GameReset:
     def __init__(self, game):
@@ -16,6 +16,9 @@ class GameReset:
         None
         """
         self.game = game
+        self.settings = Settings()
+        self.SCREEN_HEIGHT = self.settings.get("SCREEN_HEIGHT")
+        self.BALL_RADIUS = self.settings.get("BALL_RADIUS")
 
     def reset(self) -> None:
         """
@@ -33,11 +36,11 @@ class GameReset:
 
         # Reset paddle position
         self.game.paddle.rect.centerx = self.game.screen_width // 2
-        self.game.paddle.rect.y = SCREEN_HEIGHT - 60
+        self.game.paddle.rect.y = self.SCREEN_HEIGHT - 60
 
         # Reset ball position and state
         self.game.ball.x = self.game.paddle.rect.centerx
-        self.game.ball.y = self.game.paddle.rect.top - BALL_RADIUS
+        self.game.ball.y = self.game.paddle.rect.top - self.BALL_RADIUS
         self.game.ball.speed_x = 0
         self.game.ball.speed_y = 0
         self.game.ball.attached_to_paddle = True

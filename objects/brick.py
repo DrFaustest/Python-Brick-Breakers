@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from settings import Settings
 class Brick(pg.sprite.Sprite):
     """
     Represents a brick object in the game.
@@ -24,8 +24,11 @@ class Brick(pg.sprite.Sprite):
             y (int): The y-coordinate of the top-left corner of the brick.
         """
         super().__init__()
-        self.image = pg.image.load(BRICK_IMG)
-        self.image = pg.transform.scale(self.image, (BRICK_SIZE[0], BRICK_SIZE[1]))
+        self.settings = Settings()
+        self.BRICK_IMG = self.settings.get("BRICK_IMG")
+        self.BRICK_SIZE = self.settings.get("BRICK_SIZE")
+        self.image = pg.image.load(self.BRICK_IMG)
+        self.image = pg.transform.scale(self.image, (self.BRICK_SIZE[0], self.BRICK_SIZE[1]))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
