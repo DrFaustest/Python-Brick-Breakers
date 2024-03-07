@@ -1,0 +1,76 @@
+{
+    "SCALE": 1,
+    "SCREEN_WIDTH": 800,
+    "SCREEN_HEIGHT": 600,
+    "BRICK_SIZE": [
+        100,
+        20
+    ],
+    "BACKGROUND_IMAGES": [
+        "img/background.webp",
+        "img/background_2.webp",
+        "img/background_3.webp",
+        "img/background_4.webp"
+    ],
+    "BRICK_IMAGES": [
+        "img/brick_img.png",
+        "img/brick_img1.png"
+    ],
+    "BALL_IMAGES": [
+        "img/future_ball.png",
+        "img/retro_snow_ball.png",
+        "img/ring_ball.png"
+    ],
+    "PADDLE_IMAGES": [
+        "img/paddle.png"
+    ],
+    "PLAYER_SCORE": 0,
+    "FPS": 120,
+    "PADDLE_SPEED": 25,
+    "PADDLE_SIZE": [
+        100,
+        20
+    ],
+    "BALL_SPEED": 5,
+    "DIFFICULTY": 1,
+    "VOLUME": 0.5,
+    "WHITE": [
+        255,
+        255,
+        255
+    ],
+    "GRAY": [
+        128,
+        128,
+        128
+    ],
+    "RED": [
+        255,
+        0,
+        0
+    ],
+    "GREEN": [
+        0,
+        255,
+        0
+    ],
+    "BLUE": [
+        0,
+        0,
+        255
+    ],
+    "BLACK": [
+        0,
+        0,
+        0
+    ],
+    "MAX_REFLECTION_ANGLE": 90,
+    "MIN_Y_VELOCITY": -1.5,
+    "BALL_RADIUS": 15,
+    "BALL_IMG": "img/future_ball.png",
+    "PADDLE_IMG": "img/paddle.png",
+    "BRICK_IMG": "img/brick_img.png",
+    "BACKGROUND_IMG": "img/background.webp",
+    "SOUND_ENABLED_IMAGE": "img/sound_image.png",
+    "SOUND_DISABLED_IMAGE": "img/sound_muted.png"
+}
