@@ -1,4 +1,5 @@
 import json
+import os
 
 class Settings:
     _instance = None
@@ -40,6 +41,7 @@ class Settings:
             cls._instance = super(Settings, cls).__new__(cls)
             cls._instance.filename = filename
             cls._instance.settings = cls._instance.load()
+            cls._instance.populate_image_lists()
         return cls._instance
 
     def load(self):
@@ -63,3 +65,25 @@ class Settings:
     def set(self, key, value):
         self.settings[key] = value
         self.save()
+        self.settings = self.load()
+
+    def populate_image_lists(self):
+        self.settings["BALL_IMAGES"] = []
+        self.settings["PADDLE_IMAGES"] = []
+        self.settings["BACKGROUND_IMAGES"] = []
+        self.settings["BRICK_IMAGES"] = []
+        for root, dirs, files in os.walk("img"):
+            for file in files:
+                if "ball" in root:
+                    self.settings["BALL_IMAGES"].append(os.path.join(root, file))
+                elif "paddle" in root:
+                    self.settings["PADDLE_IMAGES"].append(os.path.join(root, file))
+                elif "background" in root:
+                    self.settings["BACKGROUND_IMAGES"].append(os.path.join(root, file))
+                elif "brick" in root:
+                    self.settings["BRICK_IMAGES"].append(os.path.join(root, file))
+        self.save()
+        return self.settings
+    
+
+
