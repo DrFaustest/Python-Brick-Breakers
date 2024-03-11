@@ -39,7 +39,7 @@ class GameOver(GameState):
         self.screen.fill(self.BLACK)
         if self.state == 'ENTER_NAME':
             self.text_box.draw(self.screen)
-            self.submit_button.draw(self.screen)
+            self.submit_button.draw()
         elif self.state == 'DISPLAY_SCORE':
             # Display the score and possibly the high score list
             display_scores = self.score_saver.score_display()
