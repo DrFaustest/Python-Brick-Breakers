@@ -1,81 +1,97 @@
 import pygame as pg
+from game.game_state import GameState
 from settings import Settings
 from ui.button import Button
 from ui.slider import Slider
 from ui.preview_window import PreviewWindow
 
-class SettingsMenu:
-    def __init__(self,screen):
-        self.unsaved_changes = False
+class SettingsMenu(GameState):
+    TAB_HEIGHT = 40  # Adjusted for better fit
+    BUTTON_WIDTH = 120  # Adjusted for better fit
+    BUTTON_HEIGHT = 40  # Adjusted for better fit
+    PADDING = 5  # Reduced padding for a tighter fit
+    MIDDLE_PANEL_HEIGHT = 300  # Height for the PreviewWindow and Slider
+    MIDDLE_PANEL_WIDTH = 600  # Width for the PreviewWindow and Slider
+
+    def __init__(self, game):
+        super().__init__(game)
         self.settings = Settings()
-        self.screen = screen
+        self.screen = game.screen
         self.WHITE = self.settings.get("WHITE")
         self.GREEN = self.settings.get("GREEN")
         self.BLACK = self.settings.get("BLACK")
-        self.RED = self.settings.get("RED")
         self.GRAY = self.settings.get("GRAY")
-        self.BALL_IMAGES = self.settings.get("BALL_IMAGES")
-        self.PADDLE_IMAGES = self.settings.get("PADDLE_IMAGES")
-        self.BACKGROUND_IMAGES = self.settings.get("BACKGROUND_IMAGES")
-        self.VOLUME = self.settings.get("VOLUME")
-        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
-        # Initialize buttons
-        self.back_button = Button(0, 0, 100, 50, "BACK", self.WHITE, self.back_button_color, self.back_button_action)
-        self.save_button = Button(self.SCREEN_WIDTH - 100, 0, 100, 50, "SAVE",self. WHITE, self.GRAY, self.BLACK, self.save_settings)
-        
-        # Initialize preview windows
-        self.ball_preview = PreviewWindow(self.BALL_IMAGES, 100, 100, (200, 200))
-        self.paddle_preview = PreviewWindow(self.PADDLE_IMAGES, 100, 300, (200, 200))
-        self.background_preview = PreviewWindow(self.BACKGROUND_IMAGES, 100, 500, (200, 200))
-        
-        # Initialize slider
-        self.volume_slider = Slider(self.SCREEN_WIDTH // 2 - 100, 650, 200, 20, 0, 100, self.VOLUME * 100, "Volume")
+        self.tab_buttons = []
+        self.current_tab = 'Balls'
+        middle_panel_x = (self.settings.get("SCREEN_WIDTH") - self.MIDDLE_PANEL_WIDTH) // 2
+        middle_panel_y = (self.settings.get("SCREEN_HEIGHT") - self.MIDDLE_PANEL_HEIGHT) // 2
+        self.tabs_content = {
+            'Balls': PreviewWindow(self.screen, self.settings.get("BALL_IMAGES"), "BALL", middle_panel_x, middle_panel_y, self.MIDDLE_PANEL_WIDTH, self.MIDDLE_PANEL_HEIGHT) ,
+            'Paddles': PreviewWindow(self.screen, self.settings.get("PADDLE_IMAGES"), "PADDLE", middle_panel_x, middle_panel_y, self.MIDDLE_PANEL_WIDTH, self.MIDDLE_PANEL_HEIGHT),
+            'Background': PreviewWindow(self.screen, self.settings.get("BACKGROUND_IMAGES"), "BACKGROUND", middle_panel_x, middle_panel_y, self.MIDDLE_PANEL_WIDTH, self.MIDDLE_PANEL_HEIGHT),
+            'Bricks': PreviewWindow(self.screen, self.settings.get("BRICK_IMAGES"), "BRICK", middle_panel_x, middle_panel_y, self.MIDDLE_PANEL_WIDTH, self.MIDDLE_PANEL_HEIGHT),
+        }
+        save_button_x = self.PADDING
+        save_button_y = self.settings.get("SCREEN_HEIGHT") - self.BUTTON_HEIGHT - self.PADDING
+        exit_button_x = self.settings.get("SCREEN_WIDTH") - self.BUTTON_WIDTH - self.PADDING
+        exit_button_y = save_button_y
+        self.save_button = Button(self.screen, save_button_x, save_button_y, self.BUTTON_WIDTH, self.BUTTON_HEIGHT, "Save", self.WHITE, self.GREEN, self.BLACK, self.save)
+        self.exit_button = Button(self.screen, exit_button_x, exit_button_y, self.BUTTON_WIDTH, self.BUTTON_HEIGHT, "Exit", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("MainMenu"))
+        self.create_tabs()
 
-    def update(self):
-        # Here you would check for input, update UI elements, etc.
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
-                quit()
-            # Update button states based on user interaction
-            self.back_button.update(pg.mouse.get_pos(), event)
-            self.save_button.update(pg.mouse.get_pos(), event)
-            # Update sliders
-            self.volume_slider.handle_event(event)
-            # Update preview windows
-            self.ball_preview.handle_event(event)
-            self.paddle_preview.handle_event(event)
-            self.background_preview.handle_event(event)
+    def create_tabs(self):
+        tab_names = ['Balls', 'Paddles', 'Background', 'Bricks']
+        total_tab_width = self.settings.get("SCREEN_WIDTH") - (len(tab_names) + 1) * self.PADDING
+        self.BUTTON_WIDTH = total_tab_width // len(tab_names)
+        self.tab_buttons.clear()
+        for index, name in enumerate(tab_names):
+            button_x = index * (self.BUTTON_WIDTH + self.PADDING) + self.PADDING
+            button_y = self.PADDING
+            button_color = self.GREEN if name == self.current_tab else self.GRAY
 
-            if self.unsaved_changes:
-                self.back_button.color = self.back_button_color
+            button = Button(self.screen, button_x, button_y, self.BUTTON_WIDTH, self.TAB_HEIGHT, name,
+                            self.WHITE, button_color, self.BLACK,
+                            action=lambda n=name: self.change_tab(n))
+            self.tab_buttons.append(button)
 
-    def draw(self, screen):
-        # Draw the back and save buttons
-        self.back_button.draw(screen)
-        self.save_button.draw(screen)
-        # Draw the preview windows
-        self.ball_preview.draw(screen)
-        self.paddle_preview.draw(screen)
-        self.background_preview.draw(screen)
-        # Draw the slider
-        self.volume_slider.draw(screen)
 
-    def back_button_action(self):
-        # Define the action for the back button
-        # This might involve changing the scene or updating a state
-        pass
 
-    def save_settings(self):
-        # Save the settings and reset the unsaved_changes flag
-        self.unsaved_changes = False
+    def change_tab(self, tab_name):
+        if tab_name in self.tabs_content:
+            self.current_tab = tab_name
+            self.create_tabs()
 
-    def update_volume(self, value):
-        # Update the volume based on the slider value
-        # This would typically involve setting the volume in the game's settings or audio system
-        pass
+    def handle_events(self, event):
+        if event.type == pg.MOUSEBUTTONDOWN or event.type == pg.MOUSEBUTTONUP:
+            for button in self.tab_buttons:
+                button.update(event.pos, event)
+            self.tabs_content[self.current_tab].handle_event(event)
+            self.save_button.update(event.pos, event)
+            self.exit_button.update(event.pos, event)
 
-    @property
-    def back_button_color(self):
-        # Dynamic property to get the current color for the back button
-        return self.RED if self.unsaved_changes else self.GRAY
+    def draw(self):
+        self.screen.fill(self.BLACK)
+        for button in self.tab_buttons:
+            button.draw()
+        # Draw the currently selected tab's content
+        self.tabs_content[self.current_tab].draw()
+        # Ensure padding around the text in buttons
+        self.draw_text_with_padding("Save", self.save_button)
+        self.draw_text_with_padding("Exit", self.exit_button)
+
+    def draw_text_with_padding(self, text, button):
+        font = pg.font.SysFont("Arial", 22)  # Smaller font size for button text
+        text_surface = font.render(text, True, self.WHITE)
+        text_rect = text_surface.get_rect(center=button.rect.center)
+        self.screen.blit(text_surface, text_rect)
+
+    def save(self):
+        # Save the current settings
+        if hasattr(self.tabs_content[self.current_tab], 'get_value'):
+            key, value = self.tabs_content[self.current_tab].get_value()
+            self.settings.set(key+"_IMG", value)
+
+    def update(self, events):
+        for event in events:
+            self.handle_events(event)
+
