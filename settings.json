@@ -7,22 +7,23 @@
         20
     ],
     "BACKGROUND_IMAGES": [
-        "img/background.webp",
-        "img/background_2.webp",
-        "img/background_3.webp",
-        "img/background_4.webp"
+        "img\\backgrounds\\background.webp",
+        "img\\backgrounds\\background_2.webp",
+        "img\\backgrounds\\background_3.webp",
+        "img\\backgrounds\\background_4.webp"
     ],
     "BRICK_IMAGES": [
-        "img/brick_img.png",
-        "img/brick_img1.png"
+        "img\\bricks\\brick_img.png",
+        "img\\bricks\\brick_img1.png",
+        "img\\bricks\\pattern_brick.png"
     ],
     "BALL_IMAGES": [
-        "img/future_ball.png",
-        "img/retro_snow_ball.png",
-        "img/ring_ball.png"
+        "img\\balls\\future_ball.png",
+        "img\\balls\\retro_snow_ball.png",
+        "img\\balls\\ring_ball.png"
     ],
     "PADDLE_IMAGES": [
-        "img/paddle.png"
+        "img\\paddles\\paddle.png"
     ],
     "PLAYER_SCORE": 0,
     "FPS": 120,
@@ -67,10 +68,14 @@
     "MAX_REFLECTION_ANGLE": 90,
     "MIN_Y_VELOCITY": -1.5,
     "BALL_RADIUS": 15,
-    "BALL_IMG": "img/future_ball.png",
-    "PADDLE_IMG": "img/paddle.png",
-    "BRICK_IMG": "img/brick_img.png",
-    "BACKGROUND_IMG": "img/background.webp",
+    "BALL_IMG": "img\\balls\\future_ball.png",
+    "PADDLE_IMG": "img\\paddles\\paddle.png",
+    "BRICK_IMG": "img\\bricks\\brick_img.png",
+    "BACKGROUND_IMG": "img\\backgrounds\\background_2.webp",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
-    "SOUND_DISABLED_IMAGE": "img/sound_muted.png"
+    "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
+    "BACKGROUND": "img\\backgrounds\\background_4.webp",
+    "BRICK": "img\\bricks\\pattern_brick.png",
+    "BALL": "img\\balls\\retro_snow_ball.png",
+    "PADDLE": "img\\paddles\\paddle.png"
 }
