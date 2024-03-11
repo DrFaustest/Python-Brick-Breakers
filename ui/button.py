@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Button:
-    def __init__(self, x: int, y: int, width: int = None, height: int = None, text: str = "change me", color: tuple = (255, 255, 255), hover_color: tuple = (128, 128, 128), text_color: tuple = (0, 0, 0), action: callable = None, image: pg.Surface = None) -> None:
+    def __init__(self, screen,x: int, y: int, width: int = None, height: int = None, text: str = "change me", color: tuple = (255, 255, 255), hover_color: tuple = (128, 128, 128), text_color: tuple = (0, 0, 0), action: callable = None, image: pg.Surface = None) -> None:
         """
         Initializes a Button object.
 
@@ -18,6 +18,7 @@ class Button:
         - image (pg.Surface, optional): The image to be displayed on the button. Defaults to None.
         """
         self.image = image
+        self.screen = screen
         if self.image is not None:
             # If an image is provided and no width/height are specified, use the image's dimensions
             if width is None or height is None:
@@ -26,6 +27,9 @@ class Button:
             # Default to provided dimensions or a standard size if none are specified
             width = width if width is not None else 200
             height = height if height is not None else 100
+        
+        self.x = x
+        self.y = y
 
         self.rect = pg.Rect(x, y, width, height)
         self.color = color
@@ -33,9 +37,10 @@ class Button:
         self.text = text
         self.text_color = text_color
         self.action = action
+        self.hitbox = self.rect
         self.font = pg.font.SysFont("Arial", 50)
 
-    def draw(self, screen):
+    def draw(self):
         """
         Draws the button on the screen.
 
@@ -44,16 +49,16 @@ class Button:
         """
         # Draw the button image if provided, otherwise draw a rectangle
         if self.image:
-            screen.blit(self.image, self.rect)
+            self.screen.blit(self.image, self.rect)
         else:
-            pg.draw.rect(screen, self.color, self.rect)
+            pg.draw.rect(self.screen, self.color, self.rect)
         # Draw text in the center of the button/image
         if self.text:
             text_str = str(self.text)
             text_color = self.text_color if isinstance(self.text_color, tuple) and len(self.text_color) in [3, 4] else (0, 0, 0)
             text_surface = self.font.render(text_str, True, text_color)
             text_rect = text_surface.get_rect(center=self.rect.center)
-            screen.blit(text_surface, text_rect)
+            self.screen.blit(text_surface, text_rect)
 
     def check_hover(self, mouse_pos):
         """
