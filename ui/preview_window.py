@@ -13,6 +13,7 @@ class PreviewWindow:
         self.display_height = display_height
         self.button_width = 50
         self.button_height = 50
+        self.unsaved_changes = False
         self.load_images()
         self.create_buttons()
 
@@ -29,8 +30,9 @@ class PreviewWindow:
 
     def load_images(self):
         self.images = []
-        for img in self.image_list:
-            image = pygame.image.load(img)
+        self.image_paths = self.image_list  # Store image paths
+        for img_path in self.image_list:
+            image = pygame.image.load(img_path)
             img_width, img_height = image.get_size()
             scale_factor = min((self.display_width - 2 * self.button_width) / img_width, self.display_height / img_height)
             new_size = (int(img_width * scale_factor), int(img_height * scale_factor))
@@ -40,6 +42,10 @@ class PreviewWindow:
         mid_y = self.y + (self.display_height - self.button_height) // 2
         self.left_button = pygame.Rect(self.x - self.button_width, mid_y, self.button_width, self.button_height)
         self.right_button = pygame.Rect(self.x + self.display_width, mid_y, self.button_width, self.button_height)
+        # Define hitboxes for arrows
+        self.left_arrow_hitbox = self.left_button  # This can be more precise if necessary
+        self.right_arrow_hitbox = self.right_button  # This can be more precise if necessary
+
 
     def draw_buttons(self):
         pygame.draw.rect(self.window, (100, 100, 100), self.left_button)
@@ -70,12 +76,16 @@ class PreviewWindow:
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.left_button.collidepoint(event.pos):
+            # Check if the click is on the left arrow
+            if self.left_arrow_hitbox.collidepoint(event.pos):
                 self.index = (self.index - 1) % len(self.images)
                 self.draw_image()
-            elif self.right_button.collidepoint(event.pos):
+                self.unsaved_changes = True
+            # Check if the click is on the right arrow
+            elif self.right_arrow_hitbox.collidepoint(event.pos):
                 self.index = (self.index + 1) % len(self.images)
                 self.draw_image()
+                self.unsaved_changes = True
 
-    def get_image(self):
-        return self.images[self.index]
+    def get_value(self):
+        return (self.image_description, self.image_paths[self.index])
