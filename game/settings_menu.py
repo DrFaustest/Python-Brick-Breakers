@@ -64,10 +64,10 @@ class SettingsMenu(GameState):
     def handle_events(self, event):
         if event.type == pg.MOUSEBUTTONDOWN or event.type == pg.MOUSEBUTTONUP:
             for button in self.tab_buttons:
-                button.update(event.pos, event)
+                button.update(event)
             self.tabs_content[self.current_tab].handle_event(event)
-            self.save_button.update(event.pos, event)
-            self.exit_button.update(event.pos, event)
+            self.save_button.update(event)
+            self.exit_button.update(event)
 
     def draw(self):
         self.screen.fill(self.BLACK)
@@ -75,9 +75,11 @@ class SettingsMenu(GameState):
             button.draw()
         # Draw the currently selected tab's content
         self.tabs_content[self.current_tab].draw()
+        self.save_button.draw()
+        self.exit_button.draw()
         # Ensure padding around the text in buttons
-        self.draw_text_with_padding("Save", self.save_button)
-        self.draw_text_with_padding("Exit", self.exit_button)
+        #self.draw_text_with_padding("Save", self.save_button)
+        #self.draw_text_with_padding("Exit", self.exit_button)
 
     def draw_text_with_padding(self, text, button):
         font = pg.font.SysFont("Arial", 22)  # Smaller font size for button text
@@ -90,8 +92,11 @@ class SettingsMenu(GameState):
         if hasattr(self.tabs_content[self.current_tab], 'get_value'):
             key, value = self.tabs_content[self.current_tab].get_value()
             self.settings.set(key+"_IMG", value)
+            self.save_button.error = False
 
     def update(self, events):
+        self.save_button.update(events)  # Pass the mouse position as an argument
+        self.exit_button.update(events)
         for event in events:
             self.handle_events(event)
 
