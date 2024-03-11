@@ -18,8 +18,8 @@ class GameOver(GameState):
         self.new_high_score = self.score_saver.check_high_score(self.score)
         self.state = 'ENTER_NAME' if self.new_high_score else 'DISPLAY_SCORE'
         self.text_box = TextBox(300, 200, 200, 50,self.submit_score ,"Enter Name") if self.new_high_score else None
-        self.submit_button = Button(300, 300, 200, 50, "Submit", self.WHITE, self.GREEN, self.BLACK, self.submit_score) if self.new_high_score else None
-        self.back_button = Button(300, 400, 300, 50, "Back to Menu", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("MainMenu"))
+        self.submit_button = Button(self.screen, 300, 300, 200, 50, "Submit", self.WHITE, self.GREEN, self.BLACK, self.submit_score) if self.new_high_score else None
+        self.back_button = Button(self.screen, 300, 400, 300, 50, "Back to Menu", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("MainMenu"))
 
     def submit_score(self):
         if self.new_high_score:
@@ -46,4 +46,4 @@ class GameOver(GameState):
             for i, line in enumerate(display_scores):
                 score_text = pg.font.Font(None, 36).render(line, True, self.WHITE)
                 self.screen.blit(score_text, (50, 50 + i * 30))
-            self.back_button.draw(self.screen)
+            self.back_button.draw()
