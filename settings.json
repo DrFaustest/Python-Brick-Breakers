@@ -148,9 +148,12 @@
     ],
     "BALL_IMAGES": [
         "img\\balls\\blue_marble.png",
+        "img\\balls\\football_411430.png",
         "img\\balls\\future_ball.png",
+        "img\\balls\\len_1423329.png",
         "img\\balls\\retro_snow_ball.png",
         "img\\balls\\ring_ball.png",
+        "img\\balls\\soccer_921197.png",
         "img\\balls\\Yellow_marble.png"
     ],
     "PADDLE_IMAGES": [
@@ -200,10 +203,10 @@
     "MAX_REFLECTION_ANGLE": 90,
     "MIN_Y_VELOCITY": -1.5,
     "BALL_RADIUS": 15,
-    "BALL_IMG": "img\\balls\\retro_snow_ball.png",
+    "BALL_IMG": "img\\balls\\soccer_921197.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
     "BRICK_IMG": "img\\bricks\\brick_img.png",
-    "BACKGROUND_IMG": "img\\backgrounds\\background.webp",
+    "BACKGROUND_IMG": "img\\backgrounds\\Beach.png",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
     "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
     "BACKGROUND": "img\\backgrounds\\background_4.webp",
