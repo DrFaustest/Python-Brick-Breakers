@@ -158,13 +158,13 @@
         "img\\paddles\\paddle.png"
     ],
     "PLAYER_SCORE": 0,
-    "FPS": 120,
+    "FPS": 240,
     "PADDLE_SPEED": 25,
     "PADDLE_SIZE": [
         100,
         20
     ],
-    "BALL_SPEED": 5,
+    "BALL_SPEED": 2,
     "DIFFICULTY": 1,
     "VOLUME": 0.5,
     "WHITE": [
@@ -200,10 +200,10 @@
     "MAX_REFLECTION_ANGLE": 90,
     "MIN_Y_VELOCITY": -1.5,
     "BALL_RADIUS": 15,
-    "BALL_IMG": "img\\balls\\Yellow_marble.png",
+    "BALL_IMG": "img\\balls\\retro_snow_ball.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
-    "BRICK_IMG": "img\\bricks\\Orange_maze_brick.png",
-    "BACKGROUND_IMG": "img\\backgrounds\\Castle Staircase 1.png",
+    "BRICK_IMG": "img\\bricks\\brick_img.png",
+    "BACKGROUND_IMG": "img\\backgrounds\\background.webp",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
     "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
     "BACKGROUND": "img\\backgrounds\\background_4.webp",
