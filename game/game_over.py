@@ -25,6 +25,7 @@ class GameOver(GameState):
         if self.new_high_score:
             name = self.text_box.text
             self.score_saver.add_score(name, self.score)
+            self.game.player_score = 0
         self.state = 'DISPLAY_SCORE'
 
     def update(self, events):
