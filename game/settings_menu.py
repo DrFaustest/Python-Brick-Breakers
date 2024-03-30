@@ -95,8 +95,18 @@ class SettingsMenu(GameState):
             self.save_button.error = False
 
     def update(self, events):
+        self.check_current_tab_state()
         self.save_button.update(events)  # Pass the mouse position as an argument
         self.exit_button.update(events)
         for event in events:
             self.handle_events(event)
+
+    def check_current_tab_state(self):
+        #this is ment to check the current tabs image against the currently selected image in the settings and if they differ the set the save button error status to true else false
+        key, value = self.tabs_content[self.current_tab].get_value()
+        set_val = self.settings.get(key+"_IMG")
+        if value != set_val:
+            self.save_button.error = True
+        else:
+            self.save_button.error = False
 

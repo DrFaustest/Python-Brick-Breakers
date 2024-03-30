@@ -33,6 +33,7 @@ class Button:
         self.error = False
         self.error_color = (255, 0, 0)
         self.rect = pg.Rect(x, y, width, height)
+        self.default_color = color
         self.color = color
         self.hover_color = hover_color
         self.text = text
@@ -49,6 +50,7 @@ class Button:
         - screen: The pygame screen to draw the button on.
         """
         # Draw the button image if provided, otherwise draw a rectangle
+        self.check_hover()
         if self.image:
             self.screen.blit(self.image, self.rect)
         else:
@@ -69,19 +71,19 @@ class Button:
             bool: True if the mouse is hovering over the button, False otherwise.
         """
         mouse_pos = pg.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos):  # Check if mouse is over the button
-            if not self.image:  # Change color if no image is used
+        if self.rect.collidepoint(mouse_pos):
+            if not self.image:
                 #check for the error flag and change the color to error color reguardless of the hover color
                 if self.error:
-                    self.color = self.error_color
+                    self.set_button_color(self.error_color)
                 else:
-                    self.color = self.hover_color
+                    self.set_button_color(self.hover_color)
             return True
         else: # Reset color if not hovered over
             if self.error:
-                self.color = self.error_color
+                self.set_button_color(self.error_color)
             else:
-                self.color = self.color
+                self.set_button_color(self.default_color)
         return False
 
     def handle_event(self, event):
@@ -104,6 +106,7 @@ class Button:
         Parameters:
         - events: A single pygame event or a list of pygame events to handle.
         """
+        self.check_hover()
         if self.check_hover():
             if isinstance(events, list):
                 # If events is a list, iterate over each event
@@ -112,3 +115,13 @@ class Button:
             else:
                 # If events is a single event, just handle that event
                 self.handle_event(events)
+
+    def set_button_color(self, color):
+        """
+        Sets the color of the button.
+
+        Parameters:
+        - color: The color to set the button to.
+        """
+        self.color = color
+            
