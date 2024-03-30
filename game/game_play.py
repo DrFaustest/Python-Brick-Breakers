@@ -16,6 +16,31 @@ from settings import Settings
 
 class GamePlay(GameState):
     def __init__(self, game):
+        """
+        Initialize the GamePlay class.
+
+        Args:
+            game (Game): The game instance.
+
+        Attributes:
+            settings (Settings): The game settings.
+            screen (Surface): The game screen.
+            screen_width (int): The width of the game screen.
+            screen_height (int): The height of the game screen.
+            difficulty (float): The game difficulty.
+            background_image (Surface): The background image of the game.
+            current_level_index (int): The index of the current level.
+            level (Level): The current level.
+            bricks (list): The list of bricks in the level.
+            paddle (Paddle): The game paddle.
+            ball (Ball): The game ball.
+            scoreboard (Scoreboard): The game scoreboard.
+            lives (PlayerLives): The player lives.
+            collision (Collision): The collision manager.
+            input_handler (InputEvent): The input event manager.
+            level_banner (LevelBanner): The level banner UI.
+            game_reset (GameReset): The game reset manager.
+        """
         super().__init__(game)
         self.settings = Settings()
         self.screen = game.screen
@@ -37,7 +62,15 @@ class GamePlay(GameState):
         self.game_reset = GameReset(self)
 
     def update(self, events: list):
-        """Update the game logic in the playing state."""
+        """
+        Update the game logic in the playing state.
+
+        Args:
+            events (list): The list of pygame events.
+
+        Returns:
+            None
+        """
         self.input_handler.handle_input()
         self.ball.update()
         self.collision.update()
@@ -49,6 +82,12 @@ class GamePlay(GameState):
             self.game.change_state("GameOver")
     
     def handle_level_complete(self):
+        """
+        Handle the completion of a level.
+
+        Returns:
+            None
+        """
         self.current_level_index += 1
         if self.difficulty < 10:
             new_difficulty = self.difficulty + 0.2
@@ -58,6 +97,12 @@ class GamePlay(GameState):
         self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width,self.screen_height)
 
     def draw(self):
+        """
+        Draw the game objects on the screen.
+
+        Returns:
+            None
+        """
         self.screen.blit(self.background_image, (0, 0))
         self.level.draw(self.screen)
         self.scoreboard.draw(self.screen)

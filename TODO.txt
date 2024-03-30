@@ -5,9 +5,9 @@
 4. lofi mode (auto play)
 5. leaderboard
    - Saves the top 10 scores and names (done)
-   - at end of game if the score is in the top 10, it will ask for the players name
-   - if the score is not in the top 10, it will display the leaderboard
-   - add a leader board button to the main menu to display the leaderboard
+   - at end of game if the score is in the top 10, it will ask for the players name (done)
+   - if the score is not in the top 10, it will display the leaderboard (done)
+   - add a leader board button to the main menu to display the leaderboard (done)
 
 --Menu features--
 1. MAin Screen (done)
@@ -26,8 +26,8 @@
 	(drop down menu) (scraped)
 	- preselected visual themes [auto sets the background, brick, ball, and paddle]
 	- screen size asjustment [need preset sizes to maintain aspect ratios]
-4. Menu images (1/3)
-5. Game over and score saving 
+4. Menu images (1/4)
+5. Game over and score saving  (done)
 
 
 --Requirments Reminder--

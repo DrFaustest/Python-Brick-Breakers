@@ -14,10 +14,10 @@ class TextBox:
             prompt (str, optional): The prompt text to be displayed above the text box. Defaults to an empty string.
         """
         self.rect = pygame.Rect(x, y, width, height)
-        self.color_active = (255, 0, 0)  # Red (active color for text and border)
-        self.color_inactive = (255, 255, 255)  # White (inactive color for text and border)
-        self.background_color = (0, 0, 0)  # Black background
-        self.text_color = (255, 255, 255)  # White text
+        self.color_active = (255, 0, 0)
+        self.color_inactive = (255, 255, 255)
+        self.background_color = (0, 0, 0)
+        self.text_color = (255, 255, 255)
         self.text = ""
         self.font = pygame.font.Font(None, 32)
         self.active = False
@@ -61,17 +61,13 @@ class TextBox:
         Args:
             screen (pygame.Surface): The surface to draw on.
         """
-        # Draw prompt
         prompt_surface = self.font.render(self.prompt, True, self.text_color)
-        screen.blit(prompt_surface, (self.rect.x, self.rect.y - 30))  # Adjust as necessary for prompt placement
+        screen.blit(prompt_surface, (self.rect.x, self.rect.y - 30))
         
-        # Draw text box background
         screen.fill(self.background_color, self.rect)
-        
-        # Draw text
+
         txt_surface = self.font.render(self.text, True, self.text_color)
         screen.blit(txt_surface, (self.rect.x+5, self.rect.y+5))
-        
-        # Draw border with active/inactive color
+
         border_color = self.color_active if self.active else self.color_inactive
-        pygame.draw.rect(screen, border_color, self.rect, 2)  # 2 pixels for the border thickness
+        pygame.draw.rect(screen, border_color, self.rect, 2)

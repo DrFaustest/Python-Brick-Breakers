@@ -20,11 +20,9 @@ class Button:
         self.image = image
         self.screen = screen
         if self.image is not None:
-            # If an image is provided and no width/height are specified, use the image's dimensions
             if width is None or height is None:
                 width, height = self.image.get_size()
         else:
-            # Default to provided dimensions or a standard size if none are specified
             width = width if width is not None else 200
             height = height if height is not None else 100
         
@@ -49,13 +47,13 @@ class Button:
         Parameters:
         - screen: The pygame screen to draw the button on.
         """
-        # Draw the button image if provided, otherwise draw a rectangle
         self.check_hover()
+
         if self.image:
             self.screen.blit(self.image, self.rect)
         else:
             pg.draw.rect(self.screen, self.color, self.rect)
-        # Draw text in the center of the button/image
+
         if self.text:
             text_str = str(self.text)
             text_color = self.text_color if isinstance(self.text_color, tuple) and len(self.text_color) in [3, 4] else (0, 0, 0)
@@ -73,13 +71,12 @@ class Button:
         mouse_pos = pg.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
             if not self.image:
-                #check for the error flag and change the color to error color reguardless of the hover color
                 if self.error:
                     self.set_button_color(self.error_color)
                 else:
                     self.set_button_color(self.hover_color)
             return True
-        else: # Reset color if not hovered over
+        else:
             if self.error:
                 self.set_button_color(self.error_color)
             else:
@@ -109,11 +106,9 @@ class Button:
         self.check_hover()
         if self.check_hover():
             if isinstance(events, list):
-                # If events is a list, iterate over each event
                 for event in events:
                     self.handle_event(event)
             else:
-                # If events is a single event, just handle that event
                 self.handle_event(events)
 
     def set_button_color(self, color):

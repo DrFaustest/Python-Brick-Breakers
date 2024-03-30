@@ -22,8 +22,9 @@ class LevelBanner:
             screen_width (int): The width of the screen.
             screen_height (int): The height of the screen.
         """
-        level_text = self.font.render(f"Level {level_number}", True, self.color)
+        bg_color = (255 - self.color[0], 255 - self.color[1], 255 - self.color[2])
+        level_text = self.font.render(f"Level {level_number}", True, self.color, bg_color)
         text_rect = level_text.get_rect(center=(screen_width // 2, screen_height // 2))
         screen.blit(level_text, text_rect)
-        pg.display.flip()  # Update the display
-        pg.time.wait(2000)  # Wait for a couple of seconds
+        pg.display.flip()
+        pg.time.wait(2000)

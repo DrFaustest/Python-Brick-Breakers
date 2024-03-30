@@ -29,7 +29,7 @@ class Paddle(pg.sprite.Sprite):
         self.rect.y = self.SCREEN_HEIGHT - 60
         self.speed = self.PADDLE_SPEED
         self.screen_width = self.SCREEN_WIDTH
-        self.position_accumulator = self.SCREEN_WIDTH // 2  # Floating-point accumulator for precise movement
+        self.position_accumulator = self.SCREEN_WIDTH // 2
 
     def move(self, direction) -> None:
         """

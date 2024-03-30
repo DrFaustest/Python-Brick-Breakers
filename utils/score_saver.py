@@ -96,4 +96,3 @@ class ScoreSaver:
         for i, score in enumerate(self.scores):
             display.append(f"{i + 1}. {score[0]}: {score[1]}")
         return display
-    

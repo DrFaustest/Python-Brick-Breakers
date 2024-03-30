@@ -4,6 +4,12 @@ from settings import Settings
 from logo import LogoDisplay
 
 def main() -> None:
+    """
+    The main function that initializes the game and runs the game loop.
+
+    Returns:
+        None
+    """
     pg.init()
     settings = Settings()
     screen_width = settings.get("SCREEN_WIDTH")
@@ -25,12 +31,11 @@ def main() -> None:
             if event.type == pg.QUIT:
                 running = False
 
-        # Update the game state and draw every frame, not just when there are events
         if not logo_display.done:
-            logo_display.update()  # Assuming there's an update method for logo_display
+            logo_display.update()
             logo_display.draw()
         else:
-            game.update(events)  # Pass events to the game update for processing
+            game.update(events)
             game.draw()
 
         pg.display.flip()

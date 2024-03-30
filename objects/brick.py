@@ -1,5 +1,7 @@
 import pygame as pg
 from settings import Settings
+
+
 class Brick(pg.sprite.Sprite):
     """
     Represents a brick object in the game.

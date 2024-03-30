@@ -53,11 +53,10 @@ class Collision(pg.sprite.Sprite):
         Checks for collision with the walls and updates the ball's velocity accordingly.
         """
         if self.ball.rect.left <= 0 or self.ball.rect.right >= self.screen_width:
-            self.bounce(pg.math.Vector2(1, 0))  # Horizontal normal
+            self.bounce(pg.math.Vector2(1, 0))
         if self.ball.rect.top <= 0:
-            self.bounce(pg.math.Vector2(0, 1))  # Vertical normal
+            self.bounce(pg.math.Vector2(0, 1))
 
-        # Handle the bottom screen collision separately as it might reset the ball
         if self.ball.rect.bottom >= self.screen_height:
             self.ball.attached_to_paddle = True
             self.ball.velocity = pg.math.Vector2(0, 0)
@@ -70,20 +69,20 @@ class Collision(pg.sprite.Sprite):
         """
         for brick in self.bricks:
             if not brick.is_destroyed and pg.sprite.collide_rect(self.ball, brick):
-                # Determine the collision normal based on the ball's position relative to the brick
-                if self.ball.velocity.x > 0:  # Coming from the left
-                    if self.ball.rect.right >= brick.rect.left and self.ball.rect.left < brick.rect.left:
-                        self.bounce(pg.math.Vector2(1, 0))  # Horizontal normal
-                elif self.ball.velocity.x < 0:  # Coming from the right
-                    if self.ball.rect.left <= brick.rect.right and self.ball.rect.right > brick.rect.right:
-                        self.bounce(pg.math.Vector2(-1, 0))  # Horizontal normal
 
-                if self.ball.velocity.y > 0:  # Coming from the top
+                if self.ball.velocity.x > 0:
+                    if self.ball.rect.right >= brick.rect.left and self.ball.rect.left < brick.rect.left:
+                        self.bounce(pg.math.Vector2(1, 0))
+                elif self.ball.velocity.x < 0:
+                    if self.ball.rect.left <= brick.rect.right and self.ball.rect.right > brick.rect.right:
+                        self.bounce(pg.math.Vector2(-1, 0))
+
+                if self.ball.velocity.y > 0:
                     if self.ball.rect.bottom >= brick.rect.top and self.ball.rect.top < brick.rect.top:
-                        self.bounce(pg.math.Vector2(0, 1))  # Vertical normal
-                elif self.ball.velocity.y < 0:  # Coming from the bottom
+                        self.bounce(pg.math.Vector2(0, 1))
+                elif self.ball.velocity.y < 0:
                     if self.ball.rect.top <= brick.rect.bottom and self.ball.rect.bottom > brick.rect.bottom:
-                        self.bounce(pg.math.Vector2(0, -1))  # Vertical normal
+                        self.bounce(pg.math.Vector2(0, -1))
 
                 brick.destroy()
                 self.scoreboard.increase_score()
@@ -96,20 +95,18 @@ class Collision(pg.sprite.Sprite):
         Args:
             collision_normal (pg.math.Vector2): The normal vector of the collision surface.
         """
-        # Reflect the ball's velocity vector over the collision normal
         self.ball.velocity = self.ball.velocity.reflect(collision_normal)
-
-        # Add a slight randomness to avoid infinite loops in certain scenarios
-        angle_variation = random.uniform(-10, 10)  # You can adjust the range as needed
+        angle_variation = random.uniform(-10, 10)
         angle_rad = math.radians(angle_variation)
         self.ball.velocity = self.ball.velocity.rotate(angle_rad)
     
     def check_ball_stuck(self):
-        # Adjust the y velocity if it's 0 to ensure the ball moves vertically.
+        """
+        Checks if the ball is stuck and adjusts its velocity accordingly.
+        """
         if self.ball.velocity.y == 0:
             self.ball.velocity.y = self.BALL_SPEED if self.ball.rect.centery > self.screen_height // 2 else -self.BALL_SPEED
 
-        # If the ball is stuck on the left or right wall, invert the x velocity.
         if self.ball.velocity.x == 0 and (self.ball.rect.left <= 0 or self.ball.rect.right >= self.screen_width):
             self.ball.velocity.x = self.BALL_SPEED if self.ball.rect.centerx > self.screen_width // 2 else -self.BALL_SPEED
 
