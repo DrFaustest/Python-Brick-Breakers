@@ -203,14 +203,17 @@
     "MAX_REFLECTION_ANGLE": 110,
     "MIN_Y_VELOCITY": -1,
     "BALL_RADIUS": 15,
-    "BALL_IMG": "img\\balls\\football_411430.png",
+    "BALL_IMG": "img\\balls\\Yellow_marble.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
-    "BRICK_IMG": "img\\bricks\\brick_img.png",
-    "BACKGROUND_IMG": "img\\backgrounds\\background.webp",
+    "BRICK_IMG": "img\\bricks\\brick_img1.png",
+    "BACKGROUND_IMG": "img\\backgrounds\\Beach.png",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
     "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
     "BACKGROUND": "img\\backgrounds\\background_4.webp",
     "BRICK": "img\\bricks\\pattern_brick.png",
     "BALL": "img\\balls\\retro_snow_ball.png",
-    "PADDLE": "img\\paddles\\paddle.png"
+    "PADDLE": "img\\paddles\\paddle.png",
+    "PLAY_BUTTON_IMG": "img\\StartButton.png",
+    "SETTINGS_BUTTON_IMG": "img\\SettingsButton.png",
+    "HIGH_SCORES_BUTTON_IMG": "img\\LeaderboardButton.png"
 }

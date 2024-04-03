@@ -54,10 +54,16 @@ class MainMenu(GameState):
         Returns:
         - buttons: The list of buttons in the main menu.
         """
+        play_button_image = pg.image.load(self.settings.get("PLAY_BUTTON_IMG")).convert_alpha()
+        settings_button_image = pg.image.load(self.settings.get("SETTINGS_BUTTON_IMG")).convert_alpha()
+        high_scores_button_image = pg.image.load(self.settings.get("HIGH_SCORES_BUTTON_IMG")).convert_alpha()
+        play_button_image = pg.transform.scale(play_button_image, (200, 100))
+        settings_button_image = pg.transform.scale(settings_button_image, (200, 100))
+        high_scores_button_image = pg.transform.scale(high_scores_button_image, (200, 100))
         buttons = []
-        buttons.append(Button(self.screen,300, 100, 200, 100, "Play", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("Playing")))
-        buttons.append(Button(self.screen,300, 250, 200, 100, "Settings", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("Settings")))
-        buttons.append(Button(self.screen,300, 400, 200, 100, "High Scores", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("GameOver")))
+        buttons.append(Button(self.screen,300, 100, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("Playing"), play_button_image))
+        buttons.append(Button(self.screen,300, 250, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("Settings"), settings_button_image))
+        buttons.append(Button(self.screen,300, 400, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("GameOver"), high_scores_button_image))
         buttons.append(Button(self.screen,700, 500, 50, 50, "", self.WHITE, self.GREEN, self.BLACK, self.game.background_music.change_music_state, self.game.background_music.current_image))
         return buttons
 

@@ -33,7 +33,10 @@ class Settings:
     "BRICK_IMG": "img/brick_img.png",
     "BACKGROUND_IMG": "img/background.webp",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
-    "SOUND_DISABLED_IMAGE": "img/sound_muted.png"
+    "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
+    "PLAY_BUTTON_IMG": "img/StartButton.png",
+    "SETTINGS_BUTTON_IMG": "img/SettingsButton.png",
+    "HIGH_SCORES_BUTTON_IMG": "img/LeaderboardButton.png"
   }
 
     def __new__(cls, filename="settings.json"):
