@@ -77,7 +77,7 @@ class Settings:
         self.settings["BRICK_IMAGES"] = []
         for root, dirs, files in os.walk("img"):
             for file in files:
-                if "ball" in root:
+                if "ball" in root :
                     self.settings["BALL_IMAGES"].append(os.path.join(root, file))
                 elif "paddle" in root:
                     self.settings["PADDLE_IMAGES"].append(os.path.join(root, file))
@@ -87,6 +87,3 @@ class Settings:
                     self.settings["BRICK_IMAGES"].append(os.path.join(root, file))
         self.save()
         return self.settings
-    
-
-
