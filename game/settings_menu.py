@@ -85,18 +85,25 @@ class SettingsMenu(GameState):
         """
         Creates the tab buttons.
         """
+        tab_images = self.settings.get("TAB_IMAGES")
+        tab_images = []
+        for img in self.settings.get("TAB_IMAGES"):
+            tab_images.append(pg.image.load(img))
+        for img in tab_images:
+            img = pg.transform.scale(img, (self.BUTTON_WIDTH, self.TAB_HEIGHT))
+        #"TAB_IMAGES": ["img\\tab_img\\ball_tab_img.png","img\\tab_img\\paddles_tab_img.png","img\\tab_img\\background_tab_img.png","img\\tab_img\\bricks_tab_img.png"]
         tab_names = ['Balls', 'Paddles', 'Background', 'Bricks']
         total_tab_width = self.settings.get("SCREEN_WIDTH") - (len(tab_names) + 1) * self.PADDING
         self.BUTTON_WIDTH = total_tab_width // len(tab_names)
         self.tab_buttons.clear()
-        for index, name in enumerate(tab_names):
+        for index, (name,tab_img) in enumerate(zip(tab_names,tab_images)):
             button_x = index * (self.BUTTON_WIDTH + self.PADDING) + self.PADDING
             button_y = self.PADDING
             button_color = self.GREEN if name == self.current_tab else self.GRAY
 
-            button = Button(self.screen, button_x, button_y, self.BUTTON_WIDTH, self.TAB_HEIGHT, name,
-                            self.WHITE, button_color, self.BLACK,
-                            action=lambda n=name: self.change_tab(n))
+            button = Button(self.screen, button_x, button_y, self.BUTTON_WIDTH, self.TAB_HEIGHT, '',
+                self.WHITE, button_color, self.BLACK,
+                lambda n=name: self.change_tab(n), tab_img)
             self.tab_buttons.append(button)
 
     def change_tab(self, tab_name):
