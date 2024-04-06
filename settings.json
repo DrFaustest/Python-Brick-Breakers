@@ -205,8 +205,8 @@
     "BALL_RADIUS": 15,
     "BALL_IMG": "img\\balls\\len_1423329.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
-    "BRICK_IMG": "img\\bricks\\brick_img.png",
-    "BACKGROUND_IMG": "img\\backgrounds\\Water River 2.png",
+    "BRICK_IMG": "img\\bricks\\Orange_maze_brick.png",
+    "BACKGROUND_IMG": "img\\backgrounds\\Waterlilies.png",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
     "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
     "BACKGROUND": "img\\backgrounds\\background_4.webp",
@@ -215,5 +215,11 @@
     "PADDLE": "img\\paddles\\paddle.png",
     "PLAY_BUTTON_IMG": "img\\StartButton.png",
     "SETTINGS_BUTTON_IMG": "img\\SettingsButton.png",
-    "HIGH_SCORES_BUTTON_IMG": "img\\LeaderboardButton.png"
+    "HIGH_SCORES_BUTTON_IMG": "img\\LeaderboardButton.png",
+    "TAB_IMAGES": [
+        "img\\tab_img\\ball_tab_img.png",
+        "img\\tab_img\\paddles_tab_img.png",
+        "img\\tab_img\\background_tab_img.png",
+        "img\\tab_img\\bricks_tab_img.png"
+    ]
 }
