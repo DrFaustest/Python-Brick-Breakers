@@ -1,7 +1,6 @@
 import pygame as pg
 from ui.button import Button
 from game.game_state import GameState
-from settings import Settings
 from utils.background_music import BackgroundMusic
 
 class MainMenu(GameState):
@@ -35,13 +34,8 @@ class MainMenu(GameState):
         - game: The game object.
         """
         super().__init__(game)
-        self.screen = game.screen
-        self.settings = Settings()
         self.screen_width = self.settings.get("SCREEN_WIDTH")
         self.screen_height = self.settings.get("SCREEN_HEIGHT")
-        self.WHITE = self.settings.get("WHITE")
-        self.GREEN = self.settings.get("GREEN")
-        self.BLACK = self.settings.get("BLACK")
         self.background = pg.image.load(self.settings.get("BACKGROUND_IMG")).convert()
         self.background = pg.transform.scale(self.background, (self.screen_width, self.screen_height))
         self.buttons = self.create_buttons()

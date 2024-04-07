@@ -57,12 +57,6 @@ class SettingsMenu(GameState):
         - game: The game instance.
         """
         super().__init__(game)
-        self.settings = Settings()
-        self.screen = game.screen
-        self.WHITE = self.settings.get("WHITE")
-        self.GREEN = self.settings.get("GREEN")
-        self.BLACK = self.settings.get("BLACK")
-        self.GRAY = self.settings.get("GRAY")
         self.tab_buttons = []
         self.current_tab = 'Balls'
         middle_panel_x = (self.settings.get("SCREEN_WIDTH") - self.MIDDLE_PANEL_WIDTH) // 2

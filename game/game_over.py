@@ -14,9 +14,6 @@ class GameOver(GameState):
     for high score submission, and providing options to go back to the main menu.
 
     Attributes:
-        WHITE (tuple): The RGB color value for white.
-        GREEN (tuple): The RGB color value for green.
-        BLACK (tuple): The RGB color value for black.
         score (int): The player's score.
         screen (pygame.Surface): The game screen.
         score_saver (ScoreSaver): The score saver object for saving high scores.
@@ -34,12 +31,7 @@ class GameOver(GameState):
             game (Game): The game object.
         """
         super().__init__(game)
-        settings = Settings()
-        self.WHITE = settings.get("WHITE")
-        self.GREEN = settings.get("GREEN")
-        self.BLACK = settings.get("BLACK")
         self.score = game.player_score
-        self.screen = game.screen
         self.score_saver = ScoreSaver()
         self.new_high_score = self.score_saver.check_high_score(self.score)
         self.state = 'ENTER_NAME' if self.new_high_score else 'DISPLAY_SCORE'
