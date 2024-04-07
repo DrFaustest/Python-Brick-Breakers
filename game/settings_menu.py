@@ -85,36 +85,51 @@ class SettingsMenu(GameState):
             tab_images.append(pg.image.load(img))
         for img in tab_images:
             img = pg.transform.scale(img, (self.BUTTON_WIDTH, self.TAB_HEIGHT))
+        tab_hover_images = []
+        for img in self.settings.get("TAB_HOVER_IMAGES"):
+            tab_hover_images.append(pg.image.load(img))
+        for img in tab_hover_images:
+            img = pg.transform.scale(img, (self.BUTTON_WIDTH, self.TAB_HEIGHT))
+        tab_selected_images = []
+        for img in self.settings.get("TAB_SELECTED_IMAGES"):
+            tab_selected_images.append(pg.image.load(img))
+        for img in tab_selected_images:
+            img = pg.transform.scale(img, (self.BUTTON_WIDTH, self.TAB_HEIGHT))
         #"TAB_IMAGES": ["img\\tab_img\\ball_tab_img.png","img\\tab_img\\paddles_tab_img.png","img\\tab_img\\background_tab_img.png","img\\tab_img\\bricks_tab_img.png"]
         tab_names = ['Balls', 'Paddles', 'Background', 'Bricks']
         total_tab_width = self.settings.get("SCREEN_WIDTH") - (len(tab_names) + 1) * self.PADDING
         self.BUTTON_WIDTH = total_tab_width // len(tab_names)
         self.tab_buttons.clear()
-        for index, (name,tab_img) in enumerate(zip(tab_names,tab_images)):
+        for index, (name,tab_img, tab_hover, tab_slected) in enumerate(zip(tab_names,tab_images, tab_hover_images, tab_selected_images)):
             button_x = index * (self.BUTTON_WIDTH + self.PADDING) + self.PADDING
             button_y = self.PADDING
             button_color = self.GREEN if name == self.current_tab else self.GRAY
 
             button = Button(self.screen, button_x, button_y, self.BUTTON_WIDTH, self.TAB_HEIGHT, '',
                 self.WHITE, button_color, self.BLACK,
-                lambda n=name: self.change_tab(n), tab_img)
+                lambda n=name: self.change_tab(n), tab_img, tab_hover, tab_slected)
             self.tab_buttons.append(button)
 
     def change_tab(self, tab_name):
         """
         Changes the current tab.
-    
+
         Parameters:
         - tab_name: The name of the tab to change to.
         """
-        for tab in self.tabs_content:
+        for i, tab in enumerate(self.tabs_content):
             if tab == tab_name:
-                self.tabs_content[tab].selected = True
                 self.current_tab = tab_name
+                self.tab_buttons[i].selected = True
+                print(self.tab_buttons[i].selected)
             else:
-                self.tabs_content[tab].selected = False
-    
-        self.create_tabs()
+                self.tab_buttons[i].selected = False
+                print(self.tab_buttons[i].selected)
+
+        
+
+        #self.create_tabs()
+
 
     def handle_events(self, event):
         """

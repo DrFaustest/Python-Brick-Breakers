@@ -168,7 +168,7 @@
         20
     ],
     "BALL_SPEED": 2,
-    "DIFFICULTY": 1.4,
+    "DIFFICULTY": 1,
     "VOLUME": 0.5,
     "WHITE": [
         255,
@@ -203,10 +203,10 @@
     "MAX_REFLECTION_ANGLE": 110,
     "MIN_Y_VELOCITY": -1,
     "BALL_RADIUS": 15,
-    "BALL_IMG": "img\\balls\\football_411430.png",
+    "BALL_IMG": "img\\balls\\soccer_921197.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
-    "BRICK_IMG": "img\\bricks\\brick_img1.png",
-    "BACKGROUND_IMG": "img\\backgrounds\\background_4.webp",
+    "BRICK_IMG": "img\\bricks\\Orange_maze_brick.png",
+    "BACKGROUND_IMG": "img\\backgrounds\\Castle 3.png",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
     "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
     "BACKGROUND": "img\\backgrounds\\background_4.webp",
@@ -221,5 +221,17 @@
         "img\\tab_img\\paddles_tab_img.png",
         "img\\tab_img\\background_tab_img.png",
         "img\\tab_img\\bricks_tab_img.png"
+    ],
+    "TAB_HOVER_IMAGES": [
+        "img\\tab_img\\ball_tab_img_hover.png",
+        "img\\tab_img\\paddles_tab_img_hover.png",
+        "img\\tab_img\\background_tab_img_hover.png",
+        "img\\tab_img\\bricks_tab_img_hover.png"
+    ],
+    "TAB_SELECTED_IMAGES": [
+        "img\\tab_img\\ball_tab_img_selected.png",
+        "img\\tab_img\\paddles_tab_img_selected.png",
+        "img\\tab_img\\background_tab_img_selected.png",
+        "img\\tab_img\\bricks_tab_img_selected.png"
     ]
 }
