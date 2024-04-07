@@ -109,13 +109,18 @@ class SettingsMenu(GameState):
     def change_tab(self, tab_name):
         """
         Changes the current tab.
-
+    
         Parameters:
         - tab_name: The name of the tab to change to.
         """
-        if tab_name in self.tabs_content:
-            self.current_tab = tab_name
-            self.create_tabs()
+        for tab in self.tabs_content:
+            if tab == tab_name:
+                self.tabs_content[tab].selected = True
+                self.current_tab = tab_name
+            else:
+                self.tabs_content[tab].selected = False
+    
+        self.create_tabs()
 
     def handle_events(self, event):
         """

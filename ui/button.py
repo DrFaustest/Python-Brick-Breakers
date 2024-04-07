@@ -1,7 +1,11 @@
 import pygame as pg
 
 class Button:
-    def __init__(self, screen,x: int, y: int, width: int = None, height: int = None, text: str = "change me", color: tuple = (255, 255, 255), hover_color: tuple = (128, 128, 128), text_color: tuple = (0, 0, 0), action: callable = None, image: pg.Surface = None) -> None:
+    def __init__(self, screen,x: int, y: int, width: int = None, 
+                 height: int = None, text: str = "change me", 
+                 color: tuple = (255, 255, 255), hover_color: tuple = (128, 128, 128), 
+                 text_color: tuple = (0, 0, 0), action: callable = None, 
+                 image: pg.Surface = None, hover_image: pg.Surface = None, selected_image: pg.Surface = None) -> None:
         """
         Initializes a Button object.
 
@@ -16,6 +20,8 @@ class Button:
         - text_color (tuple, optional): The color of the button's text. Defaults to (0, 0, 0) (black).
         - action (callable, optional): The function to be executed when the button is clicked. Defaults to None.
         - image (pg.Surface, optional): The image to be displayed on the button. Defaults to None.
+        - hover_image (pg.Surface, optional): The image to be displayed on the button when hovered over. Defaults to None.
+        - selected_image (pg.Surface, optional): The image to be displayed on the button when selected. Defaults to None.
         """
         self.image = image
         self.screen = screen
@@ -29,6 +35,8 @@ class Button:
         self.x = x
         self.y = y
         self.error = False
+        self.hover = False
+        self.selected = False
         self.error_color = (255, 0, 0)
         self.rect = pg.Rect(x, y, width, height)
         self.default_color = color
@@ -39,6 +47,11 @@ class Button:
         self.action = action
         self.hitbox = self.rect
         self.font = pg.font.SysFont("Arial", 50)
+        self.image = image
+        self.default_image = image
+        self.hover_image = hover_image
+        self.selected_image = selected_image
+
 
     def draw(self):
         """
@@ -61,27 +74,41 @@ class Button:
             text_rect = text_surface.get_rect(center=self.rect.center)
             self.screen.blit(text_surface, text_rect)
 
-    def check_hover(self):
+    def check_hover(self) -> bool:
         """
         Checks if the button is being hovered over and changes its appearance accordingly.
-
+    
         Returns:
             bool: True if the mouse is hovering over the button, False otherwise.
         """
         mouse_pos = pg.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos):
-            if not self.image:
-                if self.error:
-                    self.set_button_color(self.error_color)
-                else:
-                    self.set_button_color(self.hover_color)
-            return True
+        is_hovering = self.rect.collidepoint(mouse_pos)
+    
+        if not is_hovering:
+            self.handle_not_hovering()
+            return False
+    
+        if not self.image:
+            self.handle_no_image_hover()
+        elif self.hover_image and not self.selected:
+            self.image = self.hover_image
+    
+        return True
+    
+    def handle_not_hovering(self):
+        if self.error:
+            self.set_button_color(self.error_color)
+        elif self.selected:
+            self.image = self.selected_image
         else:
-            if self.error:
-                self.set_button_color(self.error_color)
-            else:
-                self.set_button_color(self.default_color)
-        return False
+            self.set_button_color(self.default_color)
+            self.image = self.default_image
+    
+    def handle_no_image_hover(self):
+        if self.error:
+            self.set_button_color(self.error_color)
+        else:
+            self.set_button_color(self.hover_color)
 
     def handle_event(self, event):
         """
