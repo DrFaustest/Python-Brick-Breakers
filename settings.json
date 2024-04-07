@@ -168,7 +168,7 @@
         20
     ],
     "BALL_SPEED": 2,
-    "DIFFICULTY": 1,
+    "DIFFICULTY": 1.4,
     "VOLUME": 0.5,
     "WHITE": [
         255,
