@@ -1,6 +1,5 @@
 import pygame as pg
 from game.game_state import GameState
-from settings import Settings
 from ui.button import Button
 from ui.preview_window import PreviewWindow
 
@@ -18,12 +17,6 @@ class SettingsMenu(GameState):
     - PADDING: The padding between elements.
     - MIDDLE_PANEL_HEIGHT: The height of the middle panel.
     - MIDDLE_PANEL_WIDTH: The width of the middle panel.
-    - settings: An instance of the Settings class.
-    - screen: The game screen.
-    - WHITE: The white color.
-    - GREEN: The green color.
-    - BLACK: The black color.
-    - GRAY: The gray color.
     - tab_buttons: A list of tab buttons.
     - current_tab: The currently selected tab.
     - tabs_content: A dictionary mapping tab names to PreviewWindow instances.
@@ -41,7 +34,6 @@ class SettingsMenu(GameState):
     - update(self, events): Updates the settings menu state.
     - check_current_tab_state(self): Checks the state of the current tab.
     """
-    
     TAB_HEIGHT = 40  
     BUTTON_WIDTH = 120  
     BUTTON_HEIGHT = 40  
@@ -95,7 +87,6 @@ class SettingsMenu(GameState):
             tab_selected_images.append(pg.image.load(img))
         for img in tab_selected_images:
             img = pg.transform.scale(img, (self.BUTTON_WIDTH, self.TAB_HEIGHT))
-        #"TAB_IMAGES": ["img\\tab_img\\ball_tab_img.png","img\\tab_img\\paddles_tab_img.png","img\\tab_img\\background_tab_img.png","img\\tab_img\\bricks_tab_img.png"]
         tab_names = ['Balls', 'Paddles', 'Background', 'Bricks']
         total_tab_width = self.settings.get("SCREEN_WIDTH") - (len(tab_names) + 1) * self.PADDING
         self.BUTTON_WIDTH = total_tab_width // len(tab_names)
@@ -121,15 +112,8 @@ class SettingsMenu(GameState):
             if tab == tab_name:
                 self.current_tab = tab_name
                 self.tab_buttons[i].selected = True
-                print(self.tab_buttons[i].selected)
             else:
                 self.tab_buttons[i].selected = False
-                print(self.tab_buttons[i].selected)
-
-        
-
-        #self.create_tabs()
-
 
     def handle_events(self, event):
         """
