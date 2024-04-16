@@ -23,10 +23,6 @@ class GamePlay(GameState):
             game (Game): The game instance.
 
         Attributes:
-            settings (Settings): The game settings.
-            screen (Surface): The game screen.
-            screen_width (int): The width of the game screen.
-            screen_height (int): The height of the game screen.
             difficulty (float): The game difficulty.
             background_image (Surface): The background image of the game.
             current_level_index (int): The index of the current level.
@@ -42,10 +38,6 @@ class GamePlay(GameState):
             game_reset (GameReset): The game reset manager.
         """
         super().__init__(game)
-        self.settings = Settings()
-        self.screen = game.screen
-        self.screen_width = self.settings.get("SCREEN_WIDTH")
-        self.screen_height = self.settings.get("SCREEN_HEIGHT")
         self.difficulty = self.settings.get("DIFFICULTY")
         self.background_image = pg.image.load(self.settings.get("BACKGROUND_IMG")).convert()
         self.background_image = pg.transform.scale(self.background_image, (self.screen_width, self.screen_height))

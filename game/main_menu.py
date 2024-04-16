@@ -13,9 +13,6 @@ class MainMenu(GameState):
     - settings: The game settings.
     - screen_width: The width of the game screen.
     - screen_height: The height of the game screen.
-    - WHITE: The color white.
-    - GREEN: The color green.
-    - BLACK: The color black.
     - background: The background image of the main menu.
     - buttons: The list of buttons in the main menu.
 
@@ -34,12 +31,9 @@ class MainMenu(GameState):
         - game: The game object.
         """
         super().__init__(game)
-        self.screen_width = self.settings.get("SCREEN_WIDTH")
-        self.screen_height = self.settings.get("SCREEN_HEIGHT")
         self.background = pg.image.load(self.settings.get("BACKGROUND_IMG")).convert()
         self.background = pg.transform.scale(self.background, (self.screen_width, self.screen_height))
         self.buttons = self.create_buttons()
-        
 
     def create_buttons(self):
         """
