@@ -8,3 +8,5 @@ class GameState:
         self.BLACK = self.settings.get("BLACK")
         self.GRAY = self.settings.get("GRAY")
         self.screen = game.screen
+        self.screen_width = self.settings.get("SCREEN_WIDTH")
+        self.screen_height = self.settings.get("SCREEN_HEIGHT")

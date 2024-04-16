@@ -185,4 +185,3 @@ class SettingsMenu(GameState):
             self.save_button.error = True
         else:
             self.save_button.error = False
-
