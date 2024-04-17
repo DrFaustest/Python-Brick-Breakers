@@ -20,7 +20,7 @@ class BackgroundMusic:
         self.disabled_image: pg.Surface = pg.image.load(self.SOUND_DISABLED_IMAGE)
         self.disabled_image = pg.transform.scale(self.disabled_image, (50, 50))
         self.current_image = self.enabled_image
-        self.playlist = ["sound/background_1.mp3", "sound/background_2.mp3", "sound/background_1.mid", "sound/background_2.mid"]
+        self.playlist = self.settings.get("MUSIC_PLAYLIST")
         self.current_track_index = 0
         pg.mixer.music.set_volume(self.VOLUME)
         pg.mixer.music.set_endevent(pg.USEREVENT)

@@ -8,9 +8,27 @@ class Settings:
     "SCREEN_WIDTH": 800,
     "SCREEN_HEIGHT": 600,
     "BRICK_SIZE": [100, 20],
-    "BACKGROUND_IMAGES": ["img/background.webp", "img/background_2.webp", "img/background_3.webp", "img/background_4.webp"],
-    "BRICK_IMAGES": ["img/brick_img.png", "img/brick_img1.png"],
-    "BALL_IMAGES": ["img/future_ball.png", "img/retro_snow_ball.png", "img/ring_ball.png"],
+    "BACKGROUND_IMAGES": [
+        "img/background.webp", 
+        "img/background_2.webp", 
+        "img/background_3.webp", 
+        "img/background_4.webp"
+    ],
+    "MUSIC_PLAYLIST":[
+        "sound\\background_1.mp3", 
+        "sound\\background_2.mp3", 
+        "sound\\background_1.mid", 
+        "sound\\background_2.mid"
+    ],
+    "BRICK_IMAGES": [
+        "img/brick_img.png", 
+        "img/brick_img1.png"
+    ],
+    "BALL_IMAGES": [
+        "img/future_ball.png", 
+        "img/retro_snow_ball.png", 
+        "img/ring_ball.png"
+    ],
     "PADDLE_IMAGES": ["img/paddle.png"],
     "PLAYER_SCORE": 0, 
     "FPS": 240,
