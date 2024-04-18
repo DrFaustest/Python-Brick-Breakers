@@ -210,7 +210,7 @@
         0
     ],
     "MAX_REFLECTION_ANGLE": 110,
-    "MIN_Y_VELOCITY": -1,
+    "MIN_Y_VELOCITY": 1,
     "BALL_RADIUS": 15,
     "BALL_IMG": "img\\balls\\soccer_921197.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
