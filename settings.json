@@ -177,7 +177,7 @@
         20
     ],
     "BALL_SPEED": 2,
-    "DIFFICULTY": 1.5999999999999999,
+    "DIFFICULTY": 1.2,
     "VOLUME": 0.5,
     "WHITE": [
         255,
@@ -215,7 +215,7 @@
     "BALL_IMG": "img\\balls\\soccer_921197.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
     "BRICK_IMG": "img\\bricks\\brick_img.png",
-    "BACKGROUND_IMG": "img\\backgrounds\\Mountain 1.png",
+    "BACKGROUND_IMG": "img\\backgrounds\\Village 7.png",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
     "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
     "BACKGROUND": "img\\backgrounds\\background_4.webp",

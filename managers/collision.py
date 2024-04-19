@@ -101,7 +101,7 @@ class Collision(pg.sprite.Sprite):
         angle_variation = random.uniform(-5, 5)
         angle_rad = math.radians(angle_variation)
         self.ball.velocity = self.ball.velocity.rotate(angle_rad)
-        self.ball.spin += angle_variation * 0.5
+        self.ball.spin += angle_variation * 0.75
         if abs(self.ball.velocity[1]) < self.MIN_Y_VELOCITY:
             self.ball.velocity[1] = self.MIN_Y_VELOCITY if self.ball.velocity[1] > 0 else -self.MIN_Y_VELOCITY
 
