@@ -2,10 +2,15 @@ import pygame as pg
 from settings import Settings
 import math
 import random
-
+from typing import List
+from objects.ball import Ball
+from objects.paddle import Paddle
+from objects.brick import Brick
+from ui.scoreboard import Scoreboard
+from ui.player_lives import PlayerLives
 
 class Collision(pg.sprite.Sprite):
-    def __init__(self, ball, paddle, bricks, scoreboard, player_lives):
+    def __init__(self, ball: Ball, paddle: Paddle, bricks: List[Brick], scoreboard: Scoreboard, player_lives: PlayerLives):
         """
         Initializes a Collision object.
 
@@ -41,10 +46,11 @@ class Collision(pg.sprite.Sprite):
             reflection_angle = offset * self.MAX_REFLECTION_ANGLE
             new_vx = math.cos(math.radians(reflection_angle)) * self.BALL_SPEED * (1 if offset > 0 else -1)
             new_vy = -math.sqrt(self.BALL_SPEED ** 2 - new_vx ** 2)
-            if new_vy > self.MIN_Y_VELOCITY:
-                new_vy = self.MIN_Y_VELOCITY
-                new_vx = math.copysign(math.sqrt(self.BALL_SPEED ** 2 - new_vy ** 2), new_vx)
+            if abs(new_vy) < self.MIN_Y_VELOCITY:  # Ensure minimum vertical velocity
+                new_vy = -self.MIN_Y_VELOCITY if new_vy < 0 else self.MIN_Y_VELOCITY
             self.ball.velocity = pg.math.Vector2(new_vx, new_vy)
+            spin_change = reflection_angle * 0.1
+            self.ball.spin += spin_change
         elif not pg.sprite.collide_rect(self.ball, self.paddle):
             self.paddle_hit = False
 
@@ -63,32 +69,28 @@ class Collision(pg.sprite.Sprite):
             self.scoreboard.decrease_score()
             self.lives.decrease_lives()
 
+
     def check_brick_collision(self):
         """
         Checks for collision with the bricks and updates the ball's velocity accordingly.
         """
         for brick in self.bricks:
             if not brick.is_destroyed and pg.sprite.collide_rect(self.ball, brick):
-
-                if self.ball.velocity.x > 0:
-                    if self.ball.rect.right >= brick.rect.left and self.ball.rect.left < brick.rect.left:
-                        self.bounce(pg.math.Vector2(1, 0))
-                elif self.ball.velocity.x < 0:
-                    if self.ball.rect.left <= brick.rect.right and self.ball.rect.right > brick.rect.right:
-                        self.bounce(pg.math.Vector2(-1, 0))
-
-                if self.ball.velocity.y > 0:
-                    if self.ball.rect.bottom >= brick.rect.top and self.ball.rect.top < brick.rect.top:
-                        self.bounce(pg.math.Vector2(0, 1))
-                elif self.ball.velocity.y < 0:
-                    if self.ball.rect.top <= brick.rect.bottom and self.ball.rect.bottom > brick.rect.bottom:
-                        self.bounce(pg.math.Vector2(0, -1))
-
+                collision_normal = pg.math.Vector2()
+                if self.ball.velocity.x > 0 and self.ball.rect.right >= brick.rect.left:
+                    collision_normal.x = -1
+                elif self.ball.velocity.x < 0 and self.ball.rect.left <= brick.rect.right:
+                    collision_normal.x = 1
+                if self.ball.velocity.y > 0 and self.ball.rect.bottom >= brick.rect.top:
+                    collision_normal.y = -1
+                elif self.ball.velocity.y < 0 and self.ball.rect.top <= brick.rect.bottom:
+                    collision_normal.y = 1
+                self.bounce(collision_normal)  # Use the bounce method to handle collision
                 brick.destroy()
                 self.scoreboard.increase_score()
-                break
+                break  # Stop checking after handling collision to avoid multiple responses
 
-    def bounce(self, collision_normal):
+    def bounce(self, collision_normal: pg.math.Vector2):
         """
         Adjusts the ball's velocity based on the collision normal.
 
@@ -96,20 +98,22 @@ class Collision(pg.sprite.Sprite):
             collision_normal (pg.math.Vector2): The normal vector of the collision surface.
         """
         self.ball.velocity = self.ball.velocity.reflect(collision_normal)
-        angle_variation = random.uniform(-10, 10)
+        angle_variation = random.uniform(-5, 5)
         angle_rad = math.radians(angle_variation)
         self.ball.velocity = self.ball.velocity.rotate(angle_rad)
-    
+        self.ball.spin += angle_variation * 0.75
+        if abs(self.ball.velocity[1]) < self.MIN_Y_VELOCITY:
+            self.ball.velocity[1] = self.MIN_Y_VELOCITY if self.ball.velocity[1] > 0 else -self.MIN_Y_VELOCITY
+
     def check_ball_stuck(self):
         """
         Checks if the ball is stuck and adjusts its velocity accordingly.
         """
-        if self.ball.velocity.y == 0:
-            self.ball.velocity.y = self.BALL_SPEED if self.ball.rect.centery > self.screen_height // 2 else -self.BALL_SPEED
+        if self.ball.velocity[1] == 0:
+            self.ball.velocity[1] = self.BALL_SPEED if self.ball.rect.centery > self.screen_height // 2 else -self.BALL_SPEED
 
-        if self.ball.velocity.x == 0 and (self.ball.rect.left <= 0 or self.ball.rect.right >= self.screen_width):
-            self.ball.velocity.x = self.BALL_SPEED if self.ball.rect.centerx > self.screen_width // 2 else -self.BALL_SPEED
-
+        if self.ball.velocity[0] == 0 and (self.ball.rect.left <= 0 or self.ball.rect.right >= self.screen_width):
+            self.ball.velocity[0] = self.BALL_SPEED if self.ball.rect.centerx > self.screen_width // 2 else -self.BALL_SPEED
 
     def update(self):
         """
