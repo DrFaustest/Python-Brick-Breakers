@@ -52,6 +52,7 @@ class GamePlay(GameState):
         self.input_handler = InputEvent(self.paddle, self.ball)
         self.level_banner = LevelBanner()
         self.game_reset = GameReset(self)
+        self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width,self.screen_height)
 
     def update(self, events: list):
         """
