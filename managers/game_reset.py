@@ -41,7 +41,7 @@ class GameReset:
         self.game.ball.speed_y = 0
         self.game.ball.attached_to_paddle = True
 
-        self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks, self.game.scoreboard, self.game.lives)
+        self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks, self.game.scoreboard, self.game.lives, self.game.screen)
 
     def full_reset(self) -> None:
         self.game.current_level_index = 0
