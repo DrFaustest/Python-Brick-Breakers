@@ -8,9 +8,10 @@ from objects.paddle import Paddle
 from objects.brick import Brick
 from ui.scoreboard import Scoreboard
 from ui.player_lives import PlayerLives
+from ui.level_banner import LevelBanner
 
 class Collision(pg.sprite.Sprite):
-    def __init__(self, ball: Ball, paddle: Paddle, bricks: List[Brick], scoreboard: Scoreboard, player_lives: PlayerLives):
+    def __init__(self, ball: Ball, paddle: Paddle, bricks: List[Brick], scoreboard: Scoreboard, player_lives: PlayerLives, screen: pg.Surface):
         """
         Initializes a Collision object.
 
@@ -23,6 +24,7 @@ class Collision(pg.sprite.Sprite):
         """
         super().__init__()
         self.settings = Settings()
+        self.screen = screen
         self.ball = ball
         self.paddle = paddle
         self.bricks = bricks
@@ -34,6 +36,7 @@ class Collision(pg.sprite.Sprite):
         self.scoreboard = scoreboard
         self.paddle_hit = False
         self.lives = player_lives
+        self.level_banner = LevelBanner()
 
 
     def check_paddle_collision(self):
@@ -66,6 +69,7 @@ class Collision(pg.sprite.Sprite):
         if self.ball.rect.bottom >= self.screen_height:
             self.ball.attached_to_paddle = True
             self.ball.velocity = pg.math.Vector2(0, 0)
+            self.level_banner.display_ball_lost_message(self.screen, self.screen_width, self.screen_height)
             self.scoreboard.decrease_score()
             self.lives.decrease_lives()
 
