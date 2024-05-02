@@ -48,7 +48,7 @@ class GamePlay(GameState):
         self.ball = Ball(self.paddle)
         self.scoreboard = Scoreboard()
         self.lives = PlayerLives()
-        self.collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard, self.lives)
+        self.collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard, self.lives, self.screen)
         self.input_handler = InputEvent(self.paddle, self.ball)
         self.level_banner = LevelBanner()
         self.game_reset = GameReset(self)
