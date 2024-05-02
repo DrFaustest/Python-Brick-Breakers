@@ -28,3 +28,19 @@ class LevelBanner:
         screen.blit(level_text, text_rect)
         pg.display.flip()
         pg.time.wait(2000)
+
+    def display_ball_lost_message(self, screen, screen_width, screen_height):
+        """
+        Display the "YOU LOST A BALL!" message on the screen.
+    
+        Args:
+            screen (pygame.Surface): The surface to display the message on.
+            screen_width (int): The width of the screen.
+            screen_height (int): The height of the screen.
+        """
+        bg_color = (255 - self.color[0], 255 - self.color[1], 255 - self.color[2])
+        message_text = self.font.render("YOU LOST A BALL!", True, (255, 0, 0), bg_color)
+        text_rect = message_text.get_rect(center=(screen_width // 2, screen_height // 2))
+        screen.blit(message_text, text_rect)
+        pg.display.flip()
+        pg.time.wait(2000)
