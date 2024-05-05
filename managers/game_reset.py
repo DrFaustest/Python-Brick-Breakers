@@ -4,7 +4,7 @@ from typing import *
 from settings import Settings
 
 class GameReset:
-    def __init__(self, game):
+    def __init__(self, game: Any) -> None:
         """
         Initializes a new instance of the GameReset class.
 
@@ -16,8 +16,8 @@ class GameReset:
         """
         self.game = game
         self.settings = Settings()
-        self.SCREEN_HEIGHT = self.settings.get("SCREEN_HEIGHT")
-        self.BALL_RADIUS = self.settings.get("BALL_RADIUS")
+        self.SCREEN_HEIGHT: int = self.settings.get("SCREEN_HEIGHT")
+        self.BALL_RADIUS: int = self.settings.get("BALL_RADIUS")
 
     def reset(self) -> None:
         """
@@ -44,6 +44,15 @@ class GameReset:
         self.game.collision = Collision(self.game.ball, self.game.paddle, self.game.bricks, self.game.scoreboard, self.game.lives, self.game.screen)
 
     def full_reset(self) -> None:
+        """
+        Fully resets the game state.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+        """
         self.game.current_level_index = 0
         self.game.scoreboard.score = 0
         self.game.lives.lives = 3

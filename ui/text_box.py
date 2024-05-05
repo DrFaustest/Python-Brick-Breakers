@@ -1,7 +1,8 @@
 import pygame
+from typing import Callable
 
 class TextBox:
-    def __init__(self, x, y, width, height, callback_function, prompt=''):
+    def __init__(self, x: int, y: int, width: int, height: int, callback_function: Callable, prompt: str = ''):
         """
         Initializes a TextBox object.
 
@@ -10,7 +11,7 @@ class TextBox:
             y (int): The y-coordinate of the top-left corner of the text box.
             width (int): The width of the text box.
             height (int): The height of the text box.
-            callback_function (function): The function to be called when the user presses Enter.
+            callback_function (Callable): The function to be called when the user presses Enter.
             prompt (str, optional): The prompt text to be displayed above the text box. Defaults to an empty string.
         """
         self.rect = pygame.Rect(x, y, width, height)
@@ -24,7 +25,7 @@ class TextBox:
         self.callback_function = callback_function
         self.prompt = prompt
 
-    def handle_event(self, event):
+    def handle_event(self, event: pygame.event.Event):
         """
         Handles the given event.
 
@@ -54,7 +55,7 @@ class TextBox:
         """
         pass
 
-    def draw(self, screen):
+    def draw(self, screen: pygame.Surface):
         """
         Draws the text box on the given screen.
 

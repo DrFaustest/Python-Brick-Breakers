@@ -2,7 +2,7 @@ import pygame as pg
 from settings import Settings
 
 class Scoreboard:
-    def __init__(self, font_size=30, color=(255, 255, 255)):
+    def __init__(self, font_size: int = 30, color: tuple = (255, 255, 255)):
         """
         Initialize the Scoreboard object.
 
@@ -11,15 +11,15 @@ class Scoreboard:
             color (tuple): The color of the score text. Default is WHITE.
         """
         self.settings = Settings()
-        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
-        self.SCREEN_HEIGHT = self.settings.get("SCREEN_HEIGHT")
-        self.score = 0
-        self.font = pg.font.SysFont(None, font_size)
-        self.color = color
-        self.x = self.SCREEN_WIDTH - 120
-        self.y = self.SCREEN_HEIGHT - 25
+        self.SCREEN_WIDTH: int = self.settings.get("SCREEN_WIDTH")
+        self.SCREEN_HEIGHT: int = self.settings.get("SCREEN_HEIGHT")
+        self.score: int = 0
+        self.font: pg.font.Font = pg.font.SysFont(None, font_size)
+        self.color: tuple = color
+        self.x: int = self.SCREEN_WIDTH - 120
+        self.y: int = self.SCREEN_HEIGHT - 25
 
-    def increase_score(self, points=10):
+    def increase_score(self, points: int = 10) -> None:
         """
         Increase the score by the specified number of points.
 
@@ -28,7 +28,7 @@ class Scoreboard:
         """
         self.score += points
 
-    def decrease_score(self, points=10):
+    def decrease_score(self, points: int = 10) -> None:
         """
         Decrease the score by the specified number of points.
 
@@ -37,7 +37,7 @@ class Scoreboard:
         """
         self.score -= points
 
-    def draw(self, screen):
+    def draw(self, screen: pg.Surface) -> None:
         """
         Draw the score on the screen.
 

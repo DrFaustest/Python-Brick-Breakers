@@ -1,8 +1,10 @@
 import pygame as pg
 from settings import Settings
+from objects.paddle import Paddle
+from objects.ball import Ball
 
 class InputEvent:
-    def __init__(self, paddle, ball):
+    def __init__(self, paddle: Paddle, ball: Ball) -> None:
         """
         Initialize the InputEvent class.
 
@@ -14,9 +16,9 @@ class InputEvent:
         self.ball = ball
         self.active_input_type = "mouse"
         self.settings = Settings()
-        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
+        self.SCREEN_WIDTH: int = self.settings.get("SCREEN_WIDTH")
 
-    def handle_input(self):
+    def handle_input(self) -> None:
         """
         Handle the input events.
 
@@ -47,4 +49,3 @@ class InputEvent:
                 self.paddle.rect.right = self.SCREEN_WIDTH
             if mouse_buttons[0]:
                 self.ball.handle_event(pg.event.Event(pg.MOUSEBUTTONDOWN, button=1))
-

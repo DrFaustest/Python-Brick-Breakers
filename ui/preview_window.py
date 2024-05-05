@@ -1,13 +1,14 @@
 import pygame
+from typing import List, Tuple
 
 class PreviewWindow:
-    def __init__(self, screen, image_list, image_description, x, y, display_width, display_height):
+    def __init__(self, screen: pygame.Surface, image_list: List[str], image_description: str, x: int, y: int, display_width: int, display_height: int) -> None:
         """
         Initializes a PreviewWindow object.
 
         Args:
             screen (pygame.Surface): The surface to draw the preview window on.
-            image_list (list): A list of image paths.
+            image_list (List[str]): A list of image paths.
             image_description (str): The description of the current image.
             x (int): The x-coordinate of the top-left corner of the preview window.
             y (int): The y-coordinate of the top-left corner of the preview window.
@@ -30,7 +31,7 @@ class PreviewWindow:
         self.create_buttons()
         self.load_current_image()
 
-    def load_current_image(self):
+    def load_current_image(self) -> None:
         """
         Loads the current image from the image list and scales it to fit the display size.
         """
@@ -43,7 +44,7 @@ class PreviewWindow:
             self.images[img_path] = pygame.transform.scale(image, new_size)
         self.current_image = self.images[img_path]
 
-    def create_buttons(self):
+    def create_buttons(self) -> None:
         """
         Creates the left and right buttons for image navigation.
         """
@@ -51,7 +52,7 @@ class PreviewWindow:
         self.left_button = pygame.Rect(self.x - self.button_width, mid_y, self.button_width, self.button_height)
         self.right_button = pygame.Rect(self.x + self.display_width, mid_y, self.button_width, self.button_height)
 
-    def draw_buttons(self):
+    def draw_buttons(self) -> None:
         """
         Draws the left and right buttons on the preview window.
         """
@@ -65,7 +66,7 @@ class PreviewWindow:
         self.window.blit(left_arrow, left_arrow_pos)
         self.window.blit(right_arrow, right_arrow_pos)
 
-    def draw_image(self):
+    def draw_image(self) -> None:
         """
         Draws the current image on the preview window.
         """
@@ -77,23 +78,23 @@ class PreviewWindow:
             self.window.blit(self.current_image, (image_x, image_y))
             self.draw_text(self.image_description, (self.x + self.display_width // 2, self.y + self.display_height + 20))
 
-    def draw_text(self, text, position, font_size=20, text_color=(255, 255, 255), background_color=None):
+    def draw_text(self, text: str, position: Tuple[int, int], font_size: int = 20, text_color: Tuple[int, int, int] = (255, 255, 255), background_color: Tuple[int, int, int] = None) -> None:
         """
         Draws text on the preview window.
 
         Args:
             text (str): The text to be displayed.
-            position (tuple): The position of the text (x, y).
+            position (Tuple[int, int]): The position of the text (x, y).
             font_size (int, optional): The size of the font. Defaults to 20.
-            text_color (tuple, optional): The color of the text. Defaults to (255, 255, 255).
-            background_color (tuple, optional): The background color of the text. Defaults to None.
+            text_color (Tuple[int, int, int], optional): The color of the text. Defaults to (255, 255, 255).
+            background_color (Tuple[int, int, int], optional): The background color of the text. Defaults to None.
         """
         font = pygame.font.Font(None, font_size)
         text_surface = font.render(text, True, text_color, background_color)
         text_rect = text_surface.get_rect(center=position)
         self.window.blit(text_surface, text_rect)
 
-    def handle_event(self, event):
+    def handle_event(self, event: pygame.event.Event) -> None:
         """
         Handles events on the preview window.
 
@@ -112,16 +113,16 @@ class PreviewWindow:
                 self.draw_image()
                 self.unsaved_changes = True
 
-    def get_value(self):
+    def get_value(self) -> Tuple[str, str]:
         """
         Returns the description and path of the current image.
 
         Returns:
-            tuple: A tuple containing the image description and path.
+            Tuple[str, str]: A tuple containing the image description and path.
         """
         return (self.image_description, self.image_list[self.index])
 
-    def draw(self):
+    def draw(self) -> None:
         """
         Draws the preview window.
         """

@@ -12,15 +12,15 @@ def main() -> None:
     """
     pg.init()
     settings = Settings()
-    screen_width = settings.get("SCREEN_WIDTH")
-    screen_height = settings.get("SCREEN_HEIGHT")
+    screen_width: int = settings.get("SCREEN_WIDTH")
+    screen_height: int = settings.get("SCREEN_HEIGHT")
 
-    FPS = settings.get("FPS")
+    FPS: int = settings.get("FPS")
     screen = pg.display.set_mode((screen_width, screen_height))
     pg.display.set_caption("Brick Breaker")
     game = Game(screen)
     logo_display = LogoDisplay(screen)
-    running = True
+    running: bool = True
     clock = pg.time.Clock()
     
     while running:

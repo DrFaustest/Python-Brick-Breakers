@@ -1,13 +1,12 @@
 import pygame as pg
 from settings import Settings
 
-
 class Brick(pg.sprite.Sprite):
     """
     Represents a brick object in the game.
 
     Attributes:
-        rect (pygame.Rect): The rectangular area occupied by the brick.
+        rect (pg.Rect): The rectangular area occupied by the brick.
         is_destroyed (bool): A flag to track if the brick is destroyed.
 
     Methods:
@@ -17,13 +16,13 @@ class Brick(pg.sprite.Sprite):
         destroy(): Marks the brick as destroyed.
     """
 
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int) -> None:
         """
         Initializes a new instance of the Brick class.
 
         Args:
-            x (int): The x-coordinate of the top-left corner of the brick.
-            y (int): The y-coordinate of the top-left corner of the brick.
+            x: The x-coordinate of the top-left corner of the brick.
+            y: The y-coordinate of the top-left corner of the brick.
         """
         super().__init__()
         self.settings = Settings()
@@ -36,22 +35,22 @@ class Brick(pg.sprite.Sprite):
         self.rect.y = y
         self.is_destroyed = False
 
-    def update(self):
+    def update(self) -> None:
         """
         Updates the state of the brick.
         """
         pass
 
-    def draw(self, screen):
+    def draw(self, screen: pg.Surface) -> None:
         """
         Draws the brick on the screen.
 
         Args:
-            screen (pygame.Surface): The surface to draw the brick on.
+            screen: The surface to draw the brick on.
         """
         screen.blit(self.image, self.rect)
 
-    def destroy(self):
+    def destroy(self) -> None:
         """
         Marks the brick as destroyed.
         """

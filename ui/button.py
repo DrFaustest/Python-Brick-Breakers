@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Button:
-    def __init__(self, screen,x: int, y: int, width: int = None, 
+    def __init__(self, screen: pg.Surface, x: int, y: int, width: int = None, 
                  height: int = None, text: str = "change me", 
                  color: tuple = (255, 255, 255), hover_color: tuple = (128, 128, 128), 
                  text_color: tuple = (0, 0, 0), action: callable = None, 
@@ -10,6 +10,7 @@ class Button:
         Initializes a Button object.
 
         Parameters:
+        - screen (pg.Surface): The pygame screen to draw the button on.
         - x (int): The x-coordinate of the button's top-left corner.
         - y (int): The y-coordinate of the button's top-left corner.
         - width (int, optional): The width of the button. If not provided, defaults to 200.
@@ -23,8 +24,8 @@ class Button:
         - hover_image (pg.Surface, optional): The image to be displayed on the button when hovered over. Defaults to None.
         - selected_image (pg.Surface, optional): The image to be displayed on the button when selected. Defaults to None.
         """
-        self.image = image
-        self.screen = screen
+        self.image: pg.Surface = image
+        self.screen: pg.Surface = screen
         if self.image is not None:
             if width is None or height is None:
                 width, height = self.image.get_size()
@@ -32,33 +33,29 @@ class Button:
             width = width if width is not None else 200
             height = height if height is not None else 100
         
-        self.x = x
-        self.y = y
-        self.error = False
-        self.hover = False
-        self.selected = False
-        self.error_color = (255, 0, 0)
-        self.rect = pg.Rect(x, y, width, height)
-        self.default_color = color
-        self.color = color
-        self.hover_color = hover_color
-        self.text = text
-        self.text_color = text_color
-        self.action = action
-        self.hitbox = self.rect
-        self.font = pg.font.SysFont("Arial", 50)
-        self.image = image
-        self.default_image = image
-        self.hover_image = hover_image
-        self.selected_image = selected_image
+        self.x: int = x
+        self.y: int = y
+        self.error: bool = False
+        self.hover: bool = False
+        self.selected: bool = False
+        self.error_color: tuple = (255, 0, 0)
+        self.rect: pg.Rect = pg.Rect(x, y, width, height)
+        self.default_color: tuple = color
+        self.color: tuple = color
+        self.hover_color: tuple = hover_color
+        self.text: str = text
+        self.text_color: tuple = text_color
+        self.action: callable = action
+        self.hitbox: pg.Rect = self.rect
+        self.font: pg.font.Font = pg.font.SysFont("Arial", 50)
+        self.default_image: pg.Surface = image
+        self.hover_image: pg.Surface = hover_image
+        self.selected_image: pg.Surface = selected_image
 
 
-    def draw(self):
+    def draw(self) -> None:
         """
         Draws the button on the screen.
-
-        Parameters:
-        - screen: The pygame screen to draw the button on.
         """
         self.check_hover()
 
@@ -95,7 +92,7 @@ class Button:
     
         return True
     
-    def handle_not_hovering(self):
+    def handle_not_hovering(self) -> None:
         if self.error:
             self.set_button_color(self.error_color)
         elif self.selected:
@@ -104,25 +101,25 @@ class Button:
             self.set_button_color(self.default_color)
             self.image = self.default_image
     
-    def handle_no_image_hover(self):
+    def handle_no_image_hover(self) -> None:
         if self.error:
             self.set_button_color(self.error_color)
         else:
             self.set_button_color(self.hover_color)
 
-    def handle_event(self, event):
+    def handle_event(self, event: pg.event.Event) -> None:
         """
         Handles events for the button, such as mouse clicks.
 
         Parameters:
-        - event: The pygame event to handle.
+        - event (pg.event.Event): The pygame event to handle.
         """
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             mouse_pos = event.pos
             if self.rect.collidepoint(mouse_pos) and self.action:
                 self.action()
 
-    def update(self, events):
+    def update(self, events) -> None:
         """
         Updates the button's appearance and checks for interaction based on the current mouse position.
         This method can handle a single event or a list of events.
@@ -138,12 +135,11 @@ class Button:
             else:
                 self.handle_event(events)
 
-    def set_button_color(self, color):
+    def set_button_color(self, color: tuple) -> None:
         """
         Sets the color of the button.
 
         Parameters:
-        - color: The color to set the button to.
+        - color (tuple): The color to set the button to.
         """
         self.color = color
-            

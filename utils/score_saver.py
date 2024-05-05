@@ -1,41 +1,42 @@
 import csv
 import os
+from typing import List, Tuple
 
 class ScoreSaver:
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes the ScoreSaver object.
 
         If the high score file does not exist, it creates an empty file.
         Loads the high scores from the file.
         """
-        self.filename = "high_score.csv"
+        self.filename: str = "high_score.csv"
         if not os.path.isfile(self.filename):
             self.file = open(self.filename, 'w')
             self.file.close()
-        self.scores = self.load_scores()
+        self.scores: List[Tuple[str, int]] = self.load_scores()
 
-    def load_scores(self) -> list: 
+    def load_scores(self) -> List[Tuple[str, int]]: 
         """
         Loads the high scores from the file.
 
         Returns:
         - scores (list): A list of tuples representing the high scores, where each tuple contains the name and score.
         """
-        scores = []
+        scores: List[Tuple[str, int]] = []
         with open(self.filename, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
                 if row:
                     try:
-                        name = row[0]
-                        score = int(row[1])
+                        name: str = row[0]
+                        score: int = int(row[1])
                         scores.append((name, score))
                     except ValueError:
                         continue                
         return scores
     
-    def check_high_score(self, score):
+    def check_high_score(self, score: int) -> bool:
         """
         Checks if a given score is a high score.
 
@@ -52,14 +53,17 @@ class ScoreSaver:
             return True
         return False
         
-    def sort_scores(self):
+    def sort_scores(self) -> List[Tuple[str, int]]:
         """
         Sorts the high scores in descending order.
-        """
-        self.scores.sort(key=lambda x: x[1], reverse=True)
-        return self.scores
 
-    def add_score(self, name, score):
+        Returns:
+        - sorted_scores (list): A list of tuples representing the sorted high scores.
+        """
+        sorted_scores: List[Tuple[str, int]] = sorted(self.scores, key=lambda x: x[1], reverse=True)
+        return sorted_scores
+
+    def add_score(self, name: str, score: int) -> None:
         """
         Adds a new score to the high scores.
 
@@ -75,7 +79,7 @@ class ScoreSaver:
             self.scores.pop()
         self.save_scores()
 
-    def save_scores(self):
+    def save_scores(self) -> None:
         """
         Saves the high scores to the file.
         """
@@ -84,15 +88,15 @@ class ScoreSaver:
             for score in self.scores:
                 writer.writerow(score)
 
-    def score_display(self):
+    def score_display(self) -> List[str]:
         """
         Generates a formatted display of the high scores.
 
         Returns:
         - display (list): A list of strings representing the formatted high scores.
         """
-        self.sort_scores()
-        display = []
-        for i, score in enumerate(self.scores):
+        sorted_scores: List[Tuple[str, int]] = self.sort_scores()
+        display: List[str] = []
+        for i, score in enumerate(sorted_scores):
             display.append(f"{i + 1}. {score[0]}: {score[1]}")
         return display
