@@ -18,9 +18,10 @@ class Collision(pg.sprite.Sprite):
         Args:
             ball (Ball): The ball object.
             paddle (Paddle): The paddle object.
-            bricks (list): A list of brick objects.
+            bricks (List[Brick]): A list of brick objects.
             scoreboard (Scoreboard): The scoreboard object.
             player_lives (PlayerLives): The player lives object.
+            screen (pg.Surface): The game screen surface.
         """
         super().__init__()
         self.settings = Settings()
@@ -39,7 +40,7 @@ class Collision(pg.sprite.Sprite):
         self.level_banner = LevelBanner()
 
 
-    def check_paddle_collision(self):
+    def check_paddle_collision(self) -> None:
         """
         Checks for collision with the paddle and updates the ball's velocity accordingly.
         """
@@ -57,7 +58,7 @@ class Collision(pg.sprite.Sprite):
         elif not pg.sprite.collide_rect(self.ball, self.paddle):
             self.paddle_hit = False
 
-    def check_wall_collision(self):
+    def check_wall_collision(self) -> None:
         """
         Checks for collision with the walls and updates the ball's velocity accordingly.
         """
@@ -74,7 +75,7 @@ class Collision(pg.sprite.Sprite):
             self.lives.decrease_lives()
 
 
-    def check_brick_collision(self):
+    def check_brick_collision(self) -> None:
         """
         Checks for collision with the bricks and updates the ball's velocity accordingly.
         """
@@ -94,7 +95,7 @@ class Collision(pg.sprite.Sprite):
                 self.scoreboard.increase_score()
                 break  # Stop checking after handling collision to avoid multiple responses
 
-    def bounce(self, collision_normal: pg.math.Vector2):
+    def bounce(self, collision_normal: pg.math.Vector2) -> None:
         """
         Adjusts the ball's velocity based on the collision normal.
 
@@ -109,7 +110,7 @@ class Collision(pg.sprite.Sprite):
         if abs(self.ball.velocity[1]) < self.MIN_Y_VELOCITY:
             self.ball.velocity[1] = self.MIN_Y_VELOCITY if self.ball.velocity[1] > 0 else -self.MIN_Y_VELOCITY
 
-    def check_ball_stuck(self):
+    def check_ball_stuck(self) -> None:
         """
         Checks if the ball is stuck and adjusts its velocity accordingly.
         """
@@ -119,7 +120,7 @@ class Collision(pg.sprite.Sprite):
         if self.ball.velocity[0] == 0 and (self.ball.rect.left <= 0 or self.ball.rect.right >= self.screen_width):
             self.ball.velocity[0] = self.BALL_SPEED if self.ball.rect.centerx > self.screen_width // 2 else -self.BALL_SPEED
 
-    def update(self):
+    def update(self) -> None:
         """
         Updates the collision detection.
         """

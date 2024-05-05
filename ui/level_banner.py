@@ -1,7 +1,8 @@
 import pygame as pg
+from pygame.surface import Surface
 
 class LevelBanner:
-    def __init__(self, font_size=50, color=(255, 255, 255)):
+    def __init__(self, font_size: int = 50, color: tuple = (255, 255, 255)) -> None:
         """
         Initialize the LevelBanner object.
 
@@ -12,7 +13,7 @@ class LevelBanner:
         self.font = pg.font.SysFont("Arial", font_size)
         self.color = color
 
-    def display(self, screen, level_number, screen_width, screen_height):
+    def display(self, screen: Surface, level_number: int, screen_width: int, screen_height: int) -> None:
         """
         Display the level banner on the screen.
 
@@ -29,7 +30,7 @@ class LevelBanner:
         pg.display.flip()
         pg.time.wait(2000)
 
-    def display_ball_lost_message(self, screen, screen_width, screen_height):
+    def display_ball_lost_message(self, screen: Surface, screen_width: int, screen_height: int) -> None:
         """
         Display the "YOU LOST A BALL!" message on the screen.
     

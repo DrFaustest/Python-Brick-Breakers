@@ -4,8 +4,7 @@ from game.settings_menu import SettingsMenu
 from game.game_over import GameOver
 from utils.background_music import BackgroundMusic
 
-
-class Game():
+class Game:
     """
     Represents the main game class.
 
@@ -17,7 +16,7 @@ class Game():
     - current_state: The current state of the game (MainMenu, GamePlay, SettingsMenu, GameOver).
     """
 
-    def __init__(self, screen):
+    def __init__(self, screen: object) -> None:
         """
         Initializes a new instance of the Game class.
 
@@ -25,12 +24,12 @@ class Game():
         - screen: The game screen object.
         """
         self.screen = screen
-        self.player_score = 0
+        self.player_score: int = 0
         self.background_music: BackgroundMusic = BackgroundMusic()
-        self.music_current_image = self.background_music.current_image
-        self.current_state = MainMenu(self)
+        self.music_current_image: str = self.background_music.current_image
+        self.current_state: object = MainMenu(self)
 
-    def change_state(self, new_state_str):
+    def change_state(self, new_state_str: str) -> None:
         """
         Changes the current state of the game.
 
@@ -46,7 +45,7 @@ class Game():
         elif new_state_str == "MainMenu":
             self.current_state = MainMenu(self)
 
-    def update(self, events):
+    def update(self, events: list) -> None:
         """
         Updates the game state.
 
@@ -55,7 +54,7 @@ class Game():
         """
         self.current_state.update(events)
 
-    def draw(self):
+    def draw(self) -> None:
         """
         Draws the game state.
         """

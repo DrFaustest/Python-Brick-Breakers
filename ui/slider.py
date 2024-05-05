@@ -1,7 +1,11 @@
 import pygame
+from pygame.surface import Surface
+from pygame.font import Font
+from pygame.rect import Rect
+from typing import Tuple
 
 class Slider:
-    def __init__(self, screen, x, y, width, height, min_value, max_value, current_value, description=""):
+    def __init__(self, screen: Surface, x: int, y: int, width: int, height: int, min_value: float, max_value: float, current_value: float, description: str = "") -> None:
         """
         Initialize a Slider object.
 
@@ -31,13 +35,13 @@ class Slider:
         self.track_color = (180, 180, 180)
         self.handle_color = (255, 255, 255)
         self.border_color = (0, 0, 0)
-        self.track_rect = pygame.Rect(x, y, width, height // 2)
-        self.handle_rect = pygame.Rect(x, y, self.get_handle_width(), height // 2)
-        self.hitbox = pygame.Rect(x, y, width, height)
+        self.track_rect = Rect(x, y, width, height // 2)
+        self.handle_rect = Rect(x, y, self.get_handle_width(), height // 2)
+        self.hitbox = Rect(x, y, width, height)
         self.grabbed = False
         self.update_handle_position()
 
-    def get_handle_width(self):
+    def get_handle_width(self) -> int:
         """
         Calculate the width of the slider handle based on the range of values.
 
@@ -47,7 +51,7 @@ class Slider:
         range_width_ratio = 20 / (self.max_value - self.min_value)
         return max(self.width * range_width_ratio, 20)
 
-    def update_handle_position(self):
+    def update_handle_position(self) -> None:
         """
         Update the position of the slider handle based on the current value.
         """
@@ -55,7 +59,7 @@ class Slider:
         handle_x_position = self.x + (self.width - self.get_handle_width()) * value_ratio
         self.handle_rect.x = handle_x_position
 
-    def handle_event(self, event):
+    def handle_event(self, event: pygame.event.Event) -> None:
         """
         Handle events related to the slider.
 
@@ -71,7 +75,7 @@ class Slider:
         elif event.type == pygame.MOUSEMOTION and self.grabbed:
             self.move_handle(event.pos[0])
 
-    def move_handle(self, mouse_x):
+    def move_handle(self, mouse_x: int) -> None:
         """
         Move the slider handle based on the mouse position.
 
@@ -83,11 +87,11 @@ class Slider:
             value_range = (self.handle_rect.x - self.x) / (self.width - self.handle_rect.width)
             self.current_value = self.min_value + value_range * (self.max_value - self.min_value)
 
-    def draw(self):
+    def draw(self) -> None:
         """
         Draw the slider on the screen.
         """
-        container_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        container_rect = Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(self.screen, self.bg_color, container_rect)
         pygame.draw.rect(self.screen, self.track_color, self.track_rect)
         pygame.draw.rect(self.screen, self.handle_color, self.handle_rect)
@@ -105,7 +109,7 @@ class Slider:
         self.screen.blit(desc_text, (self.x + self.width // 2 - desc_text.get_width() // 2, base_y))
         self.screen.blit(max_val_text, (self.x + self.width - max_val_text.get_width(), base_y))
 
-    def get_value(self):
+    def get_value(self) -> Tuple[str, float]:
         """
         Get the current value of the slider.
 
@@ -114,7 +118,7 @@ class Slider:
         """
         return (self.description, self.current_value)
 
-    def update(self, new_value):
+    def update(self, new_value: float) -> None:
         """
         Update the current value of the slider.
 

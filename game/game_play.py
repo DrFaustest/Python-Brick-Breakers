@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from settings import Settings
 from objects.paddle import Paddle
 from objects.ball import Ball
 from objects.brick import Brick
@@ -11,11 +11,9 @@ from managers.collision import Collision
 from managers.input import InputEvent
 from managers.game_reset import GameReset
 from game.game_state import GameState
-from settings import Settings
-
 
 class GamePlay(GameState):
-    def __init__(self, game):
+    def __init__(self, game) -> None:
         """
         Initialize the GamePlay class.
 
@@ -38,23 +36,23 @@ class GamePlay(GameState):
             game_reset (GameReset): The game reset manager.
         """
         super().__init__(game)
-        self.difficulty = self.settings.get("DIFFICULTY")
-        self.background_image = pg.image.load(self.settings.get("BACKGROUND_IMG")).convert()
+        self.difficulty: float = self.settings.get("DIFFICULTY")
+        self.background_image: pg.Surface = pg.image.load(self.settings.get("BACKGROUND_IMG")).convert()
         self.background_image = pg.transform.scale(self.background_image, (self.screen_width, self.screen_height))
-        self.current_level_index = 0
+        self.current_level_index: int = 0
         self.level: Level = Level(self.current_level_index)
-        self.bricks = self.level.bricks
-        self.paddle = Paddle()
-        self.ball = Ball(self.paddle)
-        self.scoreboard = Scoreboard()
-        self.lives = PlayerLives()
-        self.collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard, self.lives, self.screen)
-        self.input_handler = InputEvent(self.paddle, self.ball)
-        self.level_banner = LevelBanner()
-        self.game_reset = GameReset(self)
-        self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width,self.screen_height)
+        self.bricks: list[Brick] = self.level.bricks
+        self.paddle: Paddle = Paddle()
+        self.ball: Ball = Ball(self.paddle)
+        self.scoreboard: Scoreboard = Scoreboard()
+        self.lives: PlayerLives = PlayerLives()
+        self.collision: Collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard, self.lives, self.screen)
+        self.input_handler: InputEvent = InputEvent(self.paddle, self.ball)
+        self.level_banner: LevelBanner = LevelBanner()
+        self.game_reset: GameReset = GameReset(self)
+        self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
 
-    def update(self, events: list):
+    def update(self, events: list[pg.event.Event]) -> None:
         """
         Update the game logic in the playing state.
 
@@ -70,11 +68,11 @@ class GamePlay(GameState):
         if self.level.is_level_complete():
             self.handle_level_complete()
         if self.lives.lives == 0:
-            self.settings.set("DIFFICULTY",1)
+            self.settings.set("DIFFICULTY", 1)
             self.game.player_score = self.scoreboard.score
             self.game.change_state("GameOver")
-    
-    def handle_level_complete(self):
+
+    def handle_level_complete(self) -> None:
         """
         Handle the completion of a level.
 
@@ -83,13 +81,13 @@ class GamePlay(GameState):
         """
         self.current_level_index += 1
         if self.difficulty < 10:
-            new_difficulty = self.difficulty + 0.2
+            new_difficulty: float = self.difficulty + 0.2
             self.settings.set("DIFFICULTY", new_difficulty)
             self.difficulty = self.settings.get("DIFFICULTY")
         self.game_reset.reset()
-        self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width,self.screen_height)
+        self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
 
-    def draw(self):
+    def draw(self) -> None:
         """
         Draw the game objects on the screen.
 

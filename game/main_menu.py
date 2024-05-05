@@ -1,3 +1,4 @@
+from typing import List
 import pygame as pg
 from ui.button import Button
 from game.game_state import GameState
@@ -17,13 +18,13 @@ class MainMenu(GameState):
     - buttons: The list of buttons in the main menu.
 
     Methods:
-    - __init__(self, game): Initializes the MainMenu object.
-    - create_buttons(self): Creates the buttons for the main menu.
-    - update(self, events): Updates the main menu state based on user events.
-    - draw(self): Draws the main menu on the screen.
+    - __init__(self, game: Game) -> None: Initializes the MainMenu object.
+    - create_buttons(self) -> List[Button]: Creates the buttons for the main menu.
+    - update(self, events: List[pg.event.Event]) -> None: Updates the main menu state based on user events.
+    - draw(self) -> None: Draws the main menu on the screen.
     """
 
-    def __init__(self, game):
+    def __init__(self, game) -> None:
         """
         Initializes the MainMenu object.
 
@@ -35,7 +36,7 @@ class MainMenu(GameState):
         self.background = pg.transform.scale(self.background, (self.screen_width, self.screen_height))
         self.buttons = self.create_buttons()
 
-    def create_buttons(self):
+    def create_buttons(self) -> List[Button]:
         """
         Creates the buttons for the main menu.
 
@@ -49,13 +50,13 @@ class MainMenu(GameState):
         settings_button_image = pg.transform.scale(settings_button_image, (200, 100))
         high_scores_button_image = pg.transform.scale(high_scores_button_image, (200, 100))
         buttons = []
-        buttons.append(Button(self.screen,300, 100, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("Playing"), play_button_image))
-        buttons.append(Button(self.screen,300, 250, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("Settings"), settings_button_image))
-        buttons.append(Button(self.screen,300, 400, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("GameOver"), high_scores_button_image))
-        buttons.append(Button(self.screen,700, 500, 50, 50, "", self.WHITE, self.GREEN, self.BLACK, self.game.background_music.change_music_state, self.game.background_music.current_image))
+        buttons.append(Button(self.screen, 300, 100, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("Playing"), play_button_image))
+        buttons.append(Button(self.screen, 300, 250, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("Settings"), settings_button_image))
+        buttons.append(Button(self.screen, 300, 400, 200, 100, "", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("GameOver"), high_scores_button_image))
+        buttons.append(Button(self.screen, 700, 500, 50, 50, "", self.WHITE, self.GREEN, self.BLACK, self.game.background_music.change_music_state, self.game.background_music.current_image))
         return buttons
 
-    def update(self, events):
+    def update(self, events: List[pg.event.Event]) -> None:
         """
         Updates the main menu state based on user events.
 
@@ -68,7 +69,7 @@ class MainMenu(GameState):
                     button.handle_event(event)
                     self.buttons[3].image = self.game.background_music.current_image
 
-    def draw(self):
+    def draw(self) -> None:
         """
         Draws the main menu on the screen.
         """

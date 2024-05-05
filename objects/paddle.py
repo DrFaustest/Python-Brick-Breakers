@@ -17,21 +17,21 @@ class Paddle(pg.sprite.Sprite):
         """
         super().__init__()
         self.settings = Settings()
-        self.PADDLE_IMG = self.settings.get("PADDLE_IMG")
-        self.PADDLE_SIZE = self.settings.get("PADDLE_SIZE")
-        self.PADDLE_SPEED = self.settings.get("PADDLE_SPEED")
-        self.SCREEN_WIDTH = self.settings.get("SCREEN_WIDTH")
-        self.SCREEN_HEIGHT = self.settings.get("SCREEN_HEIGHT")
-        self.original_image = pg.image.load(self.PADDLE_IMG)
-        self.image = pg.transform.scale(self.original_image, (self.PADDLE_SIZE[0], self.PADDLE_SIZE[1]))
-        self.rect = self.image.get_rect()
-        self.rect.x = self.SCREEN_WIDTH // 2 - self.PADDLE_SIZE[0] // 2
-        self.rect.y = self.SCREEN_HEIGHT - 60
-        self.speed = self.PADDLE_SPEED
-        self.screen_width = self.SCREEN_WIDTH
-        self.position_accumulator = self.SCREEN_WIDTH // 2
+        self.PADDLE_IMG: str = self.settings.get("PADDLE_IMG")
+        self.PADDLE_SIZE: tuple[int, int] = self.settings.get("PADDLE_SIZE")
+        self.PADDLE_SPEED: int = self.settings.get("PADDLE_SPEED")
+        self.SCREEN_WIDTH: int = self.settings.get("SCREEN_WIDTH")
+        self.SCREEN_HEIGHT: int = self.settings.get("SCREEN_HEIGHT")
+        self.original_image: pg.Surface = pg.image.load(self.PADDLE_IMG)
+        self.image: pg.Surface = pg.transform.scale(self.original_image, (self.PADDLE_SIZE[0], self.PADDLE_SIZE[1]))
+        self.rect: pg.Rect = self.image.get_rect()
+        self.rect.x: int = self.SCREEN_WIDTH // 2 - self.PADDLE_SIZE[0] // 2 # type: ignore
+        self.rect.y: int = self.SCREEN_HEIGHT - 60 # type: ignore
+        self.speed: int = self.PADDLE_SPEED
+        self.screen_width: int = self.SCREEN_WIDTH
+        self.position_accumulator: int = self.SCREEN_WIDTH // 2
 
-    def move(self, direction) -> None:
+    def move(self, direction: str) -> None:
         """
         Move the paddle in the specified direction.
 
@@ -58,7 +58,7 @@ class Paddle(pg.sprite.Sprite):
             self.rect.right = self.screen_width
             self.position_accumulator = self.screen_width - self.rect.width
 
-    def draw(self, screen) -> None:
+    def draw(self, screen: pg.Surface) -> None:
         """
         Draw the paddle on the screen.
 
