@@ -73,10 +73,10 @@ class ScoreSaver:
         - name (str): The name associated with the score.
         - score (int): The score to be added.
         """
+        if len(self.scores) == 10:
+            self.scores.pop()
         self.scores.append((name, score))
         self.sort_scores()
-        if len(self.scores) > 10:
-            self.scores.pop()
         self.save_scores()
 
     def save_scores(self) -> None:
@@ -95,8 +95,7 @@ class ScoreSaver:
         Returns:
         - display (list): A list of strings representing the formatted high scores.
         """
-        sorted_scores: List[Tuple[str, int]] = self.sort_scores()
         display: List[str] = []
-        for i, score in enumerate(sorted_scores):
+        for i, score in enumerate(self.scores):
             display.append(f"{i + 1}. {score[0]}: {score[1]}")
         return display

@@ -17,9 +17,13 @@ class GameOver(GameState):
         self.back_button: Button = Button(self.screen, 300, 400, 300, 50, "Back to Menu", self.WHITE, self.GREEN, self.BLACK, lambda: self.game.change_state("MainMenu"))
 
     def submit_score(self) -> None:
+        if self.text_box.text == '':
+            self.submit_button.error=True
+            return
         if self.new_high_score:
             name: str = self.text_box.text
             self.score_saver.add_score(name, self.score)
+            self.score_saver.save_scores()
             self.game.player_score = 0
         self.state = 'DISPLAY_SCORE'
 
