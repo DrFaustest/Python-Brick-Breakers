@@ -178,7 +178,7 @@
     ],
     "BALL_SPEED": 2,
     "DIFFICULTY": 1,
-    "VOLUME": 0.5,
+    "VOLUME": 0.15,
     "WHITE": [
         255,
         255,
@@ -215,7 +215,7 @@
     "BALL_IMG": "img\\balls\\soccer_921197.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
     "BRICK_IMG": "img\\bricks\\brick_img.png",
-    "BACKGROUND_IMG": "img\\backgrounds\\Waterlilies.png",
+    "BACKGROUND_IMG": "img\\backgrounds\\Castle Prison.png",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
     "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
     "BACKGROUND": "img\\backgrounds\\background_4.webp",
