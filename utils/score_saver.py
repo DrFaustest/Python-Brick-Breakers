@@ -15,6 +15,7 @@ class ScoreSaver:
             self.file = open(self.filename, 'w')
             self.file.close()
         self.scores: List[Tuple[str, int]] = self.load_scores()
+        self.scores: List[Tuple[str, int]] = self.sort_scores()
 
     def load_scores(self) -> List[Tuple[str, int]]: 
         """
