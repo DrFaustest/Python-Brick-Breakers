@@ -97,6 +97,7 @@ class ScoreSaver:
         - display (list): A list of strings representing the formatted high scores.
         """
         display: List[str] = []
+        self.sort_scores()
         for i, score in enumerate(self.scores):
             display.append(f"{i + 1}. {score[0]}: {score[1]}")
         return display
