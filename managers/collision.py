@@ -49,9 +49,13 @@ class Collision(pg.sprite.Sprite):
             offset = (self.ball.rect.centerx - self.paddle.rect.centerx) / (self.paddle.rect.width / 2)
             reflection_angle = offset * self.MAX_REFLECTION_ANGLE
             new_vx = math.cos(math.radians(reflection_angle)) * self.BALL_SPEED * (1 if offset > 0 else -1)
-            new_vy = -math.sqrt(self.BALL_SPEED ** 2 - new_vx ** 2)
+            speed_difference = self.BALL_SPEED ** 2 - new_vx ** 2
+            speed_difference = max(0, speed_difference)  # Ensure that the value inside the square root is not negative
+            new_vy = -math.sqrt(speed_difference)
             if abs(new_vy) < self.MIN_Y_VELOCITY:  # Ensure minimum vertical velocity
                 new_vy = -self.MIN_Y_VELOCITY if new_vy < 0 else self.MIN_Y_VELOCITY
+            if new_vy > 0: # Ensure that the ball is always moving upwards after hitting the paddle
+                new_vy = -new_vy
             self.ball.velocity = pg.math.Vector2(new_vx, new_vy)
             spin_change = reflection_angle * 0.1
             self.ball.spin += spin_change
