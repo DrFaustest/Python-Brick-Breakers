@@ -30,8 +30,20 @@ Interested in contributing? Feel free to fork the repository and submit pull req
 ## Usage
 To start the game, run `python main.py` from the terminal within the game directory.
 
-## Contributing
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+## Packaging and Distribution
+To package the game for distribution, follow these steps:
+
+1. Ensure all dependencies are listed in `requirements.txt`.
+2. Create a `setup.py` file with the necessary metadata and dependencies.
+3. Build the distribution package using `setuptools` and `wheel`:
+   ```sh
+   python setup.py sdist bdist_wheel
+   ```
+4. Test the package on different platforms to ensure compatibility.
+5. Upload the package to PyPI for easy distribution:
+   ```sh
+   twine upload dist/*
+   ```
 
 ## License
 This project is licensed under the [MIT License](LICENSE.md).
@@ -39,6 +51,3 @@ This project is licensed under the [MIT License](LICENSE.md).
 ## Acknowledgments
 - Thanks to the Python and Pygame communities for their invaluable resources.
 - Special acknowledgment to [contributors' names] for their contributions to the game's development.
-
-
-
