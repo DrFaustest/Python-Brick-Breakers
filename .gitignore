@@ -28,3 +28,9 @@ Thumbs.db
 # Local data files
 high_score.csv
 settings.json
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec
+
