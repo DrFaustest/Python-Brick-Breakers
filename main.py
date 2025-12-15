@@ -1,7 +1,18 @@
 import pygame as pg
+import sys
+import os
 from game.game import Game
 from settings import Settings
 from logo import LogoDisplay
+
+def setup_bundled_paths() -> None:
+    """
+    Adjust paths for PyInstaller bundled executable.
+    When running as an exe, os.path.abspath('.') points to the temp extraction dir.
+    """
+    if getattr(sys, 'frozen', False):
+        # Running as compiled exe
+        os.chdir(sys._MEIPASS)
 
 def main() -> None:
     """
@@ -10,6 +21,7 @@ def main() -> None:
     Returns:
         None
     """
+    setup_bundled_paths()
     pg.init()
     settings = Settings()
     screen_width: int = settings.get("SCREEN_WIDTH")

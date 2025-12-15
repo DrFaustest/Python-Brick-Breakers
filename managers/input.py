@@ -2,18 +2,19 @@ import pygame as pg
 from settings import Settings
 from objects.paddle import Paddle
 from objects.ball import Ball
+from typing import List
 
 class InputEvent:
-    def __init__(self, paddle: Paddle, ball: Ball) -> None:
+    def __init__(self, paddle: Paddle, balls: List[Ball]) -> None:
         """
         Initialize the InputEvent class.
 
         Args:
             paddle (Paddle): The paddle object.
-            ball (Ball): The ball object.
+            balls (List[Ball]): List of ball objects.
         """
         self.paddle = paddle
-        self.ball = ball
+        self.balls = balls
         self.active_input_type = "mouse"
         self.settings = Settings()
         self.SCREEN_WIDTH: int = self.settings.get("SCREEN_WIDTH")
@@ -38,8 +39,11 @@ class InputEvent:
                 self.paddle.move("left")
             elif keys[pg.K_RIGHT]:
                 self.paddle.move("right")
-            if keys[pg.K_SPACE] and self.ball.attached_to_paddle:
-                self.ball.handle_event(pg.event.Event(pg.KEYDOWN, key=pg.K_SPACE))
+            if keys[pg.K_SPACE]:
+                # Launch all attached balls
+                for ball in self.balls:
+                    if ball.attached_to_paddle:
+                        ball.handle_event(pg.event.Event(pg.KEYDOWN, key=pg.K_SPACE))
 
         elif self.active_input_type == "mouse":
             self.paddle.rect.centerx = mouse_x
@@ -48,4 +52,7 @@ class InputEvent:
             if self.paddle.rect.right > self.SCREEN_WIDTH:
                 self.paddle.rect.right = self.SCREEN_WIDTH
             if mouse_buttons[0]:
-                self.ball.handle_event(pg.event.Event(pg.MOUSEBUTTONDOWN, button=1))
+                # Launch all attached balls
+                for ball in self.balls:
+                    if ball.attached_to_paddle:
+                        ball.handle_event(pg.event.Event(pg.MOUSEBUTTONDOWN, button=1))

@@ -215,7 +215,7 @@
     "BALL_IMG": "img\\balls\\soccer_921197.png",
     "PADDLE_IMG": "img\\paddles\\paddle.png",
     "BRICK_IMG": "img\\bricks\\brick_img.png",
-    "BACKGROUND_IMG": "img\\backgrounds\\Castle Prison.png",
+    "BACKGROUND_IMG": "img\\backgrounds\\Beach.png",
     "SOUND_ENABLED_IMAGE": "img/sound_image.png",
     "SOUND_DISABLED_IMAGE": "img/sound_muted.png",
     "BACKGROUND": "img\\backgrounds\\background_4.webp",
@@ -242,5 +242,6 @@
         "img\\tab_img\\paddles_tab_img_selected.png",
         "img\\tab_img\\background_tab_img_selected.png",
         "img\\tab_img\\bricks_tab_img_selected.png"
-    ]
+    ],
+    "MOVING_BRICK_SPEED": 3
 }

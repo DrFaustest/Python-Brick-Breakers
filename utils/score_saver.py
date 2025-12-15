@@ -50,9 +50,7 @@ class ScoreSaver:
         self.sort_scores()
         if len(self.scores) < 10:
             return True
-        elif score > int(self.scores[-1][1]):
-            return True
-        return False
+        return score > int(self.scores[-1][1])
         
     def sort_scores(self) -> List[Tuple[str, int]]:
         """
@@ -61,8 +59,8 @@ class ScoreSaver:
         Returns:
         - sorted_scores (list): A list of tuples representing the sorted high scores.
         """
-        sorted_scores: List[Tuple[str, int]] = sorted(self.scores, key=lambda x: x[1], reverse=True)
-        return sorted_scores
+        self.scores = sorted(self.scores, key=lambda x: x[1], reverse=True)
+        return self.scores
 
     def add_score(self, name: str, score: int) -> None:
         """
@@ -74,10 +72,10 @@ class ScoreSaver:
         - name (str): The name associated with the score.
         - score (int): The score to be added.
         """
-        if len(self.scores) == 10:
-            self.scores.pop()
         self.scores.append((name, score))
         self.sort_scores()
+        # Keep only top 10 scores
+        self.scores = self.scores[:10]
         self.save_scores()
 
     def save_scores(self) -> None:
@@ -97,7 +95,6 @@ class ScoreSaver:
         - display (list): A list of strings representing the formatted high scores.
         """
         display: List[str] = []
-        self.sort_scores()
-        for i, score in enumerate(self.scores):
+        for i, score in enumerate(self.sort_scores()):
             display.append(f"{i + 1}. {score[0]}: {score[1]}")
         return display

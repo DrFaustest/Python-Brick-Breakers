@@ -40,6 +40,7 @@ class Settings:
         "PADDLE_SPEED": 25,
         "PADDLE_SIZE": [100, 20],
         "BALL_SPEED": 2,
+        "MOVING_BRICK_SPEED": 3,
         "DIFFICULTY": 1,
         "VOLUME": 0.5,
         "WHITE": [255, 255, 255],

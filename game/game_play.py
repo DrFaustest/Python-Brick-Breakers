@@ -43,11 +43,11 @@ class GamePlay(GameState):
         self.level: Level = Level(self.current_level_index)
         self.bricks: list[Brick] = self.level.bricks
         self.paddle: Paddle = Paddle()
-        self.ball: Ball = Ball(self.paddle)
+        self.balls: list[Ball] = [Ball(self.paddle)]  # Changed to list to support multiple balls
         self.scoreboard: Scoreboard = Scoreboard()
         self.lives: PlayerLives = PlayerLives()
-        self.collision: Collision = Collision(self.ball, self.paddle, self.bricks, self.scoreboard, self.lives, self.screen)
-        self.input_handler: InputEvent = InputEvent(self.paddle, self.ball)
+        self.collision: Collision = Collision(self.balls, self.paddle, self.level, self.scoreboard, self.lives, self.screen, self)
+        self.input_handler: InputEvent = InputEvent(self.paddle, self.balls)
         self.level_banner: LevelBanner = LevelBanner()
         self.game_reset: GameReset = GameReset(self)
         self.level_banner.display(self.screen, self.current_level_index + 1, self.screen_width, self.screen_height)
@@ -63,7 +63,12 @@ class GamePlay(GameState):
             None
         """
         self.input_handler.handle_input()
-        self.ball.update()
+        self.level.update()  # Update bricks (for moving bricks)
+        
+        # Update all balls
+        for ball in self.balls[:]:
+            ball.update()
+        
         self.collision.update()
         if self.level.is_level_complete():
             self.handle_level_complete()
@@ -98,5 +103,9 @@ class GamePlay(GameState):
         self.level.draw(self.screen)
         self.scoreboard.draw(self.screen)
         self.paddle.draw(self.screen)
-        self.ball.draw(self.screen)
+        
+        # Draw all balls
+        for ball in self.balls:
+            ball.draw(self.screen)
+        
         self.lives.draw(self.screen)

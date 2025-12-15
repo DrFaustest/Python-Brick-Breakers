@@ -1,8 +1,8 @@
 --GAME FEATURES--
 1. lives system (done)
 2. powerups
-3. multi-player
-4. lofi mode (auto play)
+3. 
+4. 
 5. leaderboard
    - Saves the top 10 scores and names (done)
    - at end of game if the score is in the top 10, it will ask for the players name (done)
